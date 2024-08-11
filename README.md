@@ -1,7 +1,5 @@
 # AV1 Flow + Enable Intel ARC + Tdarr Node Killer - Script Guide
 
-# AV1 Flow and Tdarr Node Killer Script Guide
-
 ## Purpose
 
 This guide aims to help users optimize their media libraries by using AV1 encoding and efficiently managing GPU resources between Plex and Tdarr. The AV1 Flow provides a highly efficient way to compress video files, saving significant storage space, while the Tdarr Node Killer Script ensures that your Intel ARC GPU is dedicated to Plex when needed, without interrupting other processes.
