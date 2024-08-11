@@ -2,7 +2,19 @@
 
 # AV1 Flow and Tdarr Node Killer Script Guide
 
-This guide provides an overview of the AV1 encoding flow and explains how the Tdarr Node Killer Script works to manage GPU resources between Plex and Tdarr.
+## Purpose
+
+This guide aims to help users optimize their media libraries by using AV1 encoding and efficiently managing GPU resources between Plex and Tdarr. The AV1 Flow provides a highly efficient way to compress video files, saving significant storage space, while the Tdarr Node Killer Script ensures that your Intel ARC GPU is dedicated to Plex when needed, without interrupting other processes.
+
+### What You Will Accomplish
+
+- **AV1 Encoding**: Learn how to use AV1 encoding to significantly reduce the size of your video files, freeing up storage space while maintaining video quality.
+- **Efficient GPU Management**: Implement a script that automatically manages your GPU resources, ensuring that Plex has dedicated access to your Intel ARC GPU when it needs to transcode video, without interrupting Tdarr's video processing tasks.
+- **Optimized Media Library**: By following this guide, you will be able to compress a large media library, potentially reducing a 300TB library to 75-100TB, making it easier to manage and store.
+
+### Why This Is Helpful
+
+For users with large media libraries, storage space can quickly become an issue. The AV1 Flow provides an effective solution by drastically reducing the size of your video files. Additionally, the Tdarr Node Killer Script ensures that your Intel ARC GPU is used efficiently, preventing conflicts between Plex and Tdarr and ensuring that Plex users experience smooth, uninterrupted playback.
 
 ---
 
@@ -28,6 +40,22 @@ The AV1 encoding flow is a process that converts video data into the AV1 format,
 This section explains how the Tdarr Node Killer Script works to manage your GPU resources, ensuring that Plex can have dedicated access when needed.
 
 **Note:** While this script is designed to work seamlessly on Unraid, it can technically work on any operating system as long as you create a service. An experimental service script for Ubuntu is provided at the end of this guide.
+
+### Prerequisites for Unraid
+
+Before adding the Tdarr Node Killer Script, ensure that you have installed the [User Scripts] plugin by Andrew. This plugin is essential for running scripts on Unraid.
+
+![User Scripts Plugin](https://i.imgur.com/JA90q6x.png)
+
+Once the plugin is installed, set the script to run at "First Array Start Only." This setting ensures that the script starts with the array and continues to run. If it's determined that the script stops when the array is stopped, adjust it to "Start of Array Every Time."
+
+![Set Script at First Array Start](https://i.imgur.com/MpG4lP8.png)
+
+**Note:** Ignore the other two nodes in the photos. The selected node is dedicated to Plex. The purpose of this setup is to ensure that the GPU is put to work without disrupting Plex users. There are two ARC 380 GPUs (one dedicated to Plex) and one ARC 310 GPU. The ARC 380 GPUs can handle up to 7 streams each for Tdarr, while the ARC 310 handles up to 5 streams at a time.
+
+---
+
+## Tdarr Node Killer Script Behavior
 
 ### Step 1: Tdarr Node Running, No Plex Transcoding
 
@@ -97,6 +125,16 @@ The script doesn't immediately restart the Tdarr node after Plex stops transcodi
 
 ---
 
+## Data Savings with AV1 Encoding
+
+Running this setup with three ARC GPUs has shown significant data savings over two weeks. With AV1 encoding, a savings of 37TB was achieved, covering only 10-15% of the library.
+
+![Data Savings](https://i.imgur.com/Saic5J4.png)
+
+**Explanation**: AV1 encoding can drastically reduce storage needs. For example, a 300TB library could be reduced to 75-100TB, making it an efficient solution for large media libraries.
+
+---
+
 ## Experimental: Running the Script as a Service on Ubuntu
 
 If you're using a different operating system like Ubuntu, you can run this script as a service. Below is an experimental service script to help you set it up.
@@ -109,13 +147,22 @@ If you're using a different operating system like Ubuntu, you can run this scrip
     sudo nano /usr/local/bin/tdarr_node_killer.sh
     ```
 
-2. **Create a Service File**: Create a service file for the script:
+2. **Set the Proper Permissions**:
+
+    Ensure that the script has the correct permissions to execute. Use the following commands:
+
+    ```bash
+    sudo chmod +x /usr/local/bin/tdarr_node_killer.sh
+    sudo chown root:root /usr/local/bin/tdarr_node_killer.sh
+    ```
+
+3. **Create a Service File**: Create a service file for the script:
 
     ```bash
     sudo nano /etc/systemd/system/tdarr_node_killer.service
     ```
 
-3. **Add the Following Content**:
+4. **Add the Following Content**:
 
     ```ini
     [Unit]
@@ -131,13 +178,13 @@ If you're using a different operating system like Ubuntu, you can run this scrip
     WantedBy=multi-user.target
     ```
 
-4. **Reload Systemd**:
+5. **Reload Systemd**:
 
     ```bash
     sudo systemctl daemon-reload
     ```
 
-5. **Start and Enable the Service**:
+6. **Start and Enable the Service**:
 
     ```bash
     sudo systemctl start tdarr_node_killer.service
@@ -151,4 +198,3 @@ This will allow the script to run automatically on startup and ensure that it st
 ## Summary
 
 The Tdarr Node Killer Script is designed to intelligently manage GPU resources between Plex and Tdarr. By monitoring Plex transcoding activity and controlling the Tdarr node, the script ensures that your Intel ARC GPU is used efficiently. This guide provides a visual walkthrough of the process, making it easy for beginners to understand how the script works and how to configure it for their own use.
-
