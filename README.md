@@ -14,9 +14,10 @@ This requires Unraid 7.0 (which is in beta at this time). I have an AMD 7900 - 3
 
 ## Purpose
 
-This comprehensive guide provides a step-by-step approach to optimizing your media library through AV1 encoding while efficiently managing GPU resources between Plex and Tdarr on Unraid. By following this guide, you'll learn how to drastically reduce video file sizes, saving valuable storage space, and automate the allocation of GPU resources to ensure smooth and uninterrupted playback for Plex users.
+This comprehensive guide provides a step-by-step approach to optimizing your media library through AV1 encoding while efficiently managing GPU resources between Plex and Tdarr on Unraid. By following this guide, you'll learn how to drastically reduce video file sizes, saving valuable storage space, and automate the allocation of GPU resources to ensure smooth and uninterrupted playback for Plex users. 
 
-In addition to encoding and resource management, this guide covers essential information on setting up and configuring necessary plugins, importing and applying AV1 encoding flows, troubleshooting common issues, and implementing backup and recovery strategies. Whether you're a seasoned Unraid user or new to media server management, this guide equips you with the knowledge and tools needed to maximize your server's performance and efficiency.
+In addition to encoding and resource management, this guide covers essential information on setting up and configuring necessary plugins, importing and applying AV1 encoding flows, troubleshooting common issues, and implementing backup and recovery strategies. Whether you're a seasoned Unraid user or new to media server management, this guide equips you with the knowledge and tools needed to maximize your server's performance and efficiency.**
+
 ---
 
 ## Data Savings with AV1 Encoding
