@@ -1,6 +1,6 @@
 # Comprehensive Guide to Enabling AV1 Encoding, Plex Deployment & GPU Management with Tdarr on Unraid 7.0
 
-<p align="center">
+<p align="left">
   <a href="https://avatars.githubusercontent.com/u/62731045?s=200&v=4">
     <img src="https://avatars.githubusercontent.com/u/62731045?s=200&v=4" alt="Logo" style="border: 2px solid #000000; border-radius: 8px;">
   </a>
