@@ -105,7 +105,79 @@ The Tdarr Node Killer Script is designed to manage your GPU resources between Pl
 
 This setup allows you to put the GPU back to work when Plex is idle, while ensuring Plex users always get priority when transcoding is required.
 
-### Step-by-Step Implementation
+### Step-by-Step Implementation for Unraid
+
+1. **Tdarr Node Running, No Plex Transcoding**
+
+    ![Tdarr Node Running, No Plex Transcoding](https://i.imgur.com/PHRITk0.png)
+
+    **Explanation**: The Tdarr node is running, and Plex is not currently transcoding any videos. This means Tdarr is using the GPU resources for video processing tasks.
+
+2. **Script Monitoring for Plex Transcoding**
+
+    ![Script Monitoring, No Transcoding Detected](https://i.imgur.com/tveaVA5.png)
+
+    **Explanation**: The script continuously checks if Plex is transcoding. At this point, no transcoding is detected, so Tdarr continues using the GPU.
+
+3. **Plex User Starts Transcoding**
+
+    ![Plex User Starts Transcoding](https://i.imgur.com/AT6hCUV.png)
+
+    **Explanation**: A Plex user starts watching a video, causing Plex to begin transcoding. This might happen if the video is in a format like AV1, H.264, or H.265, which requires transcoding for older devices or specific user settings.
+
+4. **Script Detects Plex Transcoding, Stops Tdarr Node**
+
+    ![Script Detects Plex Transcoding, Stops Tdarr Node](https://i.imgur.com/iwob8yB.png)
+
+    **Explanation**: The script detects that Plex is transcoding and stops the Tdarr node. This action frees up the Intel ARC GPU so that Plex can use it exclusively for transcoding.
+
+5. **Tdarr Node Is Stopped**
+
+    ![Tdarr Node Stopped](https://i.imgur.com/KzdXHKf.png)
+
+    **Explanation**: Inside Tdarr, you can see that the node has been stopped by the script. This ensures that Plex has full access to the GPU for efficient transcoding.
+
+6. **Tdarr Node Dead**
+
+    ![Tdarr Node Dead](https://i.imgur.com/4gIzOkW.png)
+
+    **Explanation**: The Tdarr node is completely stopped, ensuring that Plex has exclusive access to the GPU.
+
+### Script Behavior After Plex Transcoding Stops
+
+The script doesn't immediately restart the Tdarr node after Plex stops transcoding. Instead, it checks every 5 seconds for 5 minutes to ensure that Plex isn't going to start transcoding again. This prevents the Tdarr node from constantly stopping and starting, which could be inefficient.
+
+1. **Countdown Before Restarting Tdarr Node**
+
+    ![Countdown Before Restarting Tdarr Node](https://i.imgur.com/59AGRlv.png)
+
+    **Explanation**: The script is counting down, checking every 5 seconds to see if Plex starts transcoding again. If Plex does start, the timer resets, ensuring that the Tdarr node stays off as long as Plex needs the GPU.
+
+2. **Tdarr Node Restarted After 5 Minutes**
+
+    ![Tdarr Node Restarted](https://i.imgur.com/ExHsAQI.png)
+
+    **Explanation**: After 5 minutes with no Plex transcoding detected, the script restarts the Tdarr node. The process then continues to check if Plex starts transcoding, so the node can be stopped again if needed.
+
+3. **Tdarr Node Coming Back Online**
+
+    ![Tdarr Node Coming Back Online](https://i.imgur.com/TTPVyt0.png)
+
+    **Explanation**: Inside Tdarr, you can see that the node is coming back online after being restarted by the script.
+
+4. **Tdarr Node Fully Online**
+
+    ![Tdarr Node Fully Online](https://i.imgur.com/M1M2vSL.png)
+
+    **Explanation**: The Tdarr node is now fully operational and visible on the dashboard. The script will continue to monitor Plex and manage the node as needed.
+
+---
+
+## Experimental: Running the Script on Other Operating Systems
+
+While this script is designed to work seamlessly on Unraid, it can technically work on any operating system that supports Docker and systemd services. The steps provided below can be adapted for use on systems like Ubuntu, CentOS, or any other Linux distribution that uses systemd.
+
+### Step-by-Step Implementation for Other OSes
 
 1. **Save the Script**: Save your Tdarr Node Killer Script as `tdarr_node_killer.sh` in `/usr/local/bin/`.
 
@@ -122,7 +194,7 @@ This setup allows you to put the GPU back to work when Plex is idle, while ensur
     sudo chown root:root /usr/local/bin/tdarr_node_killer.sh
     ```
 
-3. **Create a Service File (For Non-Unraid Users)**: If you're not using Unraid, you can run this script as a service on your operating system. Create a service file for the script:
+3. **Create a Service File**: Create a service file for the script:
 
     ```bash
     sudo nano /etc/systemd/system/tdarr_node_killer.service
@@ -161,11 +233,13 @@ By following these steps, the script will run automatically on startup and ensur
 
 ---
 
-## Experimental: Running the Script on Other Operating Systems
+## Data Savings with AV1 Encoding
 
-While this script is designed to work seamlessly on Unraid, it can technically work on any operating system that supports Docker and systemd services. The steps provided in the Tdarr Node Killer Script section above can be adapted for use on systems like Ubuntu, CentOS, or any other Linux distribution that uses systemd.
+Running this setup with three ARC GPUs has shown significant data savings over two weeks. With AV1 encoding, a savings of 37TB was achieved, covering only 10-15% of the library.
 
-If you’re using a different operating system and want to try this setup, follow the steps provided for saving the script, setting permissions, and creating a service file. The service will automatically start on boot and manage the Tdarr node and Plex transcoding as described.
+![Data Savings](https://i.imgur.com/Saic5J4.png)
+
+**Explanation**: AV1 encoding can drastically reduce storage needs. For example, a 300TB library could be reduced to 75-100TB, making it an efficient solution for large media libraries.
 
 ---
 
