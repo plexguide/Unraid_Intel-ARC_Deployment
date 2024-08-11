@@ -2,9 +2,11 @@
 
 <p align="left">
   <a href="https://avatars.githubusercontent.com/u/62731045?s=200&v=4">
-    <img src="https://avatars.githubusercontent.com/u/62731045?s=200&v=4" alt="Logo" style="border: 2px solid #000000; border-radius: 8px;">
+    <img src="https://avatars.githubusercontent.com/u/62731045?s=200&v=4" alt="Logo" style="border: 2px solid #000000; border-radius: 8px; width: 40%;">
   </a>
 </p>
+
+Good to see if anyone remembers the prior project; was exhausting. Unraid leads the way!
 
 ## NOTE
 
