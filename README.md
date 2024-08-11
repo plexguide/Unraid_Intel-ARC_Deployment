@@ -1,4 +1,8 @@
-# AV1 | Tdarr Setup and/or Node Killer (Optional) | Unraid Plugin - Guide
+# Comprehensive Guide to Enabling AV1 Encoding, Plex Deployment & GPU Management with Tdarr on Unraid 7.0
+
+## NOTE
+
+This requires Unraid 7.0 (which is in beta at this time). I have an AMD 7900 - 3 Intel ARC Cards - 64GB DDR 4 RAM - Two 4TB NVME Drives - 346TB of drives running many docker containers and have zero problems. Remember, it's always at your own risk. 
 
 ## Purpose
 
@@ -6,14 +10,13 @@ This guide is designed to help users optimize their media libraries using AV1 en
 
 ---
 
-## Table of Contents
+## Data Savings with AV1 Encoding
 
-- [Upgrading to Unraid 7.0 and Installing Required Plugins](#upgrading-to-unraid-70-and-installing-required-plugins)
-  - [Installing Intel GPU TOP Plugin](#installing-intel-gpu-top-plugin)
-  - [Installing GPU Statistics Plugin](#installing-gpu-statistics-plugin)
-- [AV1 Tdarr Flow](#av1-tdarr-flow)
-- [Tdarr Node Killer Script](#tdarr-node-killer-script)
-- [Experimental: Running the Script on Other Operating Systems](#experimental-running-the-script-on-other-operating-systems)
+Running this setup with three ARC GPUs has shown significant data savings over two weeks. With AV1 encoding, a savings of 37TB was achieved, covering only 10-15% of the library.
+
+![Data Savings](https://i.imgur.com/Saic5J4.png)
+
+**Explanation**: AV1 encoding can drastically reduce storage needs. For example, a 300TB library could be reduced to 75-100TB, making it an efficient solution for large media libraries.
 
 ---
 
@@ -48,6 +51,32 @@ With these plugins installed, you can monitor your Intel ARC GPU during transcod
 
 ---
 
+## Deploying Plex with Intel ARC GPU Support
+
+### Adding the Intel ARC GPU to the Plex Docker Template
+
+In Unraid, you need to add the Intel ARC GPU to your Plex Docker template as a device. Ensure that this is done correctly by adding the device at the end of your template configuration:
+
+![Add Intel ARC GPU to Plex Template](https://i.imgur.com/Da4oeGV.png)
+
+### Configuring Plex Settings
+
+After adding the GPU to the Docker template, you need to configure Plex to ensure it uses the Intel ARC GPU for transcoding. 
+
+1. **Turn Off HDR Tone Mapping**: This setting should be disabled because, currently, HDR transcoding will not work with the Intel ARC GPU. If HDR Tone Mapping is enabled, Plex will default to using your CPU for transcoding, which could cause confusion if you see high CPU usage.
+
+![Turn Off HDR Tone Mapping in Plex](https://imgur.com/U4GctIx.png)
+
+### Verifying GPU Transcoding
+
+If everything is configured correctly, Plex should use the Intel ARC GPU for transcoding. You can verify that your GPU is being used by checking the Plex dashboard during transcoding:
+
+![Plex Transcoding with Intel ARC GPU](https://i.imgur.com/Zz9jfYo.png)
+
+**Insight**: Properly configuring Plex to use your Intel ARC GPU can significantly improve transcoding performance while reducing CPU load. This is especially beneficial when handling multiple streams or when you want to optimize power consumption and system efficiency.
+
+---
+
 ## AV1 Tdarr Flow
 
 ![AV1 Flow](https://i.imgur.com/FiFVxgT.png)
@@ -63,30 +92,37 @@ The AV1 encoding flow is a process that converts video data into the AV1 format,
 
 **Note:** This flow should work on any operating system that has an Intel ARC GPU card. You just need to ensure that the ARC GPU is exposed in your Tdarr Docker container.
 
-### Setting Up the Tdarr Node Docker Container in Unraid
+### Importing the AV1 Flow in Tdarr
 
-To ensure your Tdarr node is properly configured in Unraid, follow these steps:
+To use the AV1 flow, you need to import it into Tdarr. The JSON file for the AV1 flow can be found [here](av1_flow_intel_arc.json).
 
-1. **Ensure Consistency in Naming**: The template name and the node name should be the same. This is important because if you use the Tdarr Node Killer Script, you want this to also be the exact same name. This makes it easier to manage and avoid conflicts.
+1. **Adding a New Flow**: In Tdarr, click on "Flows" at the top of the interface, then click the "Flow+" button to add a new flow.
 
-    ![Example of Consistent Naming](https://imgur.com/h4ja0DH.png)
+    ![Adding a New Flow in Tdarr](https://i.imgur.com/nLzQi1b.png)
 
-2. **Use the Correct Repository**: For the Tdarr node, use the following repository: `ghcr.io/haveagitgat/tdarr_node`. While you can enable the server node within the same container, it's generally a bad idea. If the Node Killer Script stops the server, it can take a long time to reload and rescan everything. It's better to disable the internal server node and deploy a separate node.
+2. **Scroll to the Bottom**: Scroll to the very bottom of the page to find the import option. It can be easy to miss, so make sure you scroll all the way down.
 
-3. **Add the Intel ARC GPU Card to the Template**: You need to add the Intel ARC GPU card to the Tdarr node Docker container template for it to use the GPU effectively.
+    ![Scroll to Find the Import Option](https://i.imgur.com/hmYNetQ.png)
 
-    ![Add Intel ARC GPU to Template](https://i.imgur.com/QOIUCIc.png)
+3. **Import the Flow**: Copy the exact JSON content from the [AV1 flow JSON file](av1_flow_intel_arc.json) and paste it into the import field. Make sure to click the "Copy" button to ensure you get the exact data needed for import.
 
-    To do this, open up the Unraid command line and navigate to `/dev/dri` by typing:
+    ![Copy the JSON Content](https://i.imgur.com/Qe13kYg.png)
 
-    ```bash
-    cd /dev/dri
-    ls
-    ```
+4. **Enabling the Flow for Libraries**: After importing the flow, you need to enable it for each library. Go to the "Library" tab in Tdarr, click "Transcode Options" for each library, and change the transcode option from "Classic Plugin" to "AV1" or whatever you named the flow.
 
-    You should see different render devices listed. Select the correct one for your GPU and input it in the Docker container setup as shown in the picture above.
+    **Note**: This step is crucial as the flow will not work until it is applied to the libraries.
 
-By following these steps, you’ll deploy a proper Tdarr node container, ensuring it has access to the correct GPU.
+---
+
+## Optimizing AV1 Encoding Settings
+
+To get the best results with AV1 encoding, consider the following tips:
+
+1. **Balancing Quality and Compression**: Adjust the CRF (Constant Rate Factor) and bit rate settings to find the right balance between video quality and file size. A lower CRF value will increase quality but also file size, while a higher CRF value will reduce quality but save more space.
+  
+2. **Hardware Acceleration**: Ensure that your Intel ARC GPU is being utilized for hardware-accelerated encoding. This can significantly speed up the process and reduce the load on your CPU.
+
+3. **Testing Settings**: Run a few test encodes with different settings to determine what works best for your library. Different types of content may require different settings to achieve optimal results.
 
 ---
 
@@ -95,6 +131,8 @@ By following these steps, you’ll deploy a proper Tdarr node container, ensurin
 ### Overview
 
 The Tdarr Node Killer Script is designed to manage your GPU resources between Plex and Tdarr efficiently. It ensures that when Plex starts transcoding, the Tdarr node using the same GPU is automatically stopped, preventing any conflicts.
+
+You can find the script [here](https://github.com/plexguide/tdarr-av1-scripts/blob/main/tdarr_node_killer.sh).
 
 ### Script Behavior
 
@@ -171,6 +209,23 @@ The script doesn't immediately restart the Tdarr node after Plex stops transcodi
 
     **Explanation**: The Tdarr node is now fully operational and visible on the dashboard. The script will continue to monitor Plex and manage the node as needed.
 
+### Troubleshooting Common Issues
+
+If you encounter issues during setup or operation, here are some common problems and solutions:
+
+1. **Plex Not Using GPU for Transcoding**:
+   - **Verify GPU Configuration**: Ensure the Intel ARC GPU is correctly added to the Plex Docker template and that the correct device path is used.
+   - **Check Logs**: Review Plex logs for any errors related to GPU transcoding. This can help identify if Plex is defaulting to CPU transcoding due to a misconfiguration.
+   - **Driver Issues**: Ensure that the necessary drivers for Intel ARC are installed and up to date. If using Unraid, make sure the Intel GPU TOP plugin is correctly installed and running.
+
+2. **Tdarr Node Not Restarting After Plex Stops Transcoding**:
+   - **Script Debugging**: Run the script manually and monitor the output to ensure it’s detecting the end of Plex transcoding correctly.
+   - **Check for Conflicting Processes**: Ensure that no other processes are interfering with the Tdarr node or preventing it from restarting.
+
+3. **High CPU Usage During Transcoding**:
+   - **HDR Tone Mapping**: Verify that HDR tone mapping is disabled in Plex settings if you're using the Intel ARC GPU. This is a common cause of high CPU usage as Plex defaults to CPU transcoding for HDR content.
+   - **Check GPU Utilization**: Use the GPU Statistics plugin to monitor GPU utilization and ensure the GPU is being used efficiently.
+
 ---
 
 ## Experimental: Running the Script on Other Operating Systems
@@ -233,13 +288,26 @@ By following these steps, the script will run automatically on startup and ensur
 
 ---
 
-## Data Savings with AV1 Encoding
+## Backup and Recovery Tips
 
-Running this setup with three ARC GPUs has shown significant data savings over two weeks. With AV1 encoding, a savings of 37TB was achieved, covering only 10-15% of the library.
+Before making significant changes to your Unraid setup, Plex configurations, or Docker containers, it's essential to create backups. Here are some tips:
 
-![Data Savings](https://i.imgur.com/Saic5J4.png)
+1. **Backup Plex Configurations**:
+   - Use the built-in Plex backup tools to save your library metadata, watch history, and other settings.
+   - Regularly back up the Plex configuration folder (`/config`) to ensure you can restore your setup if needed.
 
-**Explanation**: AV1 encoding can drastically reduce storage needs. For example, a 300TB library could be reduced to 75-100TB, making it an efficient solution for large media libraries.
+2. **Backup Docker Containers**:
+   - Create backups of your Docker container templates in Unraid. This makes it easy to redeploy containers with the same settings if something goes wrong.
+   - Consider using Unraid’s built-in backup features or plugins like CA Backup/Restore Appdata to automate this process.
+
+3. **Backup Unraid Configuration**:
+   - Regularly back up your Unraid flash drive. This contains your Unraid license, configuration, and other critical settings.
+   - Use the Unraid GUI to download a backup of your flash drive, and store it in a safe location.
+
+4. **Recovery Testing**:
+   - Periodically test your backups by restoring them to ensure they work as expected. This is crucial for verifying that your backups are reliable.
+
+By following these backup and recovery tips, you can ensure that your setup remains stable and that you can recover quickly from any issues.
 
 ---
 
