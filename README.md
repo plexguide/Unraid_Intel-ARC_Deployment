@@ -1,4 +1,4 @@
-# Tdarr Scripts
+# AV1 Flow + Enable Intel ARC + Tdarr Node Killer - Script Guide
 
 # AV1 Flow and Tdarr Node Killer Script Guide
 
@@ -52,6 +52,31 @@ Once the plugin is installed, set the script to run at "First Array Start Only."
 ![Set Script at First Array Start](https://i.imgur.com/MpG4lP8.png)
 
 **Note:** Ignore the other two nodes in the photos. The selected node is dedicated to Plex. The purpose of this setup is to ensure that the GPU is put to work without disrupting Plex users. There are two ARC 380 GPUs (one dedicated to Plex) and one ARC 310 GPU. The ARC 380 GPUs can handle up to 7 streams each for Tdarr, while the ARC 310 handles up to 5 streams at a time.
+
+### Setting Up the Tdarr Node Docker Container in Unraid
+
+To ensure your Tdarr node is properly configured in Unraid, follow these steps:
+
+1. **Ensure Consistency in Naming**: The template name and the node name should be the same. This is important because if you use the Tdarr Node Killer Script, you want this to also be the exact same name. This makes it easier to manage and avoid conflicts.
+
+    ![Example of Consistent Naming](https://imgur.com/h4ja0DH.png)
+
+2. **Use the Correct Repository**: For the Tdarr node, use the following repository: `ghcr.io/haveagitgat/tdarr_node`. While you can enable the server node within the same container, it's generally a bad idea. If the Node Killer Script stops the server, it can take a long time to reload and rescan everything. It's better to disable the internal server node and deploy a separate node.
+
+3. **Add the Intel ARC GPU Card to the Template**: You need to add the Intel ARC GPU card to the Tdarr node Docker container template for it to use the GPU effectively.
+
+    ![Add Intel ARC GPU to Template](https://i.imgur.com/QOIUCIc.png)
+
+    To do this, open up the Unraid command line and navigate to `/dev/dri` by typing:
+
+    ```bash
+    cd /dev/dri
+    ls
+    ```
+
+    You should see different render devices listed. Select the correct one for your GPU and input it in the Docker container setup as shown in the picture above.
+
+By following these steps, you’ll deploy a proper Tdarr node container, ensuring it has access to the correct GPU.
 
 ---
 
