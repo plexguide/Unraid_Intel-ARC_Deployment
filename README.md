@@ -10,7 +10,7 @@ Good to see if anyone remembers the prior project; was exhausting. Unraid leads 
 
 ## NOTE
 
-This requires Unraid 7.0 (which is in beta at this time). I have an AMD 7900 - 3 Intel ARC Cards - 64GB DDR 4 RAM - Two 4TB NVME Drives - 350+ TB of drives running many docker containers and have zero problems. I run no VMs nor any passthrough (which always complicates things). Remember, it's always at your own risk. 
+This requires Unraid 7.0 (which is in beta at this time). I have an AMD 7900 - 3 Intel ARC Cards - 64GB DDR5 RAM - Two 4TB NVME Drives - 350+ TB of drives running many docker containers and have zero problems. I run no VMs nor any passthrough (which always complicates things). Remember, it's always at your own risk. 
 
 ## Purpose
 
