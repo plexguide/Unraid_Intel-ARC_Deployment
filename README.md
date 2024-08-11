@@ -1,5 +1,11 @@
 # Comprehensive Guide to Enabling AV1 Encoding, Plex Deployment & GPU Management with Tdarr on Unraid 7.0
 
+<p align="center">
+  <a href="https://avatars.githubusercontent.com/u/62731045?s=200&v=4">
+    <img src="https://avatars.githubusercontent.com/u/62731045?s=200&v=4" alt="Logo" style="border: 2px solid #000000; border-radius: 8px;">
+  </a>
+</p>
+
 ## NOTE
 
 This requires Unraid 7.0 (which is in beta at this time). I have an AMD 7900 - 3 Intel ARC Cards - 64GB DDR 4 RAM - Two 4TB NVME Drives - 350+ TB of drives running many docker containers and have zero problems. I run no VMs nor any passthrough (which always complicates things). Remember, it's always at your own risk. 
