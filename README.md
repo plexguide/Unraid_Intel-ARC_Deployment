@@ -16,7 +16,35 @@ This requires Unraid 7.0 (which is in beta at this time). I have an AMD 7900 - 3
 
 This comprehensive guide provides a step-by-step approach to optimizing your media library through AV1 encoding while efficiently managing GPU resources between Plex and Tdarr on Unraid. By following this guide, you'll learn how to drastically reduce video file sizes, saving valuable storage space, and automate the allocation of GPU resources to ensure smooth and uninterrupted playback for Plex users. 
 
-In addition to encoding and resource management, this guide covers essential information on setting up and configuring necessary plugins, importing and applying AV1 encoding flows, troubleshooting common issues, and implementing backup and recovery strategies. Whether you're a seasoned Unraid user or new to media server management, this guide equips you with the knowledge and tools needed to maximize your server's performance and efficiency.**
+In addition to encoding and resource management, this guide covers essential information on setting up and configuring necessary plugins, importing and applying AV1 encoding flows, troubleshooting common issues, and implementing backup and recovery strategies. Whether you're a seasoned Unraid user or new to media server management, this guide equips you with the knowledge and tools needed to maximize your server's performance and efficiency.
+
+---
+
+## Table of Contents
+
+- [Data Savings with AV1 Encoding](#data-savings-with-av1-encoding)
+- [AV1 Drawbacks](#av1-drawbacks)
+- [Upgrading to Unraid 7.0 and Installing Required Plugins](#upgrading-to-unraid-70-and-installing-required-plugins)
+  - [Installing Intel GPU TOP Plugin](#installing-intel-gpu-top-plugin)
+  - [Installing GPU Statistics Plugin](#installing-gpu-statistics-plugin)
+- [Deploying Plex with Intel ARC GPU Support](#deploying-plex-with-intel-arc-gpu-support)
+  - [Adding the Intel ARC GPU to the Plex Docker Template](#adding-the-intel-arc-gpu-to-the-plex-docker-template)
+  - [Configuring Plex Settings](#configuring-plex-settings)
+  - [Verifying GPU Transcoding](#verifying-gpu-transcoding)
+- [AV1 Tdarr Flow](#av1-tdarr-flow)
+  - [What is the AV1 Flow?](#what-is-the-av1-flow)
+  - [Importing the AV1 Flow in Tdarr](#importing-the-av1-flow-in-tdarr)
+- [Optimizing AV1 Encoding Settings](#optimizing-av1-encoding-settings)
+- [Tdarr Node Killer Script](#tdarr-node-killer-script)
+  - [Overview](#overview)
+  - [Script Behavior](#script-behavior)
+  - [Step-by-Step Implementation for Unraid](#step-by-step-implementation-for-unraid)
+  - [Script Behavior After Plex Transcoding Stops](#script-behavior-after-plex-transcoding-stops)
+  - [Troubleshooting Common Issues](#troubleshooting-common-issues)
+- [Experimental: Running the Script on Other Operating Systems](#experimental-running-the-script-on-other-operating-systems)
+  - [Step-by-Step Implementation for Other OSes](#step-by-step-implementation-for-other-oses)
+- [Backup and Recovery Tips](#backup-and-recovery-tips)
+- [Summary](#summary)
 
 ---
 
@@ -27,6 +55,12 @@ Running this setup with three ARC GPUs has shown significant data savings over t
 ![Data Savings](https://i.imgur.com/Saic5J4.png)
 
 **Explanation**: AV1 encoding can drastically reduce storage needs. For example, a 300TB library could be reduced to 75-100TB, making it an efficient solution for large media libraries.
+
+---
+
+## AV1 Drawbacks
+
+For more information on the potential drawbacks of using AV1 encoding, including device compatibility issues and increased resource usage during transcoding, please visit the [AV1 Drawbacks page](https://github.com/plexguide/Unraid_Intel-ARC_Deployment/wiki/AV1-Drawbacks).
 
 ---
 
