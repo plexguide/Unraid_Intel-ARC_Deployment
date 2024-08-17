@@ -8,7 +8,7 @@
 
 Good to see if anyone remembers the prior project; was exhausting!
 
-`PlexGuide will slowly come back as PG11 via - https://github.com/plexguide/PlexGuide.com`
+PlexGuide will slowly come back as PG11 via - [https://github.com/plexguide/PlexGuide.com](https://github.com/plexguide/PlexGuide.com)
 
 ## NOTE
 
