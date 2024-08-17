@@ -17,112 +17,137 @@
 # ============================================================
 
 # ----------------- User Configuration Area -----------------
-# Modify the following variables based on your environment
-
-# Docker container name to monitor and restart
 DOCKER_CONTAINER_NAME="380-128-N1"
-
-# Path to the GPU device being used by Plex for transcoding
 TRANSCODING_DEVICE="/dev/dri/renderD128"
+initial_delay=20  # Initial delay before starting the script (seconds)
 
-# Initial delay to allow Docker containers to load before starting
-initial_delay=60  # Default is 60 seconds, adjust if needed
+# Duration of the initial Plex check (in seconds)
+# This variable controls how long the script checks for Plex activity during the initial phase.
+# The script will check once per second for the specified number of seconds. If Plex is detected,
+# it will immediately turn off the Tdarr node and skip the remaining checks.
+initial_check_duration=4  # Default is 4 seconds
+
+plex_check_minutes=5  # Duration in minutes for Plex activity checks at the end
 # ------------------------------------------------------------
 
-# Maximum number of checks before deciding Plex is not confirmed
-MAX_CHECKS=10
-
-# Threshold for t_restart before the Docker container is restarted
-t_restart_threshold=60  # Default is 60, adjust if needed
-
-# Initialize variables
+# Initialize counters
 t_restart=0
 plex0_count=0
 
-# Initial delay before starting the script's main loop
-echo "[$(date)] Initial delay: Waiting $initial_delay seconds for Docker containers to load..."
-sleep $initial_delay
+# Function: Log messages with timestamp
+log_message() {
+    echo "[$(date)] $1"
+    sleep 1
+}
 
+# Function: Check if Plex is using the GPU without using grep
+check_plex_usage() {
+    lsof_output=$(lsof "$TRANSCODING_DEVICE")
+    
+    if echo "$lsof_output" | while read -r line; do
+        if [[ "$line" == *"Plex"* ]]; then
+            return 0
+        fi
+    done; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Function: Turn off Tdarr node
+turn_off_tdarr() {
+    log_message "Turning off Tdarr node..."
+    # Insert command to turn off Tdarr node
+    sleep 1
+}
+
+# Function: Restart Docker container
+restart_container() {
+    log_message "Restarting Docker container $DOCKER_CONTAINER_NAME..."
+    docker restart "$DOCKER_CONTAINER_NAME"
+    t_restart=0  # Reset t_restart after restart
+    sleep 1
+}
+
+# Initial delay with countdown and timestamp
+log_message "Initial delay: Waiting $initial_delay seconds for Docker containers to load..."
+for ((i = initial_delay; i > 0; i--)); do
+    echo "[$(date)] Starting in $i seconds..."
+    sleep 1
+done
+
+log_message "Initial delay complete, starting Tdarr check..."
+
+# Simplified Initial Tdarr Turn-Off Check using the variable
+for ((i = 1; i <= initial_check_duration; i++)); do
+    if check_plex_usage; then
+        log_message "Plex detected during initial check. Turning off Tdarr node."
+        turn_off_tdarr
+        break
+    fi
+    sleep 1  # Check every second
+done
+
+# Main loop
 while true; do
-    # Initialize variables at the start of each full run
     numbercheck=0
     numberplex=0
 
     while true; do
-        # Increment numbercheck with each iteration
         numbercheck=$((numbercheck + 1))
-        
-        # Check if the device is being accessed by Plex
-        check=$(lsof | grep "$TRANSCODING_DEVICE")
-        
-        if echo "$check" | grep -q "Plex"; then
-            numberplex=$((numberplex + 1))
-            echo "[$(date)] plex1 detected: Plex is currently transcoding."
-            plex0_count=0  # Reset plex0_count if Plex is detected
-            t_restart=0  # Reset t_restart when Plex transcoding is detected
 
-            # Check if numberplex has reached 4 to confirm Plex usage
+        if check_plex_usage; then
+            numberplex=$((numberplex + 1))
+            log_message "Plex is currently transcoding (plex1 detected)."
+            plex0_count=0  # Reset plex0_count if Plex is detected
+            t_restart=0  # Reset t_restart when Plex is active
+
             if [ "$numberplex" -ge 4 ]; then
-                echo "[$(date)] PLEX Confirmed: Plex has reached the required number of transcoding events."
+                log_message "Plex confirmed: Transcoding activity detected."
                 
-                # Stop the Docker container if it's running
                 if docker ps | grep -q "$DOCKER_CONTAINER_NAME"; then
-                    echo "[$(date)] Stopping Docker container $DOCKER_CONTAINER_NAME..."
+                    log_message "Stopping Docker container $DOCKER_CONTAINER_NAME..."
                     docker stop "$DOCKER_CONTAINER_NAME"
                 else
-                    echo "[$(date)] Docker container $DOCKER_CONTAINER_NAME is not running. Skipping stop command."
+                    log_message "Docker container $DOCKER_CONTAINER_NAME is not running."
                 fi
                 
-                sleep 2  # Wait for 2 seconds before restarting the loop
                 break
             fi
-
         else
-            echo "[$(date)] plex0 detected: Plex is not currently transcoding."
+            log_message "Plex is not currently transcoding (plex0 detected)."
             plex0_count=$((plex0_count + 1))
         fi
         
-        # Proceed only after plex0 has been echoed 3 times consecutively
         if [ "$plex0_count" -ge 3 ]; then
-            echo "[$(date)] PLEX not confirmed: Plex has not been detected for 3 consecutive checks."
-
-            # Check if the Docker container is running before incrementing t_restart
+            log_message "Plex not confirmed: No activity for 3 consecutive checks."
+            
             if ! docker ps | grep -q "$DOCKER_CONTAINER_NAME"; then
-                t_restart=$((t_restart + 1))  # Increment t_restart only if container is not running
-                echo "[$(date)] t_restart count: $t_restart"
-
-                # Calculate and echo the estimated time to reach the restart threshold
+                t_restart=$((t_restart + 1))
+                log_message "t_restart count: $t_restart"
+                
                 remaining_increments=$((t_restart_threshold - t_restart))
-                estimated_time=$((remaining_increments * 5))  # 5 seconds per increment (as sleep 5 is used)
-                echo "[$(date)] Estimated time to reach t_restart threshold: $estimated_time seconds"
+                estimated_time=$((remaining_increments * 5))
+                log_message "Estimated time to restart: $estimated_time seconds"
             else
-                echo "[$(date)] Docker container $DOCKER_CONTAINER_NAME is already running. t_restart not incremented."
+                log_message "Docker container $DOCKER_CONTAINER_NAME is already running."
             fi
-            
-            # Sleep for 5 seconds for visual purposes
-            sleep 5
-            
-            # If t_restart hits the threshold, restart the Docker container
+
+            sleep 5  # Wait before checking again
+
             if [ "$t_restart" -ge "$t_restart_threshold" ]; then
-                echo "[$(date)] Restarting Docker container $DOCKER_CONTAINER_NAME..."
-                docker restart "$DOCKER_CONTAINER_NAME"
-                t_restart=0  # Reset t_restart after restarting
+                restart_container
             fi
-
             break
         fi
 
-        # If numbercheck reaches MAX_CHECKS without plex0_count hitting 3, exit loop
-        if [ "$numbercheck" -ge "$MAX_CHECKS" ]; then
-            echo "[$(date)] MAX_CHECKS reached without Plex confirmation. Exiting loop."
+        # Simplified Plex Check Towards the End
+        total_checks=$((plex_check_minutes * 12))  # 12 checks per minute (every 5 seconds)
+        if [ "$numbercheck" -ge "$total_checks" ]; then
+            log_message "Plex check duration ($plex_check_minutes minutes) reached without Plex confirmation."
             sleep 5
             break
         fi
-
-        # Optional: Add a sleep delay if you want to pause between iterations
-        # sleep 1
-
     done
-
-    # Restart the entire script after the 5-second delay
 done
