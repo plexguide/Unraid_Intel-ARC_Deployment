@@ -10,38 +10,36 @@
 
 ## PlexGuide Information
 
-Visit the [PlexGuide Installation Information](https://github.com/plexguide/PlexGuide.com/wiki/PlexGuide-Install-Information) area for more detailed information. 
-
 ```bash
 sudo apt-get update -y && sudo apt-get install -y curl git && curl -o /tmp/install.sh https://raw.githubusercontent.com/plexguide/PlexGuide.com/v11/mods/install/install.sh && chmod +x /tmp/install.sh && /tmp/install.sh && chmod +x /pg/scripts/menu.sh && /pg/scripts/menu.sh
 ```
 
-* Simple, debloated, no fancy menus and executes for exactly what you need and w orks for Ubuntu 22 and Ubuntu 24 Server LTS
-* Once installed, type pg or plexguide <<<
+* Simple, debloated, no fancy menus and executes for exactly what you need and works for Ubuntu 22 and Ubuntu 24 Server LTS
+* Once installed, type `pg` or `plexguide`
 
 <p align="center">
-  <img src="https://i.imgur.com/tuJpsTR.jpeg" alt="Menu Example" width="65%">
-</p>
-<p align="center">
-  <img src="https://i.imgur.com/M7G2LLl.jpeg" alt="Plex Example" width="65%">
-</p>
-<p align="center">
-  <img src="https://i.imgur.com/goozBTI.jpeg" alt="Plex Example" width="65%">
-</p>
-<p align="center">
-  <img src="https://i.imgur.com/WkEyL9D.jpeg" alt="Plex Example" width="65%">
+  <table>
+    <tr>
+      <td align="center"><img src="https://i.imgur.com/tuJpsTR.jpeg" alt="Menu Example" width="65%"></td>
+      <td align="center"><img src="https://i.imgur.com/M7G2LLl.jpeg" alt="Plex Example" width="65%"></td>
+    </tr>
+    <tr>
+      <td align="center"><img src="https://i.imgur.com/goozBTI.jpeg" alt="Plex Example" width="65%"></td>
+      <td align="center"><img src="https://i.imgur.com/WkEyL9D.jpeg" alt="Plex Example" width="65%"></td>
+    </tr>
+  </table>
 </p>
 
+## Intel ARC Script & Purpose
+
+This comprehensive guide provides a step-by-step approach to optimizing your media library through AV1 encoding while efficiently managing GPU resources between Plex and Tdarr on Unraid. By following this guide, you'll learn how to drastically reduce video file sizes, saving valuable storage space, and automate the allocation of GPU resources to ensure smooth and uninterrupted playback for Plex users.
+
+In addition to encoding and resource management, this guide covers essential information on setting up and configuring necessary plugins, importing and applying AV1 encoding flows, troubleshooting common issues, and implementing backup and recovery strategies. Whether you're a seasoned Unraid user or new to media server management, this guide equips you with the knowledge and tools needed to maximize your server's performance and efficiency.
 
 ## NOTE
 
-This requires Unraid 7.0 (which is in beta at this time). I have an AMD 7900 - 3 Intel ARC Cards - 64GB DDR5 RAM - Two 4TB NVME Drives - 350+ TB of drives running many docker containers and have zero problems. I run no VMs nor any passthrough (which always complicates things). Remember, it's always at your own risk. 
+This requires Unraid 7.0 (which is in beta at this time). I have an AMD 7900 - 3 Intel ARC Cards - 64GB DDR5 RAM - Two 4TB NVME Drives - 350+ TB of drives running many Docker containers and have zero problems. I run no VMs nor any passthrough (which always complicates things). Remember, it's always at your own risk.
 
-## Purpose
-
-This comprehensive guide provides a step-by-step approach to optimizing your media library through AV1 encoding while efficiently managing GPU resources between Plex and Tdarr on Unraid. By following this guide, you'll learn how to drastically reduce video file sizes, saving valuable storage space, and automate the allocation of GPU resources to ensure smooth and uninterrupted playback for Plex users. 
-
-In addition to encoding and resource management, this guide covers essential information on setting up and configuring necessary plugins, importing and applying AV1 encoding flows, troubleshooting common issues, and implementing backup and recovery strategies. Whether you're a seasoned Unraid user or new to media server management, this guide equips you with the knowledge and tools needed to maximize your server's performance and efficiency.
 
 ---
 
