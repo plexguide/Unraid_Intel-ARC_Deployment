@@ -20,8 +20,8 @@ sudo apt-get update -y && sudo apt-get install -y curl git && curl -o /tmp/insta
 <p align="center">
   <table>
     <tr>
-      <td align="center"><img src="https://i.imgur.com/tuJpsTR.jpeg" alt="Menu Example" width="65%"></td>
-      <td align="center"><img src="https://i.imgur.com/M7G2LLl.jpeg" alt="Plex Example" width="65%"></td>
+      <td align="center"><img src="https://i.imgur.com/tuJpsTR.jpeg" alt="Menu Example" width="85%"></td>
+      <td align="center"><img src="https://i.imgur.com/M7G2LLl.jpeg" alt="Plex Example" width="85%"></td>
     </tr>
     <tr>
       <td align="center"><img src="https://i.imgur.com/goozBTI.jpeg" alt="Plex Example" width="65%"></td>
