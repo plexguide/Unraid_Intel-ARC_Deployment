@@ -20,12 +20,12 @@ sudo apt-get update -y && sudo apt-get install -y curl git && curl -o /tmp/insta
 <p align="center">
   <table>
     <tr>
-      <td align="center"><img src="https://i.imgur.com/tuJpsTR.jpeg" alt="Menu Example" width="95%"></td>
-      <td align="center"><img src="https://i.imgur.com/M7G2LLl.jpeg" alt="Plex Example" width="95%"></td>
+      <td align="center"><img src="https://i.imgur.com/tuJpsTR.jpeg" alt="Menu Example" width="70%"></td>
+      <td align="center"><img src="https://i.imgur.com/M7G2LLl.jpeg" alt="Plex Example" width="70%"></td>
     </tr>
     <tr>
-      <td align="center"><img src="https://i.imgur.com/goozBTI.jpeg" alt="Plex Example" width="95%"></td>
-      <td align="center"><img src="https://i.imgur.com/WkEyL9D.jpeg" alt="Plex Example" width="95%"></td>
+      <td align="center"><img src="https://i.imgur.com/goozBTI.jpeg" alt="Plex Example" width="70%"></td>
+      <td align="center"><img src="https://i.imgur.com/WkEyL9D.jpeg" alt="Plex Example" width="70%"></td>
     </tr>
   </table>
 </p>
