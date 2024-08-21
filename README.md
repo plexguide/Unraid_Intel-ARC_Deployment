@@ -18,18 +18,17 @@ sudo apt-get update -y && sudo apt-get install -y curl git && curl -o /tmp/insta
 * Once installed, type `pg` or `plexguide`
 
 <p align="center">
-  <table>
+  <table align="center">
     <tr>
-      <td align="center"><img src="https://i.imgur.com/tuJpsTR.jpeg" alt="Menu Example" width="400"></td>
-      <td align="center"><img src="https://i.imgur.com/M7G2LLl.jpeg" alt="Plex Example" width="400"></td>
+      <td align="center"><img src="https://i.imgur.com/tuJpsTR.jpeg" alt="Menu Example" width="500"></td>
+      <td align="center"><img src="https://i.imgur.com/M7G2LLl.jpeg" alt="Plex Example" width="500"></td>
     </tr>
     <tr>
-      <td align="center"><img src="https://i.imgur.com/goozBTI.jpeg" alt="Plex Example" width="400"></td>
-      <td align="center"><img src="https://i.imgur.com/WkEyL9D.jpeg" alt="Plex Example" width="400"></td>
+      <td align="center"><img src="https://i.imgur.com/goozBTI.jpeg" alt="Plex Example" width="500"></td>
+      <td align="center"><img src="https://i.imgur.com/WkEyL9D.jpeg" alt="Plex Example" width="500"></td>
     </tr>
   </table>
 </p>
-
 
 ## Intel ARC Script & Purpose
 
