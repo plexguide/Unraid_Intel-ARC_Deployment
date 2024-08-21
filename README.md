@@ -40,7 +40,7 @@ In addition to encoding and resource management, this guide covers essential inf
 
 This requires Unraid 7.0 (which is in beta at this time). I have an AMD 7900 - 3 Intel ARC Cards - 64GB DDR5 RAM - Two 4TB NVME Drives - 350+ TB of drives running many Docker containers and have zero problems. I run no VMs nor any passthrough (which always complicates things). Remember, it's always at your own risk. 
 
-**Apple TV Users: ** Force Apple TV to Play AV1 Natively! Yes, no transcoding from the GPU @ https://github.com/plexguide/AV1-AppleTV
+**Apple TV Users: ** Force Apple TV to Play AV1 Natively! No Transcoding from the GPU @ https://github.com/plexguide/AV1-AppleTV
 
 
 ---
