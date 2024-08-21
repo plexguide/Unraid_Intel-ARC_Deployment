@@ -8,7 +8,7 @@
   </a>
 </p>
 
-## PlexGuide Information
+## PlexGuide Information - About the Main Project (Unraid SCript Info Below)
 
 ```bash
 sudo apt-get update -y && sudo apt-get install -y curl git && curl -o /tmp/install.sh https://raw.githubusercontent.com/plexguide/PlexGuide.com/v11/mods/install/install.sh && chmod +x /tmp/install.sh && /tmp/install.sh && chmod +x /pg/scripts/menu.sh && /pg/scripts/menu.sh
