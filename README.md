@@ -15,7 +15,7 @@ sudo apt-get update -y && sudo apt-get install -y curl git && curl -o /tmp/insta
 ```
 
 * Simple, debloated, no fancy menus and executes for exactly what you need and works for Ubuntu 22 and Ubuntu 24 Server LTS
-* Once installed, type `pg` or `plexguide`
+* Once installed, type `pg` or `plexguide` - In Beta
 
 <p align="center">
   <table align="center">
