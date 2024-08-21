@@ -8,9 +8,7 @@
   </a>
 </p>
 
-## PlexGuide 11 - Not Related to this but just info
-
-## PlexGuide Installation
+## PlexGuide Information
 
 Visit the [PlexGuide Installation Information](https://github.com/plexguide/PlexGuide.com/wiki/PlexGuide-Install-Information) area for more detailed information. 
 
@@ -18,11 +16,8 @@ Visit the [PlexGuide Installation Information](https://github.com/plexguide/Plex
 sudo apt-get update -y && sudo apt-get install -y curl git && curl -o /tmp/install.sh https://raw.githubusercontent.com/plexguide/PlexGuide.com/v11/mods/install/install.sh && chmod +x /tmp/install.sh && /tmp/install.sh && chmod +x /pg/scripts/menu.sh && /pg/scripts/menu.sh
 ```
 
-* Simple, debloated, no fancy menus and executes for exactly what you need!
-* Works for Ubuntu 22 and Ubuntu 24 Server LTS
-
-Quick Notes:
-1. Once installed, type pg or plexguide <<<
+* Simple, debloated, no fancy menus and executes for exactly what you need and w orks for Ubuntu 22 and Ubuntu 24 Server LTS
+* Once installed, type pg or plexguide <<<
 
 <p align="center">
   <img src="https://i.imgur.com/tuJpsTR.jpeg" alt="Menu Example" width="65%">
