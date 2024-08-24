@@ -11,7 +11,7 @@
 ## PlexGuide Information - About the Main Project (Unraid Script Info Below)
 Visit the main PlexGuide Repo @ https://github.com/plexguide/PlexGuide.com
 ```bash
-sudo apt-get update -y && sudo apt-get install -y curl git && curl -o /tmp/install.sh https://raw.githubusercontent.com/plexguide/PlexGuide.com/v11/mods/install/install.sh && chmod +x /tmp/install.sh && /tmp/install.sh && chmod +x /pg/scripts/menu.sh && /pg/scripts/menu.sh
+sudo apt-get update && sudo apt-get install -y curl && bash <(curl -s https://raw.githubusercontent.com/plexguide/PlexGuide.com/v11/mods/scripts/install_menu.sh)
 ```
 
 * Simple, debloated, no fancy menus and executes for exactly what you need and works for Ubuntu 22 and Ubuntu 24 Server LTS
