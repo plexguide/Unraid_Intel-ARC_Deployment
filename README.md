@@ -23,15 +23,19 @@ sudo apt-get update && sudo apt-get install -y curl && bash <(curl -s https://ra
 * Simple, debloated, no fancy menus and executes for exactly what you need and works for Ubuntu 22 and Ubuntu 24 Server LTS
 * Once installed, type `pg` or `plexguide` - In Beta
 
+* Simple, debloated, no fancy menus and executes for exactly what you need!
+* Works on Ubuntu 22/Ubuntu 24/Debian 12
+* To Test (Use Ubuntu or Debian) CMD Line; once installed, type `pg` or `plexguide`
+
 <p align="center">
   <table align="center">
     <tr>
       <td align="center"><img src="https://i.imgur.com/HzCKvO5.jpeg" alt="Menu Example" width="500"></td>
-      <td align="center"><img src="https://i.imgur.com/pu1D9Cc.jpeg" alt="Plex Example" width="500"></td>
+      <td align="center"><img src="https://i.imgur.com/TNy3rmn.jpeg" alt="Plex Example" width="500"></td>
     </tr>
     <tr>
       <td align="center"><img src="https://i.imgur.com/goozBTI.jpeg" alt="Plex Example" width="500"></td>
-      <td align="center"><img src="https://i.imgur.com/WkEyL9D.jpeg" alt="Plex Example" width="500"></td>
+      <td align="center"><img src="https://i.imgur.com/dlhxRNs.jpeg" alt="Plex Example" width="500"></td>
     </tr>
   </table>
 </p>
