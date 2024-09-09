@@ -8,38 +8,6 @@
 
 # Comprehensive Guide to Enabling AV1 Encoding, Plex Deployment & GPU Management with Tdarr on Unraid 7.0
 
-<p align="center">
-  <a href="https://avatars.githubusercontent.com/u/62731045?s=200&v=4">
-    <img src="https://avatars.githubusercontent.com/u/62731045?s=200&v=4" alt="Logo" style="border: 2px solid #000000; border-radius: 8px; width: 10%;">
-  </a>
-</p>
-
-## PlexGuide Information - About the Main Project (Unraid Script Info Below)
-Visit the main PlexGuide Repo @ https://github.com/plexguide/PlexGuide.com
-```bash
-sudo apt-get update && sudo apt-get install -y curl && bash <(curl -s https://raw.githubusercontent.com/plexguide/Installer/v11/install_menu.sh)
-```
-
-* Simple, debloated, no fancy menus and executes for exactly what you need and works for Ubuntu 22 and Ubuntu 24 Server LTS
-* Once installed, type `pg` or `plexguide` - In Beta
-
-* Simple, debloated, no fancy menus and executes for exactly what you need!
-* Works on Ubuntu 22/Ubuntu 24/Debian 12
-* To Test (Use Ubuntu or Debian) CMD Line; once installed, type `pg` or `plexguide`
-
-<p align="center">
-  <table align="center">
-    <tr>
-      <td align="center"><img src="https://i.imgur.com/HzCKvO5.jpeg" alt="Menu Example" width="500"></td>
-      <td align="center"><img src="https://i.imgur.com/TNy3rmn.jpeg" alt="Plex Example" width="500"></td>
-    </tr>
-    <tr>
-      <td align="center"><img src="https://i.imgur.com/goozBTI.jpeg" alt="Plex Example" width="500"></td>
-      <td align="center"><img src="https://i.imgur.com/dlhxRNs.jpeg" alt="Plex Example" width="500"></td>
-    </tr>
-  </table>
-</p>
-
 ## Intel ARC Script & Purpose
 
 This comprehensive guide provides a step-by-step approach to optimizing your media library through AV1 encoding while efficiently managing GPU resources between Plex and Tdarr on Unraid. By following this guide, you'll learn how to drastically reduce video file sizes, saving valuable storage space, and automate the allocation of GPU resources to ensure smooth and uninterrupted playback for Plex users.
