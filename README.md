@@ -61,8 +61,8 @@ For more information on the potential drawbacks of using AV1 encoding, including
 ---
 
 ## Upgrading to Unraid 7.0 and Installing Required Plugins
-
-Before setting up the AV1 Tdarr Flow or the Tdarr Node Killer Script, ensure that you are running Unraid 7.0 and have the necessary plugins installed to monitor and manage your Intel ARC GPU.
+ 
+Before setting up the AV1 Tdarr Flow or the Tdarr Node Killer Script (totally optional and not needed), ensure that you are running Unraid 7.0 and have the necessary plugins installed to monitor and manage your Intel ARC GPU.
 
 ### Installing Intel GPU TOP Plugin
 
@@ -166,7 +166,7 @@ To get the best results with AV1 encoding, consider the following tips:
 
 ---
 
-## Tdarr Node Killer Script
+## Tdarr Node Killer Script (Totally Optional & Not Required)
 
 ### Overview
 
