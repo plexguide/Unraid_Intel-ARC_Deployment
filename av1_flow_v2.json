@@ -1,6 +1,7 @@
 {
+  "_id": "Cn7nZJzC2",
   "name": "AV1",
-  "description": "Better Quality",
+  "description": "AV1",
   "tags": "",
   "flowPlugins": [
     {
@@ -9,13 +10,13 @@
       "pluginName": "ffmpegCommandCustomArguments",
       "version": "1.0.0",
       "inputsDB": {
-        "outputArguments": "-max_muxing_queue_size 999 -g 150 -crf 15 -preset veryslow",
+        "outputArguments": "-max_muxing_queue_size 9999 -g 150",
         "inputArguments": "-hwaccel qsv"
       },
       "id": "2mA1B19I3",
       "position": {
         "x": 719.90296090162,
-        "y": 577.0178801708093
+        "y": 575.0095450843314
       },
       "fpEnabled": true
     },
@@ -188,12 +189,12 @@
       "pluginName": "ffmpegCommandCustomArguments",
       "version": "1.0.0",
       "inputsDB": {
-        "outputArguments": "-max_muxing_queue_size 999 -g 150 -crf 16 -preset veryslow",
+        "outputArguments": "-max_muxing_queue_size 9999 -g 150",
         "inputArguments": "-hwaccel qsv"
       },
       "id": "PMCe3RdQg",
       "position": {
-        "x": 963.9267729116413,
+        "x": 965.6509061141375,
         "y": 575.2407708604419
       },
       "fpEnabled": true
@@ -255,23 +256,6 @@
       "fpEnabled": true
     },
     {
-      "name": "Notify Overseas",
-      "sourceRepo": "Community",
-      "pluginName": "notifyRadarrOrSonarr",
-      "version": "2.0.0",
-      "inputsDB": {
-        "arr": "sonarr",
-        "arr_host": "http://10.0.0.10:8988",
-        "arr_api_key": "3ff8afc8581c4a83bef1b9fb1c67a90f"
-      },
-      "id": "AoYdGJERT",
-      "position": {
-        "x": 337.8023209778064,
-        "y": 780.2659611266196
-      },
-      "fpEnabled": true
-    },
-    {
       "name": "Notify Movies",
       "sourceRepo": "Community",
       "pluginName": "notifyRadarrOrSonarr",
@@ -282,8 +266,8 @@
       },
       "id": "afcN2Nl97",
       "position": {
-        "x": 480.07337313925154,
-        "y": 844.0056577875237
+        "x": 358.07337313925154,
+        "y": 767.0056577875237
       },
       "fpEnabled": true
     },
@@ -400,20 +384,6 @@
       "id": "ntS8LAKo4"
     },
     {
-      "source": "7cEM9Ueje",
-      "sourceHandle": "2",
-      "target": "AoYdGJERT",
-      "targetHandle": null,
-      "id": "xq9r15Fqa"
-    },
-    {
-      "source": "AoYdGJERT",
-      "sourceHandle": "2",
-      "target": "afcN2Nl97",
-      "targetHandle": null,
-      "id": "3vbMDfaxV"
-    },
-    {
       "source": "x4UqtuCK9",
       "sourceHandle": "1",
       "target": "nlAVmhQV3",
@@ -496,6 +466,13 @@
       "target": "AAKi8flZe",
       "targetHandle": null,
       "id": "Z74hXNB0o"
+    },
+    {
+      "source": "7cEM9Ueje",
+      "sourceHandle": "2",
+      "target": "afcN2Nl97",
+      "targetHandle": null,
+      "id": "tyBp5ms9Q"
     }
   ]
 }
