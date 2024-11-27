@@ -134,7 +134,7 @@ The AV1 encoding flow is a process that converts video data into the AV1 format,
 
 ### Importing the AV1 Flow in Tdarr
 
-To use the AV1 flow, you need to import it into Tdarr. The JSON file for the AV1 flow can be found [here](av1_flow_intel_arc.json).
+To use the AV1 flow, you need to import it into Tdarr. The JSON file for the AV1 flow can be found [here](av1_flow_intel_arc.json). Use the lastest version, right now is v2 for better quality.
 
 1. **Adding a New Flow**: In Tdarr, click on "Flows" at the top of the interface, then click the "Flow+" button to add a new flow.
 
