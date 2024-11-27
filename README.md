@@ -144,7 +144,7 @@ To use the AV1 flow, you need to import it into Tdarr. The JSON file for the AV1
 
     ![Scroll to Find the Import Option](https://i.imgur.com/hmYNetQ.png)
 
-3. **Import the Flow**: Copy the exact JSON content from the [AV1 flow JSON file](av1_flow_v2.json) and paste it into the import field. Make sure to click the "Copy" button to ensure you get the exact data needed for import.
+3. **Import the Flow**: Copy the exact JSON content from the [AV1 flow JSON file](av1_flow_v3.json) and paste it into the import field.
 
     ![Copy the JSON Content](https://i.imgur.com/Qe13kYg.png)
 
