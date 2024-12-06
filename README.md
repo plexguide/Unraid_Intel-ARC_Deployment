@@ -48,10 +48,10 @@ This requires Unraid 7.0 (which is in beta at this time). I have an AMD 7900 - 3
 
 Running this setup with three ARC GPUs has shown significant data savings over two weeks. With AV1 encoding, a savings of 37TB was achieved, covering only 10-15% of the library.
 
-![Data Savings]<img width="438" alt="image" src="https://github.com/user-attachments/assets/1543f745-828f-47ba-86b2-9ddd5b9d189c">
+<img width="438" alt="image" src="https://github.com/user-attachments/assets/1543f745-828f-47ba-86b2-9ddd5b9d189c">
 
 
-**Explanation**: AV1 encoding can drastically reduce storage needs. For example, a 300TB library could be reduced to 75-100TB, making it an efficient solution for large media libraries.
+**Explanation**: AV1 encoding can drastically reduce storage needs. For example, a 300TB library could be reduced to 75-100TB, making it an efficient solution for large media libraries. In this picture above, the 3 Intel ARC cards have been transconding for about 3 weeks and still going!
 
 ---
 
@@ -104,9 +104,9 @@ In Unraid, you need to add the Intel ARC GPU to your Plex Docker template as a d
 
 After adding the GPU to the Docker template, you need to configure Plex to ensure it uses the Intel ARC GPU for transcoding. 
 
-1. **Turn Off HDR Tone Mapping**: This setting should be disabled because, currently, HDR transcoding will not work with the Intel ARC GPU. If HDR Tone Mapping is enabled, Plex will default to using your CPU for transcoding, which could cause confusion if you see high CPU usage.
+1. **Turn On HDR Tone Mapping**: Tone Mapping now works!
 
-![Turn Off HDR Tone Mapping in Plex](https://imgur.com/U4GctIx.png)
+<img width="1020" alt="image" src="https://github.com/user-attachments/assets/2ed05f55-ee92-4011-9f6f-99c24b5d1a3f">
 
 ### Verifying GPU Transcoding
 
@@ -120,7 +120,7 @@ If everything is configured correctly, Plex should use the Intel ARC GPU for tra
 
 ## AV1 Tdarr Flow
 
-![AV1 Flow](https://i.imgur.com/FiFVxgT.png)
+<img width="824" alt="image" src="https://github.com/user-attachments/assets/54e5b72c-5f88-4264-a01c-833a8d67287c">
 
 ### What is the AV1 Flow?
 
