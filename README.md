@@ -204,7 +204,7 @@ This setup allows you to put the GPU back to work when Plex is idle, while ensur
 
 <img width="615" alt="image" src="https://github.com/user-attachments/assets/a0ebab4e-e178-4de3-87f7-00e749cfa6cd">
 
-    **Explanation**: The script continuously checks if Plex is transcoding. At this point, no transcoding is detected, so Tdarr continues using the GPU.
+  **Explanation**: The script continuously checks if Plex is transcoding. At this point, no transcoding is detected, so Tdarr continues using the GPU.
 
 3. **Plex User Starts Transcoding**
 
@@ -214,9 +214,9 @@ This setup allows you to put the GPU back to work when Plex is idle, while ensur
 
 4. **Script Detects Plex Transcoding, Stops Tdarr Node**
 
-    ![Script Detects Plex Transcoding, Stops Tdarr Node](https://i.imgur.com/iwob8yB.png)
+<img width="655" alt="image" src="https://github.com/user-attachments/assets/8b9b0cdc-9084-48ed-a1c0-b00e32f51dc6">
 
-    **Explanation**: The script detects that Plex is transcoding and stops the Tdarr node. This action frees up the Intel ARC GPU so that Plex can use it exclusively for transcoding.
+  **Explanation**: The script detects that Plex is transcoding and stops the Tdarr node. This action frees up the Intel ARC GPU so that Plex can use it exclusively for transcoding.
 
 5. **Tdarr Node Is Stopped**
 
@@ -232,7 +232,7 @@ This setup allows you to put the GPU back to work when Plex is idle, while ensur
 
 ### Script Behavior After Plex Transcoding Stops
 
-The script doesn't immediately restart the Tdarr node after Plex stops transcoding. Instead, it checks every 5 seconds for 5 minutes to ensure that Plex isn't going to start transcoding again. This prevents the Tdarr node from constantly stopping and starting, which could be inefficient.
+The script doesn't immediately restart the Tdarr node after Plex stops transcoding. Instead, it waits 3 minutes to ensure that Plex is not transcoding This prevents the Tdarr node from constantly stopping and starting in such a short time... which is also inefficient.
 
 1. **Countdown Before Restarting Tdarr Node**
 
@@ -240,11 +240,11 @@ The script doesn't immediately restart the Tdarr node after Plex stops transcodi
 
     **Explanation**: The script is counting down, checking every 5 seconds to see if Plex starts transcoding again. If Plex does start, the timer resets, ensuring that the Tdarr node stays off as long as Plex needs the GPU.
 
-2. **Tdarr Node Restarted After 5 Minutes**
+2. **Tdarr Node Restarted After 3 Minutes**
 
     ![Tdarr Node Restarted](https://i.imgur.com/ExHsAQI.png)
 
-    **Explanation**: After 5 minutes with no Plex transcoding detected, the script restarts the Tdarr node. The process then continues to check if Plex starts transcoding, so the node can be stopped again if needed.
+    **Explanation**: After 3 minutes with no Plex transcoding detected, the script restarts the Tdarr node. The process then continues to check if Plex starts transcoding, so the node can be stopped again if needed.
 
 3. **Tdarr Node Coming Back Online**
 
