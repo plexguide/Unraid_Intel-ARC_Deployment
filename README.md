@@ -114,7 +114,7 @@ Change Log:
 * v3: Improved Quality Greatly
 * v4: Added remove image from files, this would cause about a 25% failure rate for your files to transcode. Adding this allows a 100% conversion rate for AV1.
 
-**JSON Script**: This script can be found [Here](av1_flow_intel_v4.json).
+**JSON Script**: This script can be found [Here](av1_flow_v4.json).
 
 <img width="824" alt="image" src="https://github.com/user-attachments/assets/54e5b72c-5f88-4264-a01c-833a8d67287c">
 
