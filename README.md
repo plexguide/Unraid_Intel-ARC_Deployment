@@ -48,7 +48,8 @@ This requires Unraid 7.0 (which is in beta at this time). I have an AMD 7900 - 3
 
 Running this setup with three ARC GPUs has shown significant data savings over two weeks. With AV1 encoding, a savings of 37TB was achieved, covering only 10-15% of the library.
 
-![Data Savings](https://i.imgur.com/Saic5J4.png)
+![Data Savings]<img width="438" alt="image" src="https://github.com/user-attachments/assets/1543f745-828f-47ba-86b2-9ddd5b9d189c">
+
 
 **Explanation**: AV1 encoding can drastically reduce storage needs. For example, a 300TB library could be reduced to 75-100TB, making it an efficient solution for large media libraries.
 
