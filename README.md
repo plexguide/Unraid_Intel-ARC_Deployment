@@ -1,6 +1,6 @@
 ##### WANT TO HELP? CLICK THE ★ (STAR LOGO) in the Upper-Right! 
 
-# Comprehensive Guide to Enabling AV1 Encoding, Plex Deployment & GPU Management with Tdarr on Unraid 7.0
+# Guide to Intel ARC AV1 Endocing via Unraid + Tdarr Node Killer + SAB Speed Control (Bonus)
 
 ## Intel ARC Script & Purpose
 
@@ -176,10 +176,15 @@ You can find the script [here](https://github.com/plexguide/tdarr-av1-scripts/bl
 
 ### Script Behavior
 
-1. **Monitoring Plex**: The script continuously monitors Plex for any transcoding activity. When Plex starts transcoding, the script kills the Tdarr node using the same GPU.
-2. **Five-Minute Check Cycle**: After stopping the Tdarr node, the script checks every 5 seconds for 5 minutes to see if Plex has finished transcoding.
-   - If no transcoding is detected during this time, the Tdarr node is restarted.
-   - If transcoding is detected at any point, the timer resets, and the script continues monitoring.
+### Changes 
+v1: Initial Script
+v2: Changed to Use Tautulli API for Plex Monitoring
+
+1. **Monitoring Plex**: This script interfaces with Tautulli's API to determine if Plex is Transcoding. 
+2. **3 Second Check Cycle**: Every 3 seconds, the script checks in with Tautulli to see if Plex is transcoding.
+   - If nothing is transcoding, the script checks in every three seconds.
+   - If Plex is transcoding via Tautulli's moniotring, this script will killer your Tdarr Node so the GPU can be dedicated soley for Plex.
+   - When Plex is no longer transcoding after a 180 second check, this script will restart your Tdarr Node. The purpose of the 180 seconds is to ensure the script does not constantly bring your Tdarr Node - up and down in a short period.
 
 This setup allows you to put the GPU back to work when Plex is idle, while ensuring Plex users always get priority when transcoding is required.
 
