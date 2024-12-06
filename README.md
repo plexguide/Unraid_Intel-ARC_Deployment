@@ -105,6 +105,9 @@ In Unraid, you need to add the Intel ARC GPU to your Plex Docker template as a d
 After adding the GPU to the Docker template, you need to configure Plex to ensure it uses the Intel ARC GPU for transcoding. 
 
 1. **Turn On HDR Tone Mapping**: Tone Mapping now works!
+2. **Select the Correct GPU and Turn on Transcoding**: If you have multiple GPU's, make sure you pick the right one for transcoding
+
+Note For Same Exact Multiple GPUs: For example, having 3 ARC 380's, you end up with 3. The first one in the list is based on the # order from /dev/dri. So if you have D128, D130, D131... the first GPU in the list will be D128. If you pick the 3rd one, it will be D131. This only matters if you have multiple of the same exact GPU.
 
 <img width="1020" alt="image" src="https://github.com/user-attachments/assets/2ed05f55-ee92-4011-9f6f-99c24b5d1a3f">
 
@@ -199,7 +202,7 @@ This setup allows you to put the GPU back to work when Plex is idle, while ensur
 
 2. **Script Monitoring for Plex Transcoding**
 
-    ![Script Monitoring, No Transcoding Detected](https://i.imgur.com/tveaVA5.png)
+<img width="615" alt="image" src="https://github.com/user-attachments/assets/a0ebab4e-e178-4de3-87f7-00e749cfa6cd">
 
     **Explanation**: The script continuously checks if Plex is transcoding. At this point, no transcoding is detected, so Tdarr continues using the GPU.
 
