@@ -10,7 +10,7 @@
       "pluginName": "ffmpegCommandCustomArguments",
       "version": "1.0.0",
       "inputsDB": {
-        "outputArguments": "-max_muxing_queue_size 9999 -g 150",
+        "outputArguments": "-max_muxing_queue_size 1024 -preset veryslow",
         "inputArguments": "-hwaccel qsv"
       },
       "id": "2mA1B19I3",
@@ -70,7 +70,7 @@
       "id": "6a0HyfVUa",
       "position": {
         "x": 862.3539340590717,
-        "y": 306.2567530485981
+        "y": 252.13922508175244
       },
       "fpEnabled": true
     },
@@ -104,8 +104,8 @@
       },
       "id": "nvhiecc42",
       "position": {
-        "x": 721.6378650896165,
-        "y": 515.8669984865228
+        "x": 720.4862978173959,
+        "y": 517.0185657587435
       },
       "fpEnabled": true
     },
@@ -140,8 +140,8 @@
       "version": "1.0.0",
       "id": "Fipyujmi9",
       "position": {
-        "x": 863.4465098575988,
-        "y": 395.7812691937931
+        "x": 862.3853818582489,
+        "y": 322.56343723864893
       },
       "fpEnabled": true
     },
@@ -189,7 +189,7 @@
       "pluginName": "ffmpegCommandCustomArguments",
       "version": "1.0.0",
       "inputsDB": {
-        "outputArguments": "-max_muxing_queue_size 9999 -g 150",
+        "outputArguments": "-max_muxing_queue_size 1024 -preset veryslow",
         "inputArguments": "-hwaccel qsv"
       },
       "id": "PMCe3RdQg",
@@ -266,7 +266,7 @@
       },
       "id": "afcN2Nl97",
       "position": {
-        "x": 358.07337313925154,
+        "x": 399.4573651138983,
         "y": 767.0056577875237
       },
       "fpEnabled": true
@@ -278,10 +278,25 @@
       "version": "1.0.0",
       "id": "nlAVmhQV3",
       "position": {
-        "x": 343.51378361855905,
-        "y": 266.7874000532925
+        "x": 487.8271915301475,
+        "y": 290.13221603899063
       },
       "fpEnabled": true
+    },
+    {
+      "name": "Removing Image (Prevents Failures)",
+      "sourceRepo": "Community",
+      "pluginName": "runClassicTranscodePlugin",
+      "version": "1.0.0",
+      "id": "jz_648bNe",
+      "position": {
+        "x": 862.0679971139446,
+        "y": 200.72432644227598
+      },
+      "fpEnabled": true,
+      "inputsDB": {
+        "pluginSourceId": "Community:Tdarr_Plugin_MC93_MigzImageRemoval"
+      }
     }
   ],
   "flowEdges": [
@@ -333,13 +348,6 @@
       "target": "OBbLCZ8SO",
       "targetHandle": null,
       "id": "FKFIiJuWU"
-    },
-    {
-      "source": "x4UqtuCK9",
-      "sourceHandle": "2",
-      "target": "6a0HyfVUa",
-      "targetHandle": null,
-      "id": "nlDWA5bMA"
     },
     {
       "source": "2mA1B19I3",
@@ -473,6 +481,20 @@
       "target": "afcN2Nl97",
       "targetHandle": null,
       "id": "tyBp5ms9Q"
+    },
+    {
+      "source": "x4UqtuCK9",
+      "sourceHandle": "2",
+      "target": "jz_648bNe",
+      "targetHandle": null,
+      "id": "r4DwBp2m_"
+    },
+    {
+      "source": "jz_648bNe",
+      "sourceHandle": "1",
+      "target": "6a0HyfVUa",
+      "targetHandle": null,
+      "id": "sMxtCh2Xl"
     }
   ]
 }
