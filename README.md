@@ -107,6 +107,15 @@ Play a file that needs transcoding. Check Plex’s dashboard and GPU stats. If t
 
 ## AV1 Tdarr Flow
 
+Change Log:
+
+* v1: Original
+* v2: Remove B Frames
+* v3: Improved Quality Greatly
+* v4: Added remove image from files, this would cause about a 25% failure rate for your files to transcode. Adding this allows a 100% conversion rate for AV1.
+
+**JSON Script**: This script can be found [Here](av1_flow_intel_v4.json).
+
 <img width="824" alt="image" src="https://github.com/user-attachments/assets/54e5b72c-5f88-4264-a01c-833a8d67287c">
 
 ### What is the AV1 Flow?
@@ -139,12 +148,19 @@ Experiment with quality (CRF) and bitrate settings until you find a good balance
 
 ## Tdarr Node Killer Script
 
+**Change Log**
+
+* v1: Original Script
+* v2: Script monitors PLEX via Tautulli to simplify processes
+
 ### Overview
 
 This optional script frees up the GPU for Plex whenever Plex needs it. If Tdarr and Plex share the GPU, Tdarr might interfere with streaming performance. With this script:
 
 - When Plex starts transcoding: the script stops the Tdarr node, giving the GPU to Plex.
 - When Plex stops: after a short cooldown (e.g., 180 seconds), the script restarts Tdarr.
+
+**SCRIPT**: The Tdarr Node Killer script can be found [Here](tdarr_node_killer.sh).
 
 ### Script Behavior
 
