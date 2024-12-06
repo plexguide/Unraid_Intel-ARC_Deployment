@@ -174,7 +174,9 @@ To get the best results with AV1 encoding, consider the following tips:
 
 ### Overview
 
-The Tdarr Node Killer Script is designed to manage your GPU resources between Plex and Tdarr efficiently. It ensures that when Plex starts transcoding, the Tdarr node using the same GPU is automatically stopped, preventing any conflicts.
+This is a completely optional script. The purpose of this script is to kill your Tdarr Node if Plex is transcoding. Why? Well, you maybe only have an Intel ARC card with an AMD processor or... you want all your Intel ARC cards Transcoding at all times. Why is it bad to have the ARC Card assigned to Plex and Tdarr at the same time? It's because one Tdarr Transcode will tax and Intel ARC at 50-60%. This means that if you have 3 or 4 users watching 4K via AV1, it may stutter. By killing the Tdarr node, your ARC is completely freed up. When no one is watching Plex, this script will bring your Tdarr Node back online!
+
+**NOTE: You MUST HAVE TATULLAI Running including it's API. This script interacts with Tautulli to see if there is a PLEX Transcoding Session**
 
 You can find the script [here](https://github.com/plexguide/tdarr-av1-scripts/blob/main/tdarr_node_killer.sh).
 
@@ -242,9 +244,9 @@ The script doesn't immediately restart the Tdarr node after Plex stops transcodi
 
 2. **Tdarr Node Restarted After 3 Minutes**
 
-    ![Tdarr Node Restarted](https://i.imgur.com/ExHsAQI.png)
+<img width="611" alt="image" src="https://github.com/user-attachments/assets/7ca1d8b0-efac-44ab-9701-24ef525f33c7">
 
-    **Explanation**: After 3 minutes with no Plex transcoding detected, the script restarts the Tdarr node. The process then continues to check if Plex starts transcoding, so the node can be stopped again if needed.
+  **Explanation**: After 3 minutes with no Plex transcoding detected, the script restarts the Tdarr node. The process then continues to check if Plex starts transcoding, so the node can be stopped again if needed. NOTE: The picture says 30 seconds for demo purposes, but the script allows you to change it to however many seconds you want.
 
 3. **Tdarr Node Coming Back Online**
 
@@ -257,6 +259,8 @@ The script doesn't immediately restart the Tdarr node after Plex stops transcodi
     ![Tdarr Node Fully Online](https://i.imgur.com/M1M2vSL.png)
 
     **Explanation**: The Tdarr node is now fully operational and visible on the dashboard. The script will continue to monitor Plex and manage the node as needed.
+
+---
 
 ### Troubleshooting Common Issues
 
