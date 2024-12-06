@@ -12,117 +12,68 @@
 # container. The script is designed to run indefinitely and
 # includes logging for monitoring and troubleshooting.
 # ============================================================
-# NOTE: Setup for AV1 with Intel ARC; could be modified for
-# Other Cards
+# NOTE: Requires Tautulli
 # ============================================================
+#!/bin/bash
 
-# ----------------- User Configuration Area -----------------
-# Modify the following variables based on your environment
+# Configuration
+TAUTULLI_API_KEY="dad9bbb78bde43249754b630b58fbf6a" #your api key
+TAUTULLI_URL="http://10.0.0.10:8181/api/v2" #your tautulli url
+WAIT_SECONDS=180 #wait time for when script killed tdarr node to bring up tdarr node again; do not have short to ensure that plex transcodning has occured in awhile
+BASIC_CHECK=3 #wait time to check when plex is not transcoding
+CONTAINER_NAME="N1" #the exact name of your tdarr node that you want killed
 
-# Docker container name to monitor and restart
-DOCKER_CONTAINER_NAME="380-128-N1"
+# Function to check if Plex is transcoding via Tautulli
+is_plex_transcoding() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Checking Plex activity via Tautulli API"
+    response=$(curl -s "${TAUTULLI_URL}?apikey=${TAUTULLI_API_KEY}&cmd=get_activity")
+    # Count how many sessions are transcoding
+    transcoding_count=$(echo "$response" | jq '[.response.data.sessions[]?.transcode_decision == "transcode"] | map(select(. == true)) | length')
 
-# Path to the GPU device being used by Plex for transcoding
-TRANSCODING_DEVICE="/dev/dri/renderD128"
+    if [ "$transcoding_count" -gt 0 ]; then
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Plex is currently transcoding $transcoding_count session(s)."
+        return 0
+    else
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - No Plex transcoding detected."
+        return 1
+    fi
+}
 
-# Initial delay to allow Docker containers to load before starting
-initial_delay=60  # Default is 60 seconds, adjust if needed
-# ------------------------------------------------------------
-
-# Maximum number of checks before deciding Plex is not confirmed
-MAX_CHECKS=10
-
-# Threshold for t_restart before the Docker container is restarted
-t_restart_threshold=60  # Default is 60, adjust if needed
-
-# Initialize variables
-t_restart=0
-plex0_count=0
-
-# Initial delay before starting the script's main loop
-echo "[$(date)] Initial delay: Waiting $initial_delay seconds for Docker containers to load..."
-sleep $initial_delay
+# Function to check if the container is running
+is_container_running() {
+    state=$(docker inspect -f '{{.State.Running}}' "${CONTAINER_NAME}" 2>/dev/null)
+    if [ "$state" = "true" ]; then
+        return 0
+    else
+        return 1
+    fi
+}
 
 while true; do
-    # Initialize variables at the start of each full run
-    numbercheck=0
-    numberplex=0
-
-    while true; do
-        # Increment numbercheck with each iteration
-        numbercheck=$((numbercheck + 1))
-        
-        # Check if the device is being accessed by Plex
-        check=$(lsof | grep "$TRANSCODING_DEVICE")
-        
-        if echo "$check" | grep -q "Plex"; then
-            numberplex=$((numberplex + 1))
-            echo "[$(date)] plex1 detected: Plex is currently transcoding."
-            plex0_count=0  # Reset plex0_count if Plex is detected
-            t_restart=0  # Reset t_restart when Plex transcoding is detected
-
-            # Check if numberplex has reached 4 to confirm Plex usage
-            if [ "$numberplex" -ge 4 ]; then
-                echo "[$(date)] PLEX Confirmed: Plex has reached the required number of transcoding events."
-                
-                # Stop the Docker container if it's running
-                if docker ps | grep -q "$DOCKER_CONTAINER_NAME"; then
-                    echo "[$(date)] Stopping Docker container $DOCKER_CONTAINER_NAME..."
-                    docker stop "$DOCKER_CONTAINER_NAME"
-                else
-                    echo "[$(date)] Docker container $DOCKER_CONTAINER_NAME is not running. Skipping stop command."
-                fi
-                
-                sleep 2  # Wait for 2 seconds before restarting the loop
-                break
-            fi
-
+    if is_plex_transcoding; then
+        # Plex is transcoding, ensure container is not running
+        if is_container_running; then
+            echo "$(date '+%Y-%m-%d %H:%M:%S') - Killing Docker container ${CONTAINER_NAME} due to Plex transcoding."
+            docker kill "${CONTAINER_NAME}"
         else
-            echo "[$(date)] plex0 detected: Plex is not currently transcoding."
-            plex0_count=$((plex0_count + 1))
-        fi
-        
-        # Proceed only after plex0 has been echoed 3 times consecutively
-        if [ "$plex0_count" -ge 3 ]; then
-            echo "[$(date)] PLEX not confirmed: Plex has not been detected for 3 consecutive checks."
-
-            # Check if the Docker container is running before incrementing t_restart
-            if ! docker ps | grep -q "$DOCKER_CONTAINER_NAME"; then
-                t_restart=$((t_restart + 1))  # Increment t_restart only if container is not running
-                echo "[$(date)] t_restart count: $t_restart"
-
-                # Calculate and echo the estimated time to reach the restart threshold
-                remaining_increments=$((t_restart_threshold - t_restart))
-                estimated_time=$((remaining_increments * 5))  # 5 seconds per increment (as sleep 5 is used)
-                echo "[$(date)] Estimated time to reach t_restart threshold: $estimated_time seconds"
-            else
-                echo "[$(date)] Docker container $DOCKER_CONTAINER_NAME is already running. t_restart not incremented."
-            fi
-            
-            # Sleep for 5 seconds for visual purposes
-            sleep 5
-            
-            # If t_restart hits the threshold, restart the Docker container
-            if [ "$t_restart" -ge "$t_restart_threshold" ]; then
-                echo "[$(date)] Restarting Docker container $DOCKER_CONTAINER_NAME..."
-                docker restart "$DOCKER_CONTAINER_NAME"
-                t_restart=0  # Reset t_restart after restarting
-            fi
-
-            break
+            echo "$(date '+%Y-%m-%d %H:%M:%S') - ${CONTAINER_NAME} is already stopped."
         fi
 
-        # If numbercheck reaches MAX_CHECKS without plex0_count hitting 3, exit loop
-        if [ "$numbercheck" -ge "$MAX_CHECKS" ]; then
-            echo "[$(date)] MAX_CHECKS reached without Plex confirmation. Exiting loop."
-            sleep 5
-            break
+        # Wait before checking again
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Sleeping for ${WAIT_SECONDS} seconds..."
+        sleep "${WAIT_SECONDS}"
+    else
+        # Plex is not transcoding
+        # Check if container is running, if not, start it
+        if ! is_container_running; then
+            echo "$(date '+%Y-%m-%d %H:%M:%S') - Starting Docker container ${CONTAINER_NAME} since Plex is not transcoding."
+            docker start "${CONTAINER_NAME}"
+        else
+            echo "$(date '+%Y-%m-%d %H:%M:%S') - ${CONTAINER_NAME} is already running, no action needed."
         fi
 
-        # Optional: Add a sleep delay if you want to pause between iterations
-        # sleep 1
-
-    done
-
-    # Restart the entire script after the 5-second delay
+        # Sleep before next check
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Sleeping for ${BASIC_CHECK} seconds..."
+        sleep "${BASIC_CHECK}"
+    fi
 done
