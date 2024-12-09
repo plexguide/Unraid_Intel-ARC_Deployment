@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# v1 - Initial Script | v2 - Added Night Speeds 
+
 # Configuration
 SABNZBD_API_KEY="60x7fega60f642d489ed89f08c4f8a80fake"
 SABNZBD_URL="http://10.0.0.10:8081/sabnzbd/api"
