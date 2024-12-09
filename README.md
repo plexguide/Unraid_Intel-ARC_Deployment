@@ -13,10 +13,11 @@ This guide shows you how to optimize your media library with AV1 encoding on Unr
 
 Whether you’re an Unraid pro or new to the platform, we’ll walk you through it step-by-step.
 
-**BONUS:** Use the SAB Speed Script to control the speeds of SABNZBD when others are watching from your server. Why? If your server is downloading MAXED OUT, it will fight the users attempting to watch from your PLEX Server. The script will slow down DL speeds so your bandwidth is freed up for the users. Script also contains a NIGHT Speed to MAX out speeds (if you want) when your not using the Internet. The script can be found [Here](sab_speed_control.sh) and requires Tautulli for Plex Monitoring
+---
+
+**BONUS:** Enhance your SABnzbd experience with the SAB Speed Script. This tool dynamically adjusts your download speeds whenever someone is watching content from your Plex server, preventing bandwidth competition that could cause buffering and playback issues. By automatically slowing down your downloads during peak usage and offering a configurable “nighttime” mode for maximum speeds when your network is idle, the SAB Speed Script ensures a smoother, more efficient media streaming experience. The script can be found [Here](sab_speed_control.sh) and requires Tautulli for Plex Monitoring.
 
 <img width="483" alt="image" src="https://github.com/user-attachments/assets/b04d53b1-9d5d-42ab-ab33-2ac2dd2449b0">
-
 
 ---
 
