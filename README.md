@@ -4,7 +4,7 @@
 
 This guide shows you how to optimize your media library with AV1 encoding on Unraid, while also managing GPU resources between Plex and Tdarr. You’ll learn how to shrink your video files, save a ton of storage space, and automatically free up your GPU for Plex users. On top of that, we’ll show you how to use a simple script to pause Tdarr when Plex needs the GPU, then restart Tdarr when Plex is done.
 
-This guide covers:
+**This guide covers:**
 - Getting your Intel ARC GPU set up on Unraid.
 - Encoding videos to AV1 for huge space savings.
 - Dynamically managing your Tdarr node so Plex always has priority.
@@ -13,7 +13,7 @@ This guide covers:
 
 Whether you’re an Unraid pro or new to the platform, we’ll walk you through it step-by-step.
 
-BONUS: Use the SAB Speed Script to control the speeds of SABNZBD when others are watching from your server. Why? If your server is downloading MAXED OUT, it will fight the users attempting to watch from your PLEX Server. The script will slow down DL speeds so your bandwidth is freed up for the users. Script also contains a NIGHT Speed to MAX out speeds (if you want) when your not using the Internet.
+**BONUS:** Use the SAB Speed Script to control the speeds of SABNZBD when others are watching from your server. Why? If your server is downloading MAXED OUT, it will fight the users attempting to watch from your PLEX Server. The script will slow down DL speeds so your bandwidth is freed up for the users. Script also contains a NIGHT Speed to MAX out speeds (if you want) when your not using the Internet.
 
 ---
 
