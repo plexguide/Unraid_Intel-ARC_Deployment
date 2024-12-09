@@ -1,11 +1,11 @@
+#!/bin/bash
+
 # ============================================================
 # Script Name: SAB Speed Control 
 # Author: Admin9705 
 # ============================================================
 # NOTE: Control DL speeds while others are watching PLEX
 # ============================================================
-
-#!/bin/bash
 
 # v1 - Initial Script | v2 - Added Night Speeds 
 
