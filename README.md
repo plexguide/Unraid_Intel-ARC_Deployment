@@ -19,6 +19,11 @@ Whether you’re an Unraid pro or new to the platform, we’ll walk you through 
 
 <img width="483" alt="image" src="https://github.com/user-attachments/assets/b04d53b1-9d5d-42ab-ab33-2ac2dd2449b0">
 
+For this script to run, you need to install - USER SCRIPTS - from the UNRAID APP STORE. Once you save the script, ensure it is setup to STARTUP AT ARRAY. Also, click RUN IN THE BACKGROUND just to get it going.
+
+<img width="403" alt="image" src="https://github.com/user-attachments/assets/728a6959-cfaf-44e5-8302-ab43372c87a1">
+
+
 ---
 
 ## Table of Contents
@@ -167,6 +172,10 @@ This optional script frees up the GPU for Plex whenever Plex needs it. If Tdarr 
 - When Plex stops: after a short cooldown (e.g., 180 seconds), the script restarts Tdarr.
 
 **SCRIPT**: The Tdarr Node Killer script can be found [Here](tdarr_node_killer.sh).
+
+For this script to run, you need to install - USER SCRIPTS - from the UNRAID APP STORE. Once you save the script, ensure it is setup to STARTUP AT ARRAY. Also, click RUN IN THE BACKGROUND just to get it going.
+
+<img width="403" alt="image" src="https://github.com/user-attachments/assets/728a6959-cfaf-44e5-8302-ab43372c87a1">
 
 ### Script Behavior
 
