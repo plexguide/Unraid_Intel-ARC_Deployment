@@ -13,6 +13,8 @@ This guide covers:
 
 Whether you’re an Unraid pro or new to the platform, we’ll walk you through it step-by-step.
 
+BONUS: Use the SAB Speed Script to control the speeds of SABNZBD when others are watching from your server. Why? If your server is downloading MAXED OUT, it will fight the users attempting to watch from your PLEX Server. The script will slow down DL speeds so your bandwidth is freed up for the users. Script also contains a NIGHT Speed to MAX out speeds (if you want) when your not using the Internet.
+
 ---
 
 ## Table of Contents
