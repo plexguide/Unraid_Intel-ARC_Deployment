@@ -58,7 +58,7 @@ For this script to run, you need to install - USER SCRIPTS - from the UNRAID APP
 
 With AV1, you can drastically reduce storage usage. In tests with three Intel ARC GPUs, just encoding 10-15% of a large library saved about 37TB! For a 300TB collection, AV1 could potentially bring it down to 75-100TB.
 
-<img width="438" alt="image" src="https://github.com/user-attachments/assets/1543f745-828f-47ba-86b2-9ddd5b9d189c">
+<img width="373" alt="image" src="https://github.com/user-attachments/assets/09d36726-56d9-4c53-8589-eca2173e7283">
 
 In short, AV1 can save you tons of space and costs.
 
