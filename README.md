@@ -15,17 +15,6 @@ Whether you’re an Unraid pro or new to the platform, we’ll walk you through 
 
 ---
 
-**BONUS:** Enhance your SABnzbd experience with the SAB Speed Script. This tool dynamically adjusts your download speeds whenever someone is watching content from your Plex server, preventing bandwidth competition that could cause buffering and playback issues. By automatically slowing down your downloads during peak usage and offering a configurable “nighttime” mode for maximum speeds when your network is idle, the SAB Speed Script ensures a smoother, more efficient media streaming experience. The script can be found [Here](sab_speed_control.sh) and requires Tautulli for Plex Monitoring.
-
-<img width="483" alt="image" src="https://github.com/user-attachments/assets/b04d53b1-9d5d-42ab-ab33-2ac2dd2449b0">
-
-For this script to run, you need to install - USER SCRIPTS - from the UNRAID APP STORE. Once you save the script, ensure it is setup to STARTUP AT ARRAY. Also, click RUN IN THE BACKGROUND just to get it going. NOT REQUIRED FOR TDARR AV1!
-
-<img width="403" alt="image" src="https://github.com/user-attachments/assets/728a6959-cfaf-44e5-8302-ab43372c87a1">
-
-
----
-
 ## Table of Contents
 
 - [Data Savings with AV1 Encoding](#data-savings-with-av1-encoding)
@@ -41,6 +30,7 @@ For this script to run, you need to install - USER SCRIPTS - from the UNRAID APP
   - [What is the AV1 Flow?](#what-is-the-av1-flow)
   - [Importing the AV1 Flow in Tdarr](#importing-the-av1-flow-in-tdarr)
 - [Optimizing AV1 Encoding Settings](#optimizing-av1-encoding-settings)
+- [SAB Speed Control - Bonus](#sab-speed-control)
 - [Tdarr Node Killer Script](#tdarr-node-killer-script)
   - [Overview](#overview)
   - [Script Behavior](#script-behavior)
@@ -94,7 +84,7 @@ Once installed, you can see real-time GPU usage:
 
 ---
 
-## Deploying Plex with Intel ARC GPU Support
+# Deploying Plex with Intel ARC GPU Support
 
 ### Adding the Intel ARC GPU to the Plex Docker Template
 
@@ -157,7 +147,19 @@ Experiment with quality (CRF) and bitrate settings until you find a good balance
 
 ---
 
-## Tdarr Node Killer Script
+# SABNZBD Speed Control
+
+Enhance your SABnzbd experience with the SAB Speed Script. This tool dynamically adjusts your download speeds whenever someone is watching content from your Plex server, preventing bandwidth competition that could cause buffering and playback issues. By automatically slowing down your downloads during peak usage and offering a configurable “nighttime” mode for maximum speeds when your network is idle, the SAB Speed Script ensures a smoother, more efficient media streaming experience. The script can be found [Here](sab_speed_control.sh) and requires Tautulli for Plex Monitoring.
+
+<img width="483" alt="image" src="https://github.com/user-attachments/assets/b04d53b1-9d5d-42ab-ab33-2ac2dd2449b0">
+
+For this script to run, you need to install - USER SCRIPTS - from the UNRAID APP STORE. Once you save the script, ensure it is setup to STARTUP AT ARRAY. Also, click RUN IN THE BACKGROUND just to get it going. NOT REQUIRED FOR TDARR AV1!
+
+<img width="403" alt="image" src="https://github.com/user-attachments/assets/728a6959-cfaf-44e5-8302-ab43372c87a1">
+
+---
+
+# Tdarr Node Killer Script
 
 **Change Log**
 
