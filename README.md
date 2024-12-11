@@ -161,13 +161,14 @@ After setting up the Tdarr Server, install the **Tdarr Node** container (listed 
 
 ```ls -la /dev/dri/ ``` 
 
-**WARNING**: _If your running an AMD processor? _Ignore this! Have an iGPU from an intel processor? One of these numbers will reflect your iGPU. Do not assign the iGPU to your Tdarr Node! I have not found a good way to discover which one the iGPU from the CMD line... but if you goto Plex and Transcode and look at the order of the GPUs from the menu, it actually follows that order.
+**WARNING**:
+
+One of these numbers will reflect your iGPU, even for AMD processors. Do not assign the iGPU to your Tdarr Node! I have not found a good way to discover which one the iGPU from the CMD line... but if you goto Plex and Transcode and look at the order of the GPUs from the menu, it actually follows that order.
    
 <img width="477" alt="image" src="https://github.com/user-attachments/assets/8ce39a4d-1479-433c-b3c8-9eceb4ebf044" />
 <img width="749" alt="image" src="https://github.com/user-attachments/assets/736eff11-ec78-441d-9c82-0f11def877bd" />
 <img width="769" alt="image" src="https://github.com/user-attachments/assets/b7a2d3e3-288b-4f16-9424-74a82b8f6451" />
-
-
+<img width="457" alt="image" src="https://github.com/user-attachments/assets/3e8b0028-c1b2-4517-b42d-731c2b01d7f3" />
 
 [UNDER CONSTRUCTION - DEPLOYING TDARR]
 
