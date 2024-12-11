@@ -1,17 +1,21 @@
 # Guide to Intel ARC AV1 Encoding on Unraid + Tdarr Node Killer + SAB Speed Control (Bonus)
 
+**Bookmarks (New Resources Added):**  
+- [Intel ARC GPU Documentation](https://www.intel.com/content/www/us/en/support/products/140984/graphics.html)  
+- [Tautulli Documentation](https://tautulli.com/)  
+- [Tdarr Documentation](https://docs.tdarr.io/)
+
 **Want to help?** Click the ★ (Star) button in the upper-right corner!
 
-This guide shows you how to optimize your media library with AV1 encoding on Unraid, while also managing GPU resources between Plex and Tdarr. You’ll learn how to shrink your video files, save a ton of storage space, and automatically free up your GPU for Plex users. On top of that, we’ll show you how to use a simple script to pause Tdarr when Plex needs the GPU, then restart Tdarr when Plex is done.
+This guide shows you how to optimize your media library with AV1 encoding on Unraid while also managing GPU resources between Plex and Tdarr. You’ll learn how to significantly reduce video file sizes, save substantial storage space, and automatically free up your GPU for Plex transcodes when needed. Additionally, you’ll learn how to pause Tdarr when Plex requires the GPU and then restart Tdarr once Plex is done.
 
-**This guide covers:**
-- Getting your Intel ARC GPU set up on Unraid.
-  - Setting up Tdarr (working on)   
-  - Encoding videos to AV1 for huge space savings.
-- SABNZBD Speed Control (Priotize SAB download speeds when users watch PLEX, including night control speeds)
-- Tdarr Node Killer (Priotize Plex for your GPU if PLEX and the Tdarr Node share the same GPU)
+**What you’ll learn:**
+- How to configure your Intel ARC GPU on Unraid.
+- How to set up and optimize Tdarr for AV1 encoding.
+- How to manage SABnzbd download speeds based on Plex streaming activity.
+- How to use the Tdarr Node Killer script to give Plex GPU priority over Tdarr.
 
-Whether you’re an Unraid pro or new to the platform, we’ll walk you through it step-by-step.
+Whether you’re a seasoned Unraid user or just starting out, this step-by-step guide will help you achieve better resource management, substantial storage savings, and an improved streaming experience.
 
 ---
 
@@ -26,11 +30,15 @@ Whether you’re an Unraid pro or new to the platform, we’ll walk you through 
   - [Adding the Intel ARC GPU to the Plex Docker Template](#adding-the-intel-arc-gpu-to-the-plex-docker-template)
   - [Configuring Plex Settings](#configuring-plex-settings)
   - [Verifying GPU Transcoding](#verifying-gpu-transcoding)
+- [Setting Up Tdarr](#setting-up-tdarr)
+  - [Deploying Tdarr Server](#deploying-tdarr-server)
+  - [Tdarr Transcoding Location](#tdarr-transcoding-location)
+  - [Deploying Tdarr Node(s)](#deploying-tdarr-nodes)
 - [AV1 Tdarr Flow](#av1-tdarr-flow)
   - [What is the AV1 Flow?](#what-is-the-av1-flow)
   - [Importing the AV1 Flow in Tdarr](#importing-the-av1-flow-in-tdarr)
 - [Optimizing AV1 Encoding Settings](#optimizing-av1-encoding-settings)
-- [SABNZBD Speed Control - Bonus](#sabnzbd-speed-control)
+- [SABNZBD Speed Control - Bonus](#sabnzbd-speed-control---bonus)
 - [Tdarr Node Killer Script](#tdarr-node-killer-script)
   - [Overview](#overview)
   - [Script Behavior](#script-behavior)
@@ -46,41 +54,40 @@ Whether you’re an Unraid pro or new to the platform, we’ll walk you through 
 
 ## Data Savings with AV1 Encoding
 
-With AV1, you can drastically reduce storage usage. In tests with three Intel ARC GPUs, just encoding 10-15% of a large library saved about 37TB! For a 300TB collection, AV1 could potentially bring it down to 75-100TB.
+AV1 encoding can dramatically reduce your file sizes. In practice, using three Intel ARC GPUs to encode just 10-15% of a large library resulted in roughly 37TB of saved space. For a 300TB collection, this could bring the total size down to around 75-100TB with careful AV1 conversion.
 
-<img width="373" alt="image" src="https://github.com/user-attachments/assets/09d36726-56d9-4c53-8589-eca2173e7283">
+![Data Savings Example](https://github.com/user-attachments/assets/09d36726-56d9-4c53-8589-eca2173e7283)
 
-In short, AV1 can save you tons of space and costs.
+In other words, AV1 can provide huge storage and cost savings.
 
 ---
 
 ## AV1 Drawbacks
 
-AV1 isn’t perfect. Some devices can’t handle it natively yet, and the encoding process might be slower or more resource-intensive. For more details, check out the [AV1 Drawbacks](https://github.com/plexguide/Unraid_Intel-ARC_Deployment/wiki/AV1-Drawbacks) page.
+AV1 isn’t flawless. Some devices may not natively support AV1 decoding yet. Additionally, AV1 encoding can be more resource-intensive and may take longer. For more details, check out the [AV1 Drawbacks](https://github.com/plexguide/Unraid_Intel-ARC_Deployment/wiki/AV1-Drawbacks) page to understand compatibility issues and potential trade-offs.
 
 ---
 
 ## Upgrading to Unraid 7.0 and Installing Required Plugins
 
-Before setting up AV1 flows or using the Tdarr Node Killer Script, make sure you’re on Unraid 7.0 (or newer) and have the proper plugins to manage and monitor your Intel ARC GPU.
+Before setting up AV1 flows or using the Tdarr Node Killer Script, ensure you’re running Unraid 7.0 (or newer) and have the necessary GPU-related plugins.
 
 ### Installing Intel GPU TOP Plugin
 
-Install **Intel GPU TOP** by ich777 from the Unraid Community Apps. This lets you monitor your Intel ARC GPU’s performance directly in Unraid.
+Install **Intel GPU TOP** by ich777 from the Unraid Community Apps store. This plugin allows you to monitor your Intel ARC GPU’s performance directly from the Unraid dashboard.
 
 ![Intel GPU TOP Plugin](https://i.imgur.com/0bHRqya.png)
 
 ### Installing GPU Statistics Plugin
 
-Install the **GPU Statistics** plugin by b3rs3rk for detailed GPU usage stats. With these two plugins, you’ll easily confirm that your GPU is being used when encoding or transcoding.
+Next, install the **GPU Statistics** plugin by b3rs3rk. With Intel GPU TOP, you’ll gain comprehensive insights into your GPU’s usage during encoding or transcoding tasks.
 
 ![GPU Statistics Plugin](https://i.imgur.com/lJZgPvC.png)
 
-Once installed, you can see real-time GPU usage:
+Once installed, you’ll see real-time GPU usage:
 
-![GPU in Use Example 1](https://i.imgur.com/toOvgvN.png)
-
-![GPU in Use Example 2](https://i.imgur.com/jDbrB5a.png)
+![GPU Usage Example 1](https://i.imgur.com/toOvgvN.png)  
+![GPU Usage Example 2](https://i.imgur.com/jDbrB5a.png)
 
 ---
 
@@ -88,195 +95,195 @@ Once installed, you can see real-time GPU usage:
 
 ### Adding the Intel ARC GPU to the Plex Docker Template
 
-In your Plex Docker template, add the Intel ARC GPU as a device. Without this, Plex won’t know it can use your GPU.
+In your Plex Docker template, add the Intel ARC GPU as a device. Without this, Plex won’t recognize the GPU for hardware acceleration.
 
 ![Add Intel ARC GPU to Plex Template](https://i.imgur.com/Da4oeGV.png)
 
 ### Configuring Plex Settings
 
-Enable GPU transcoding in Plex and, if needed, HDR tone mapping. If you have multiple identical GPUs, Plex lists them in order. Make sure you select the correct one.
+Enable hardware transcoding in Plex and HDR tone mapping (if supported). If multiple GPUs are present, select the correct one in Plex settings.
 
-<img width="1020" alt="image" src="https://github.com/user-attachments/assets/2ed05f55-ee92-4011-9f6f-99c24b5d1a3f">
+![Plex Settings](https://github.com/user-attachments/assets/2ed05f55-ee92-4011-9f6f-99c24b5d1a3f)
 
 ### Verifying GPU Transcoding
 
-Play a file that needs transcoding. Check Plex’s dashboard and GPU stats. If the GPU is doing the work, you’ll see less CPU usage and a smooth playback experience.
+Play a media file that requires transcoding. Check Plex’s dashboard and your GPU stats to confirm the GPU is handling the task. You should see minimal CPU usage and smooth playback.
 
-![Plex Transcoding with Intel ARC GPU](https://i.imgur.com/Zz9jfYo.png)
+![Plex GPU Transcoding](https://i.imgur.com/Zz9jfYo.png)
 
 ---
 
 # Setting Up Tdarr
 
-What is Tdarr? Tdarr simply is a program that contains an entire interface that makes it easy for you to shrink or convert videos to a particular format without you having to understanding a single line of code. The only problem with Tdarr is that the GUI interface can be confusing for new users. As an expert user for many things, Tdarr took me several months to fully understand. I added this section recently to help you. Again, please ★ (Star) the project above that shows me other users care about the information provided.
+**What is Tdarr?**  
+Tdarr simplifies media transcoding through a user-friendly interface. It automates batch conversions without requiring manual command-line settings. Although the interface can be confusing at first, once you understand it, Tdarr becomes a powerful tool for media optimization.
+
+If you find this guide helpful, please consider clicking the ★ (Star) button above. It helps others discover this content and shows your support.
 
 ## Deploying Tdarr Server
 
-When deploying the Tdarr Server, you will sometimes see an option to deploy a Tdarr Node. The Tdarr Server template allows you to deploy an internal node. For purposes of this guide, I highly recommend to deploy your nodes seperately, even if only using one. If the Tdarr Server has issues, it is much easier to troubleshoot the just the Server instead of a Server/Node combo. 
+When installing Tdarr, you may see an option to deploy both a Tdarr Server and a Tdarr Node in one container. To simplify troubleshooting, it’s recommended to deploy them separately.
 
-First deploy Tdarr Server via Unraid via the Unraid App Store. Make sure it just says Tdarr, not Tdarr Node.
+1. Install the **Tdarr Server** via the Unraid App Store (ensure it’s labeled “Tdarr,” not “Tdarr Node”).
+2. Name it something identifiable, like “Tdarr_Server.”
+3. Ensure the server IP is set correctly, usually your Unraid server’s IP.
+4. Set the internal node option to **False**, so you’ll deploy a separate node later.
 
-<img width="381" alt="image" src="https://github.com/user-attachments/assets/e3f60be8-5c2b-4ea1-8c36-af7e25097603" />
- 
-Next, the template will have some information. Call it _Server_ for simple sanity tracking purpose.
-
-<img width="557" alt="image" src="https://github.com/user-attachments/assets/126ff9c9-7b32-4fdf-82cc-864bedf85700" />
-
-The biggest thing you have to ensure is that the Server IP is correct, which should be your UNRAID server IP. Leave everything else alone and ensure that the node is _False_. As a resuolt of that, ignore the rest of the port numbers.
-
-<img width="688" alt="image" src="https://github.com/user-attachments/assets/b70a2724-b0f7-463e-8da3-c1e7ad3d052b" />
+![Deploying Tdarr Server](https://github.com/user-attachments/assets/e3f60be8-5c2b-4ea1-8c36-af7e25097603)  
+![Tdarr Server Template](https://github.com/user-attachments/assets/126ff9c9-7b32-4fdf-82cc-864bedf85700)  
+![Server IP Settings](https://github.com/user-attachments/assets/b70a2724-b0f7-463e-8da3-c1e7ad3d052b)
 
 ## Tdarr Transcoding Location
 
-Where you transcode on and how is very important including the amount of nodes and multiple transcodes. For a majority of users with an SSD/NVME and transcoding a few files at a time, you will be fine transcoding on that device. For heavy transcoding, read the bottleneck warning below.
+Your transcoding location and hardware choice are crucial. For occasional transcoding, using an SSD/NVMe cache drive is fine. For heavy and continuous transcoding (multiple streams, multiple GPUs), consider dedicating a separate NVMe drive to handle the workload. Avoid using HDDs or RAM for transcoding as they cause performance issues and potential errors.
 
-### Warning: Bottlenecks & SSD/Wear & Tear
+### Warning: Bottlenecks & SSD Wear
 
-I personally have a small NVME dedicated for Tdarr Transcodes. If your only transcoding a few files here and there, you'll be fine. For me, I have 3 graphics cards that each transcode 4 streams at a time. Having this much data transcode at one time all the time will bottle neck your NVME/SSD with your appdata. Avoid transcoding to a standard HHD at all cost. Do not transcode in the RAM (I have tried this even with 64GB of RAM) and Tdarr will generate many errors and it will also bottleneck your unraid system. The upside to transcoding to a cheap NVME is that all the wear and tear targets that NVME. Why wear down your good SSD/NVME with TBs and TBs of Tdarr Transcodes? I actually mannaged to wear down an NVME's life span to 0 with a SMART WARNING telling me (still works fine) soley because of Tdarr.
+Heavier workloads can wear out your SSD/NVMe quickly. By using a dedicated, inexpensive NVMe for transcoding, you protect your main drives from excessive wear.
 
-<img width="754" alt="image" src="https://github.com/user-attachments/assets/daac629c-3fe9-45e4-89e9-c8e50686e2ea" />
+![NVMe Wear Warning](https://github.com/user-attachments/assets/daac629c-3fe9-45e4-89e9-c8e50686e2ea)
 
 ## Deploying Tdarr Node(s)
 
-Next, deploy the Tdarr Node via Unraid via the Unraid App Store. Make sure it just says Tdarr Node, not Tdarr (by itself). 
+After setting up the Tdarr Server, install the **Tdarr Node** container (listed separately in the Unraid App Store). The node handles the actual transcoding, while the server manages nodes, libraries, and workflows.
 
-What is a Tdarr Node? A tdarr node is a seperate node apart from the server that does the actual work in shrinking/encoding your media files. Keep in mind the Tdarr server program just tracks your nodes, flows, settings, and etc. Basically, the baby sitter of the nodes.
-
-<img width="397" alt="image" src="https://github.com/user-attachments/assets/6b384a42-194d-4089-b1ff-89d6cca77728" />
-
-
+![Deploying Tdarr Node](https://github.com/user-attachments/assets/6b384a42-194d-4089-b1ff-89d6cca77728)
 
 ---
 
 # AV1 Tdarr Flow
 
-Change Log:
+**Change Log:**
+- **v1:** Original AV1 flow.
+- **v2:** Removed B-frames.
+- **v3:** Greatly improved quality.
+- **v4:** Removed images from files, reducing failure rates from ~25% to nearly 0%.
 
-* v1: Original
-* v2: Remove B Frames
-* v3: Improved Quality Greatly
-* v4: Added remove image from files, this would cause about a 25% failure rate for your files to transcode. Adding this allows a 100% conversion rate for AV1.
+**JSON Script:** [av1_flow_v4.json](av1_flow_v4.json)
 
-**JSON Script**: This script can be found [Here](av1_flow_v4.json).
-
-<img width="824" alt="image" src="https://github.com/user-attachments/assets/54e5b72c-5f88-4264-a01c-833a8d67287c">
+![AV1 Flow](https://github.com/user-attachments/assets/54e5b72c-5f88-4264-a01c-833a8d67287c)
 
 ### What is the AV1 Flow?
 
-The AV1 Flow is a preset in Tdarr that converts your media to AV1. It’s straightforward: input → process → encode → output. This is where you get those huge file-size savings.
+The AV1 Flow is a predefined workflow that converts your media into the AV1 format. Once applied, Tdarr processes your libraries, delivering significant space savings without you needing to master complex transcoding parameters.
 
 ### Importing the AV1 Flow in Tdarr
 
-Import the provided AV1 Flow JSON into Tdarr. Then apply it to your libraries so Tdarr will start using your Intel ARC GPU for AV1 encoding (if configured).
+1. Open Tdarr’s flows section.
+2. Scroll down and select the “Import” option.
+3. Paste the AV1 Flow JSON script.
+4. Apply it to your libraries.
 
-![Adding a New Flow in Tdarr](https://i.imgur.com/nLzQi1b.png)
+![Adding a New Flow in Tdarr](https://i.imgur.com/nLzQi1b.png)  
+![Scroll to Import Option](https://i.imgur.com/hmYNetQ.png)  
+![Pasting the JSON Content](https://i.imgur.com/Qe13kYg.png)
 
-Scroll to the very bottom:
-
-![Scroll to Find the Import Option](https://i.imgur.com/hmYNetQ.png)
-
-Paste the JSON:
-
-![Copy the JSON Content](https://i.imgur.com/Qe13kYg.png)
-
-Once applied, Tdarr will begin shrinking your files to AV1 format.
+Once set, Tdarr will begin transcoding your files to AV1.
 
 ---
 
 ## Optimizing AV1 Encoding Settings
 
-Experiment with quality (CRF) and bitrate settings until you find a good balance between file size and video quality. Also, ensure hardware acceleration is on so the GPU does most of the heavy lifting.
+Experiment with quality (CRF) and bitrate settings in the AV1 Flow to find a balance between file size and image quality. Ensure hardware acceleration is enabled so the GPU handles most of the processing.
 
 ---
 
-# SABNZBD Speed Control
+# SABNZBD Speed Control - Bonus
 
-Enhance your SABnzbd experience with the SAB Speed Script. This tool dynamically adjusts your download speeds whenever someone is watching content from your Plex server, preventing bandwidth competition that could cause buffering and playback issues. By automatically slowing down your downloads during peak usage and offering a configurable “nighttime” mode for maximum speeds when your network is idle, the SAB Speed Script ensures a smoother, more efficient media streaming experience. The script can be found [Here](sab_speed_control.sh) and requires Tautulli for Plex Monitoring.
+The SAB Speed Script dynamically adjusts SABnzbd download speeds based on Plex streaming activity. When Plex is active, it reduces download speeds to prevent buffering. During off-peak times, it ramps speeds back up, maximizing your bandwidth efficiency.
 
-<img width="483" alt="image" src="https://github.com/user-attachments/assets/b04d53b1-9d5d-42ab-ab33-2ac2dd2449b0">
+**Requirements:**
+- [Tautulli](https://tautulli.com/) for Plex monitoring.
+- [User Scripts](https://forums.unraid.net/topic/87144-plugin-user-scripts/) plugin from the Unraid App Store.
 
-For this script to run, you need to install - USER SCRIPTS - from the UNRAID APP STORE. Once you save the script, ensure it is setup to STARTUP AT ARRAY. Also, click RUN IN THE BACKGROUND just to get it going. NOT REQUIRED FOR TDARR AV1!
+**Script:** [sab_speed_control.sh](sab_speed_control.sh)
 
-<img width="403" alt="image" src="https://github.com/user-attachments/assets/728a6959-cfaf-44e5-8302-ab43372c87a1">
+After saving the script, configure it to run at array startup and choose “Run in Background.”
+
+![SAB Speed Control](https://github.com/user-attachments/assets/b04d53b1-9d5d-42ab-ab33-2ac2dd2449b0)  
+![User Scripts Setup](https://github.com/user-attachments/assets/728a6959-cfaf-44e5-8302-ab43372c87a1)
 
 ---
 
 # Tdarr Node Killer Script
 
-**Change Log**
-
-* v1: Original Script
-* v2: Script monitors PLEX via Tautulli to simplify processes
+**Change Log:**  
+- **v1:** Original Script  
+- **v2:** Uses Tautulli to monitor Plex, simplifying detection.
 
 ### Overview
 
-This optional script frees up the GPU for Plex whenever Plex needs it. If Tdarr and Plex share the GPU, Tdarr might interfere with streaming performance. With this script:
-
-- When Plex starts transcoding: the script stops the Tdarr node, giving the GPU to Plex.
-- When Plex stops: after a short cooldown (e.g., 180 seconds), the script restarts Tdarr.
-
-**SCRIPT**: The Tdarr Node Killer script can be found [Here](tdarr_node_killer.sh).
-
-For this script to run, you need to install - USER SCRIPTS - from the UNRAID APP STORE. Once you save the script, ensure it is setup to STARTUP AT ARRAY. Also, click RUN IN THE BACKGROUND just to get it going.
-
-<img width="403" alt="image" src="https://github.com/user-attachments/assets/728a6959-cfaf-44e5-8302-ab43372c87a1">
+The Tdarr Node Killer script ensures Plex always has priority access to the GPU. If Plex and Tdarr share the same GPU, Tdarr’s transcoding tasks can pause whenever Plex starts transcoding, preserving a smooth streaming experience.
 
 ### Script Behavior
 
-The script uses Tautulli’s API to detect when Plex is transcoding:
+- When Plex starts transcoding (detected via Tautulli’s API), the script stops the Tdarr Node.
+- After Plex stops transcoding, the script waits a cooldown (e.g., 3 minutes) before restarting Tdarr. This prevents rapid start/stop cycles if users frequently pause or stop streaming.
 
-- If Plex is transcoding: kill the Tdarr node.
-- After Plex stops, wait the cooldown period, then bring Tdarr back online.
+**Script:** [tdarr_node_killer.sh](tdarr_node_killer.sh)
 
-This prevents rapid start/stop cycles if Plex users jump in and out often.
+Install the User Scripts plugin, add the script, set it to run at array startup, and run it in the background.
+
+![User Scripts Setup for Tdarr Node Killer](https://github.com/user-attachments/assets/728a6959-cfaf-44e5-8302-ab43372c87a1)
 
 ### Step-by-Step Implementation for Unraid
 
-1. Tdarr node running, no Plex transcoding:
+1. Tdarr Node Running, No Plex Transcoding:
+   
+   ![Tdarr Node Running](https://i.imgur.com/PHRITk0.png)
 
-    ![Tdarr Node Running, No Plex Transcoding](https://i.imgur.com/PHRITk0.png)
+2. Script Monitoring Plex:
+   
+   ![Script Monitoring](https://github.com/user-attachments/assets/a0ebab4e-e178-4de3-87f7-00e749cfa6cd)
 
-2. Script monitoring for Plex transcoding:
+3. Plex User Starts Transcoding:
+   
+   ![Plex User Starts Transcoding](https://i.imgur.com/AT6hCUV.png)
 
-    <img width="615" alt="image" src="https://github.com/user-attachments/assets/a0ebab4e-e178-4de3-87f7-00e749cfa6cd">
+4. Script Detects Transcoding & Stops Tdarr Node:
+   
+   ![Script Stopping Tdarr Node](https://github.com/user-attachments/assets/8b9b0cdc-9084-48ed-a1c0-b00e32f51dc6)  
+   ![Tdarr Node Stopped](https://i.imgur.com/KzdXHKf.png)
 
-3. Plex user starts transcoding:
-
-    ![Plex User Starts Transcoding](https://i.imgur.com/AT6hCUV.png)
-
-4. Script detects Plex transcoding and stops Tdarr node:
-
-    <img width="655" alt="image" src="https://github.com/user-attachments/assets/8b9b0cdc-9084-48ed-a1c0-b00e32f51dc6">
-
-    ![Tdarr Node Stopped](https://i.imgur.com/KzdXHKf.png)
-
-5. Tdarr node is completely stopped:
-
-    ![Tdarr Node Dead](https://i.imgur.com/4gIzOkW.png)
+5. Tdarr Node Completely Stopped:
+   
+   ![Tdarr Node Dead](https://i.imgur.com/4gIzOkW.png)
 
 ### Script Behavior After Plex Transcoding Stops
 
-The script doesn’t instantly bring Tdarr back up. It waits, say 3 minutes, to ensure Plex isn’t going to start transcoding again immediately.
+The script waits a set cooldown period after Plex finishes before restarting the Tdarr Node.
 
-1. Countdown before restarting Tdarr node:
+1. Countdown Before Restarting Tdarr Node:
+   
+   ![Countdown](https://i.imgur.com/59AGRlv.png)
 
-    ![Countdown Before Restarting Tdarr Node](https://i.imgur.com/59AGRlv.png)
+2. Tdarr Node Restarts After Cooldown:
+   
+   ![Tdarr Node Restarting](https://github.com/user-attachments/assets/7ca1d8b0-efac-44ab-9701-24ef525f33c7)  
+   ![Tdarr Node Coming Online](https://i.imgur.com/TTPVyt0.png)
 
-2. After the wait, Tdarr node is restarted:
-
-    <img width="611" alt="image" src="https://github.com/user-attachments/assets/7ca1d8b0-efac-44ab-9701-24ef525f33c7">
-
-    ![Tdarr Node Coming Back Online](https://i.imgur.com/TTPVyt0.png)
-
-3. Tdarr node fully online again:
-
-    ![Tdarr Node Fully Online](https://i.imgur.com/M1M2vSL.png)
+3. Tdarr Node Fully Online Again:
+   
+   ![Tdarr Node Online](https://i.imgur.com/M1M2vSL.png)
 
 ### Troubleshooting Common Issues
 
-- Plex not using GPU? Check your Docker template and Plex settings.
-- Tdarr not restarting? Ensure the script and Tautulli API are working correctly.
-- High CPU usage? Check if HDR tone mapping is enabled and supported. Also verify GPU drivers and plugins are up-to-date.
+- **Plex Not Using GPU?** Double-check Docker template settings and Plex’s hardware transcoding settings.
+- **Tdarr Not Restarting?** Verify the script and Tautulli API settings. Make sure the script runs in the background.
+- **High CPU Usage?** If HDR tone mapping is on, ensure your GPU and drivers support it. Update all plugins and drivers.
+
+---
+
+## Experimental: Running the Script on Other Operating Systems
+
+You can run the Tdarr Node Killer script on other Linux distributions or operating systems that support Docker and systemd. The process is similar: place the script, grant proper permissions, and create a systemd service.
+
+### Step-by-Step Implementation for Other OSes
+
+1. **Save the Script:**
+   ```bash
+   sudo nano /usr/local/bin/tdarr_node_killer.sh
+
 
 ---
 
