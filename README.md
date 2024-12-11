@@ -6,10 +6,10 @@ This guide shows you how to optimize your media library with AV1 encoding on Unr
 
 **This guide covers:**
 - Getting your Intel ARC GPU set up on Unraid.
-- Encoding videos to AV1 for huge space savings.
-- Dynamically managing your Tdarr node so Plex always has priority.
-- Backing up and restoring configurations.
-- Troubleshooting common issues.
+  - Setting up Tdarr (working on)   
+  - Encoding videos to AV1 for huge space savings.
+- SABNZBD Speed Control (Priotize SAB download speeds when users watch PLEX, including night control speeds)
+- Tdarr Node Killer (Priotize Plex for your GPU if PLEX and the Tdarr Node share the same GPU)
 
 Whether you’re an Unraid pro or new to the platform, we’ll walk you through it step-by-step.
 
