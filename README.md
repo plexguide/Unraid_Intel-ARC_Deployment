@@ -238,7 +238,17 @@ Tdarr will then begin AV1 transcoding.
 
 ## Optimizing AV1 Encoding Settings
 
-Adjust CRF and bitrate in the AV1 flow to balance quality and file size. Ensure hardware acceleration is on so the GPU does most of the work.
+Adjust CRF and bitrate in the AV1 flow to balance quality and file size. Ensure hardware acceleration is on so the GPU does most of the work. Test out on a few files to figure where you like it, but I have discovered over time the set numbers provide the best balance between quality and size.
+
+Keep in mind the following:
+
+* Bigger Number: Worst Quality, Smaller File
+* Lower Number: Better Quality, Bigger File
+
+<br><img width="467" alt="image" src="https://github.com/user-attachments/assets/59439420-8a46-4548-b63f-47076f1a5a6b" /><br>
+<br><img width="448" alt="image" src="https://github.com/user-attachments/assets/b001501f-8757-4ca3-9b63-c74d24fe4da8" /><br>
+
+
 
 ---
 
