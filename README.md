@@ -170,6 +170,41 @@ One of these numbers will reflect your iGPU, even for AMD processors. Do not ass
 <img width="769" alt="image" src="https://github.com/user-attachments/assets/b7a2d3e3-288b-4f16-9424-74a82b8f6451" />
 <img width="457" alt="image" src="https://github.com/user-attachments/assets/3e8b0028-c1b2-4517-b42d-731c2b01d7f3" />
 
+### Configuring Tdarr
+
+Once your server and node(s) are deployed, visit
+```http://ip-address:8265```
+
+If you setup your nodes correctly, you should see the following below:
+<img width="409" alt="image" src="https://github.com/user-attachments/assets/db6b2dc8-6fb7-4acf-be86-785705a44961" />
+
+Note, repeat the following below if you have more than 1 node.
+
+1. Click a Node
+2. Set the numbers for the following ARC card type (picture below example below)
+
+- ARC 310
+  - Transcode: CPU (O) GPU (3)
+  - Healthcheck: CPU (2) GPU (0)
+ 
+- ARC 380
+  - Transcode: CPU (O) GPU (4)
+  - Healthcheck: CPU (2) GPU (0) 
+
+- ARC 500/700 Series
+  - Transcode: CPU (O) GPU (6)
+  - Healthcheck: CPU (2) GPU (0) 
+
+<img width="548" alt="image" src="https://github.com/user-attachments/assets/8dc965c7-d801-42b3-af1f-c5310e2e2fad" />
+
+3. Now click Options and scroll towards the mid bottom and ensure the GPU Works to do CPU Tasks are turned [On] and click the X in the upper right when done
+
+<img width="431" alt="image" src="https://github.com/user-attachments/assets/3cb3786a-025a-48c6-ba72-c6835effef11" />
+
+4. dfdf
+ 
+
+
 [UNDER CONSTRUCTION - DEPLOYING TDARR]
 
 ---
