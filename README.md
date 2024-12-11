@@ -110,12 +110,14 @@ Play a file that needs transcoding. Check Plex’s dashboard and GPU stats. If t
 
 What is Tdarr? Tdarr simply is a program that contains an entire interface that makes it easy for you to shrink or convert videos to a particular format without you having to understanding a single line of code. The only problem with Tdarr is that the GUI interface can be confusing for new users. As an expert user for many things, Tdarr took me several months to fully understand. I added this section recently to help you. Again, please ★ (Star) the project above that shows me other users care about the information provided.
 
-# Deploying Tdarr Server
+## Deploying Tdarr Server
 
 When deploying the Tdarr Server, you will sometimes see an option to deploy a Tdarr Node. The Tdarr Server template allows you to deploy an internal node. For purposes of this guide, I highly recommend to deploy your nodes seperately, even if only using one. If the Tdarr Server has issues, it is much easier to troubleshoot the just the Server instead of a Server/Node combo. 
 
-First deploy Tdarr Server via Unraid via the Unraid App Store. 
+First deploy Tdarr Server via Unraid via the Unraid App Store. Make sure it just says Tdarr, not Tdarr Node.
 
+<img width="381" alt="image" src="https://github.com/user-attachments/assets/e3f60be8-5c2b-4ea1-8c36-af7e25097603" />
+ 
 Next, the template will have some information. Call it _Server_ for simple sanity tracking purpose.
 
 <img width="557" alt="image" src="https://github.com/user-attachments/assets/126ff9c9-7b32-4fdf-82cc-864bedf85700" />
@@ -124,12 +126,17 @@ The biggest thing you have to ensure is that the Server IP is correct, which sho
 
 <img width="688" alt="image" src="https://github.com/user-attachments/assets/b70a2724-b0f7-463e-8da3-c1e7ad3d052b" />
 
-Next, ensure that you point your media library to the right location
+** Tdarr Transcoding Location
+
+Where you transcode on and how is very important including the amount of nodes and multiple transcodes. For a majority of users with an SSD/NVME and transcoding a few files at a time, you will be fine transcoding on that device. For heavy transcoding, read the bottleneck warning below.
+
+*** Warning: Bottlenecks & SSD/Wear & Tear
+
+I personally have a small NVME dedicated for Tdarr Transcodes. If your only transcoding a few files here and there, you'll be fine. For me, I have 3 graphics cards that each transcode 4 streams at a time. Having this much data transcode at one time all the time will bottle neck your NVME/SSD with your appdata. Avoid transcoding to a standard HHD at all cost. Do not transcode in the RAM (I have tried this even with 64GB of RAM) and Tdarr will generate many errors and it will also bottleneck your unraid system. The upside to transcoding to a cheap NVME is that all the wear and tear targets that NVME. Why wear down your good SSD/NVME with TBs and TBs of Tdarr Transcodes? I actually mannaged to wear down an NVME's life span to 0 with a SMART WARNING telling me (still works fine) soley because of Tdarr.
 
 <img width="754" alt="image" src="https://github.com/user-attachments/assets/daac629c-3fe9-45e4-89e9-c8e50686e2ea" />
 
-
-[WORKING ON]
+## Deploying Tdarr Node(s)
 
 
 
