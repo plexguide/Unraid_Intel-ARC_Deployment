@@ -112,7 +112,7 @@ Play a media file that requires transcoding. Check Plex’s dashboard and your G
 
 ---
 
-# Setting Up Tdarr
+# Setting Up Tdarr Server & Nodes
 
 **What is Tdarr?**  
 Tdarr simplifies media transcoding through a user-friendly interface. It automates batch conversions without requiring manual command-line settings. Although the interface can be confusing at first, once you understand it, Tdarr becomes a powerful tool for media optimization.
@@ -201,7 +201,19 @@ Note, repeat the following below if you have more than 1 node.
 
 <br><img width="431" alt="image" src="https://github.com/user-attachments/assets/3cb3786a-025a-48c6-ba72-c6835effef11" /><br>
 
-4. dfdf
+4. Scroll down more to staging section and make sure to [CHECK] auto-accept successful transcodes. Failing to do so prevents the transcoded files from replacing the old files and will fill up your hard drive because the files are transcoded, but have no where to go.
+
+<br><img width="745" alt="image" src="https://github.com/user-attachments/assets/b78a71c2-71c9-4a01-a5c7-40d34ff26775" /><br>
+
+5. Continue to scroll to status downward and match the picture. I recommend for you to transcode your largest files first, but you can choose whatever you like!
+
+<br><img width="774" alt="image" src="https://github.com/user-attachments/assets/111cbddd-bfe3-437f-b79e-7fd00ec90c59" /><br>
+
+---
+
+# Setting up Tdarr Libraries
+
+The purpose of setting up libraries is to target
  
 
 
