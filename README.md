@@ -346,7 +346,7 @@ Install User Scripts, add the script, set it to run at array startup, and run it
 
 5. Tdarr Node completely stopped:
    
-   ![Tdarr Node Dead](https://i.imgur.com/4gIzOkW.png)
+   <br><img width="548" alt="image" src="https://github.com/user-attachments/assets/e10fc050-2000-49a6-be46-a49b9a8609e2" /><br>
 
 ### Script Behavior After Plex Transcoding Stops
 
