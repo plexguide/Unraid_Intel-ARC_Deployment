@@ -207,6 +207,41 @@ If you have multiple nodes, repeat the following steps for each:
 
 ---
 
+# Setting up the AV1 Tdarr Flow
+
+**Change Log:**
+- **v1:** Original AV1 flow
+- **v2:** Removed B-frames
+- **v3:** Improved quality
+- **v4:** Removed images from files, reducing failure rates from ~25% to nearly 0%
+
+**JSON Script:** [av1_flow_v4.json](av1_flow_v4.json)
+
+<img width="824" alt="image" src="https://github.com/user-attachments/assets/54e5b72c-5f88-4264-a01c-833a8d67287c">
+
+### What is the AV1 Flow?
+
+The AV1 Flow is a predefined workflow that transcodes media into AV1, delivering significant space savings without requiring you to master encoding parameters. This step is required prior to setting up the libraries!
+
+### Importing the AV1 Flow in Tdarr
+
+1. Open the Flows section in Tdarr.
+2. Scroll down and select “Import.”
+3. Paste the AV1 Flow JSON.
+4. Apply it to your libraries.
+
+![Adding a New Flow in Tdarr](https://i.imgur.com/nLzQi1b.png)  
+![Scroll to Import Option](https://i.imgur.com/hmYNetQ.png)  
+![Pasting the JSON Content](https://i.imgur.com/Qe13kYg.png)
+
+Tdarr will then begin AV1 transcoding.
+
+## Optimizing AV1 Encoding Settings
+
+Adjust CRF and bitrate in the AV1 flow to balance quality and file size. Ensure hardware acceleration is on so the GPU does most of the work.
+
+---
+
 # Setting Up Tdarr Libraries
 
 Libraries let you target specific media locations. For simplicity, we’ll use “tv” and “movies” as examples, but you can create as many as needed.
@@ -232,7 +267,7 @@ Libraries let you target specific media locations. For simplicity, we’ll use �
 
 <br><img width="297" alt="image" src="https://github.com/user-attachments/assets/8ed82ff6-aa65-4fbe-a576-39810eeed1c3" /><br>
 
-7. Under **Transcode Options**, deselect classic plugins, select the “Flows” tab, and choose the AV1 flow. If you have not yet imported the AV1 flow, follow the steps in the AV1 Flow section and then return here.
+7. Under **Transcode Options**, deselect classic plugins, select the “Flows” tab, and choose the AV1 flow. If you have not yet imported the AV1 flow, follow the steps in the AV1 Flow section above this section and then return here.
 
 <br><img width="1004" alt="image" src="https://github.com/user-attachments/assets/a0a4028d-c539-4df9-8e09-4b25a6a2a2a5" /><br>
 
@@ -248,43 +283,6 @@ Libraries let you target specific media locations. For simplicity, we’ll use �
 11. If errors increase rapidly, double-check configurations or GPU assignments.
 
 <br><img width="1254" alt="image" src="https://github.com/user-attachments/assets/474ce9bf-d883-4b31-afa7-f0ccb909dd0f" /><br>
-
----
-
-# AV1 Tdarr Flow
-
-**Change Log:**
-- **v1:** Original AV1 flow
-- **v2:** Removed B-frames
-- **v3:** Improved quality
-- **v4:** Removed images from files, reducing failure rates from ~25% to nearly 0%
-
-**JSON Script:** [av1_flow_v4.json](av1_flow_v4.json)
-
-<img width="824" alt="image" src="https://github.com/user-attachments/assets/54e5b72c-5f88-4264-a01c-833a8d67287c">
-
-### What is the AV1 Flow?
-
-The AV1 Flow is a predefined workflow that transcodes media into AV1, delivering significant space savings without requiring you to master encoding parameters.
-
-### Importing the AV1 Flow in Tdarr
-
-1. Open the Flows section in Tdarr.
-2. Scroll down and select “Import.”
-3. Paste the AV1 Flow JSON.
-4. Apply it to your libraries.
-
-![Adding a New Flow in Tdarr](https://i.imgur.com/nLzQi1b.png)  
-![Scroll to Import Option](https://i.imgur.com/hmYNetQ.png)  
-![Pasting the JSON Content](https://i.imgur.com/Qe13kYg.png)
-
-Tdarr will then begin AV1 transcoding.
-
----
-
-## Optimizing AV1 Encoding Settings
-
-Adjust CRF and bitrate in the AV1 flow to balance quality and file size. Ensure hardware acceleration is on so the GPU does most of the work.
 
 ---
 
