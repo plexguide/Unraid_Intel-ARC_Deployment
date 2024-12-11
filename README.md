@@ -326,12 +326,10 @@ Install User Scripts, add the script, set it to run at array startup, and run it
 
 ### Step-by-Step Implementation for Unraid
 
-1. Tdarr Node running, no Plex transcoding:
-   
+1. Tdarr Node [N1] running, no Plex transcoding:
    <br><img width="543" alt="image" src="https://github.com/user-attachments/assets/c4d99d6c-e8f9-4d38-a103-f8071f07a4fa" /><br>
 
 2. Script monitoring Plex:
-   
    <img width="615" alt="image" src="https://github.com/user-attachments/assets/a0ebab4e-e178-4de3-87f7-00e749cfa6cd">
 
 3. Plex user starts transcoding:
@@ -339,13 +337,11 @@ Install User Scripts, add the script, set it to run at array startup, and run it
    ![Plex User Starts Transcoding](https://i.imgur.com/AT6hCUV.png)
 
 4. Script detects transcoding & stops Tdarr Node:
-   
    <br><img width="655" alt="image" src="https://github.com/user-attachments/assets/8b9b0cdc-9084-48ed-a1c0-b00e32f51dc6"><br>
    
    <br><img width="322" alt="image" src="https://github.com/user-attachments/assets/68dcc0c5-b347-4bed-86cb-53e58637b48b" /><br>
 
-5. Tdarr Node completely stopped:
-   
+5. Tdarr Node [N1] completely stopped:
    <br><img width="548" alt="image" src="https://github.com/user-attachments/assets/e10fc050-2000-49a6-be46-a49b9a8609e2" /><br>
 
 ### Script Behavior After Plex Transcoding Stops
