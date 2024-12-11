@@ -106,7 +106,36 @@ Play a file that needs transcoding. Check Plex’s dashboard and GPU stats. If t
 
 ---
 
-## AV1 Tdarr Flow
+# Setting Up Tdarr
+
+What is Tdarr? Tdarr simply is a program that contains an entire interface that makes it easy for you to shrink or convert videos to a particular format without you having to understanding a single line of code. The only problem with Tdarr is that the GUI interface can be confusing for new users. As an expert user for many things, Tdarr took me several months to fully understand. I added this section recently to help you. Again, please ★ (Star) the project above that shows me other users care about the information provided.
+
+# Deploying Tdarr Server
+
+When deploying the Tdarr Server, you will sometimes see an option to deploy a Tdarr Node. The Tdarr Server template allows you to deploy an internal node. For purposes of this guide, I highly recommend to deploy your nodes seperately, even if only using one. If the Tdarr Server has issues, it is much easier to troubleshoot the just the Server instead of a Server/Node combo. 
+
+First deploy Tdarr Server via Unraid via the Unraid App Store. 
+
+Next, the template will have some information. Call it _Server_ for simple sanity tracking purpose.
+
+<img width="557" alt="image" src="https://github.com/user-attachments/assets/126ff9c9-7b32-4fdf-82cc-864bedf85700" />
+
+The biggest thing you have to ensure is that the Server IP is correct, which should be your UNRAID server IP. Leave everything else alone and ensure that the node is _False_. As a resuolt of that, ignore the rest of the port numbers.
+
+<img width="688" alt="image" src="https://github.com/user-attachments/assets/b70a2724-b0f7-463e-8da3-c1e7ad3d052b" />
+
+Next, ensure that you point your media library to the right location
+
+<img width="754" alt="image" src="https://github.com/user-attachments/assets/daac629c-3fe9-45e4-89e9-c8e50686e2ea" />
+
+
+[WORKING ON]
+
+
+
+---
+
+# AV1 Tdarr Flow
 
 Change Log:
 
