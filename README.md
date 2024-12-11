@@ -152,10 +152,10 @@ After setting up the Tdarr Server, install the **Tdarr Node** container (listed 
 
 1. Install the **Tdarr Node** via the Unraid App Store (ensure it’s labeled “Tdarr Node,” not “Tdarr).
 2. Name it something identifiable, like - Node1 or N1
-  - Using 2 or more GPU's? Repeat the process and call the next node - Node2 or N2
+   - Using 2 or more GPU's? Repeat the process and call the next node - Node2 or N2
 3. Ensure the server IP is set correctly, usually your Unraid server’s IP. Also ensure the NodeIP is the same IP (trust me on it)
 4. Make sure the configs and logs match the node # for simplicity.
-  - Using 2 or more GPU's? Repeat the process and label each one based off the node name - node2 or n2
+   - Using 2 or more GPU's? Repeat the process and label each one based off the node name - node2 or n2
 5. Ensure the transcode cache matches the server's template path that you created. For this, add the node name at the end such n1 or node1
 6. Ensure to assign the correct GPU to the node. To see your GPUs, type:
 
