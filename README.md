@@ -177,6 +177,7 @@ Once your server and node(s) are deployed, visit
 
 If you setup your nodes correctly, you should see the following below:
 <br><img width="409" alt="image" src="https://github.com/user-attachments/assets/db6b2dc8-6fb7-4acf-be86-785705a44961" /><br>
+
 Note, repeat the following below if you have more than 1 node.
 
 1. Click a Node
@@ -195,8 +196,11 @@ Note, repeat the following below if you have more than 1 node.
   - Healthcheck: CPU (2) GPU (0) 
 
 <br><img width="548" alt="image" src="https://github.com/user-attachments/assets/8dc965c7-d801-42b3-af1f-c5310e2e2fad" /><br>
+
 3. Now click Options and scroll towards the mid bottom and ensure the GPU Works to do CPU Tasks are turned [On] and click the X in the upper right when done.
+
 <br><img width="431" alt="image" src="https://github.com/user-attachments/assets/3cb3786a-025a-48c6-ba72-c6835effef11" /><br>
+
 4. dfdf
  
 
