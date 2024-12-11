@@ -124,7 +124,7 @@ If you find this guide helpful, please consider clicking the ★ (Star) button a
 When installing Tdarr, you may see an option to deploy both a Tdarr Server and a Tdarr Node in one container. To simplify troubleshooting, it’s recommended to deploy them separately.
 
 1. Install the **Tdarr Server** via the Unraid App Store (ensure it’s labeled “Tdarr,” not “Tdarr Node”).
-2. Name it something identifiable, like “Tdarr_Server.”
+2. Name it something identifiable, like “Tdarr_Server.” (I use - Server)
 3. Ensure the server IP is set correctly, usually your Unraid server’s IP.
 4. Set the internal node option to **False**, so you’ll deploy a separate node later.
 
@@ -149,6 +149,27 @@ Heavier workloads can wear out your SSD/NVMe quickly. By using a dedicated, inex
 After setting up the Tdarr Server, install the **Tdarr Node** container (listed separately in the Unraid App Store). The node handles the actual transcoding, while the server manages nodes, libraries, and workflows.
 
 <img width="397" alt="image" src="https://github.com/user-attachments/assets/6b384a42-194d-4089-b1ff-89d6cca77728" />
+
+1. Install the **Tdarr Node** via the Unraid App Store (ensure it’s labeled “Tdarr Node,” not “Tdarr).
+2. Name it something identifiable, like - Node1 or N1
+   - Using 2 or more GPU's? Repeat the process and call the next node - Node2 or N2
+3. Ensure the server IP is set correctly, usually your Unraid server’s IP. Also ensure the NodeIP is the same IP (trust me on it)
+4. Make sure the configs and logs match the node # for simplicity.
+  - Using 2 or more GPU's? Repeat the process and label each one based off the node name - node2 or n2
+5. Ensure the transcode cache matches the server's template path that you created. For this, add the node name at the end such n1 or node1
+6. Ensure to assign the correct GPU to the node. To see your GPUs, type:
+
+```ls -la /dev/dri/ ``` 
+
+**WARNING**: _If your running an AMD processor? _Ignore this! Have an iGPU from an intel processor? One of these numbers will reflect your iGPU. Do not assign the iGPU to your Tdarr Node! I have not found a good way to discover which one the iGPU from the CMD line... but if you goto Plex and Transcode and look at the order of the GPUs from the menu, it actually follows that order.
+   
+<img width="477" alt="image" src="https://github.com/user-attachments/assets/8ce39a4d-1479-433c-b3c8-9eceb4ebf044" />
+<img width="749" alt="image" src="https://github.com/user-attachments/assets/736eff11-ec78-441d-9c82-0f11def877bd" />
+<img width="769" alt="image" src="https://github.com/user-attachments/assets/b7a2d3e3-288b-4f16-9424-74a82b8f6451" />
+
+
+
+[UNDER CONSTRUCTION - DEPLOYING TDARR]
 
 ---
 
