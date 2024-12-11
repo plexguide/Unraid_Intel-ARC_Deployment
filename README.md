@@ -157,7 +157,7 @@ After setting up the Tdarr Server, install the **Tdarr Node** container (listed 
 4. Make sure the configs and logs match the node # for simplicity.
    - Using 2 or more GPU's? Repeat the process and label each one based off the node name - node2 or n2
 5. Ensure the transcode cache matches the server's template path that you created. For this, add the node name at the end such n1 or node1
-6. Ensure to assign the correct GPU to the node. To see your GPUs, type:
+6. Ensure to assign the correct GPU to the node. If your deploying 2 or more nodes, ensure it's using the same device. To see your GPUs, type:
 
 ```ls -la /dev/dri/ ``` 
 
