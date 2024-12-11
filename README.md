@@ -255,9 +255,10 @@ Libraries let you target specific media locations. For simplicity, we’ll use �
 <br><img width="130" alt="image" src="https://github.com/user-attachments/assets/f5c6a119-afb6-4f63-8dbc-c2f1db63c019" /><br>
 
 3. Name it “TV” or “Movies.” Repeat these steps for additional libraries.
-4. Under **Source**, set your media path.
+4. Under **Source**, set your media path. Also below that, turn on the [hourly] scan to find new items (important).
 
 <br><img width="909" alt="image" src="https://github.com/user-attachments/assets/2142aa48-a7a8-4e3f-9dcb-d7df3aed5570" /><br>
+<br><img width="292" alt="image" src="https://github.com/user-attachments/assets/e5bb4b33-5115-4d65-a4de-7a28d705a0d0" /><br>
 
 5. Under **Transcode Cache**, set the path as shown (e.g., /temp).
 
