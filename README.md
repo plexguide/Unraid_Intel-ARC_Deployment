@@ -330,7 +330,7 @@ Install User Scripts, add the script, set it to run at array startup, and run it
    <br><img width="543" alt="image" src="https://github.com/user-attachments/assets/c4d99d6c-e8f9-4d38-a103-f8071f07a4fa" /><br>
 
 2. Script monitoring Plex:
-   <img width="615" alt="image" src="https://github.com/user-attachments/assets/a0ebab4e-e178-4de3-87f7-00e749cfa6cd">
+   <br><img width="615" alt="image" src="https://github.com/user-attachments/assets/a0ebab4e-e178-4de3-87f7-00e749cfa6cd"><br>
 
 3. Plex user starts transcoding:
    
