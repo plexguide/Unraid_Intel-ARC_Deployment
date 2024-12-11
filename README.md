@@ -126,17 +126,23 @@ The biggest thing you have to ensure is that the Server IP is correct, which sho
 
 <img width="688" alt="image" src="https://github.com/user-attachments/assets/b70a2724-b0f7-463e-8da3-c1e7ad3d052b" />
 
-** Tdarr Transcoding Location
+## Tdarr Transcoding Location
 
 Where you transcode on and how is very important including the amount of nodes and multiple transcodes. For a majority of users with an SSD/NVME and transcoding a few files at a time, you will be fine transcoding on that device. For heavy transcoding, read the bottleneck warning below.
 
-*** Warning: Bottlenecks & SSD/Wear & Tear
+### Warning: Bottlenecks & SSD/Wear & Tear
 
 I personally have a small NVME dedicated for Tdarr Transcodes. If your only transcoding a few files here and there, you'll be fine. For me, I have 3 graphics cards that each transcode 4 streams at a time. Having this much data transcode at one time all the time will bottle neck your NVME/SSD with your appdata. Avoid transcoding to a standard HHD at all cost. Do not transcode in the RAM (I have tried this even with 64GB of RAM) and Tdarr will generate many errors and it will also bottleneck your unraid system. The upside to transcoding to a cheap NVME is that all the wear and tear targets that NVME. Why wear down your good SSD/NVME with TBs and TBs of Tdarr Transcodes? I actually mannaged to wear down an NVME's life span to 0 with a SMART WARNING telling me (still works fine) soley because of Tdarr.
 
 <img width="754" alt="image" src="https://github.com/user-attachments/assets/daac629c-3fe9-45e4-89e9-c8e50686e2ea" />
 
 ## Deploying Tdarr Node(s)
+
+Next, deploy the Tdarr Node via Unraid via the Unraid App Store. Make sure it just says Tdarr Node, not Tdarr (by itself). 
+
+What is a Tdarr Node? A tdarr node is a seperate node apart from the server that does the actual work in shrinking/encoding your media files. Keep in mind the Tdarr server program just tracks your nodes, flows, settings, and etc. Basically, the baby sitter of the nodes.
+
+<img width="397" alt="image" src="https://github.com/user-attachments/assets/6b384a42-194d-4089-b1ff-89d6cca77728" />
 
 
 
