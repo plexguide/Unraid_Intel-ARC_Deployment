@@ -107,7 +107,7 @@ Enable hardware transcoding in Plex and HDR tone mapping (if supported). If mult
 
 Play a media file that requires transcoding. Check Plex’s dashboard and your GPU stats to confirm the GPU is handling the task. You should see minimal CPU usage and smooth playback.
 
-*(No width specified)*  
+  
 ![Plex GPU Transcoding](https://i.imgur.com/Zz9jfYo.png)
 
 ---
@@ -197,7 +197,7 @@ The AV1 Flow is a predefined workflow that converts your media into the AV1 form
 3. Paste the AV1 Flow JSON script.
 4. Apply it to your libraries.
 
-*(No width specified)*  
+  
 ![Adding a New Flow in Tdarr](https://i.imgur.com/nLzQi1b.png)  
 ![Scroll to Import Option](https://i.imgur.com/hmYNetQ.png)  
 ![Pasting the JSON Content](https://i.imgur.com/Qe13kYg.png)
@@ -255,7 +255,7 @@ Install the User Scripts plugin, add the script, set it to run at array startup,
 
 1. Tdarr Node Running, No Plex Transcoding:
    
-   *(No width specified)*  
+     
    ![Tdarr Node Running](https://i.imgur.com/PHRITk0.png)
 
 2. Script Monitoring Plex:
@@ -264,19 +264,19 @@ Install the User Scripts plugin, add the script, set it to run at array startup,
 
 3. Plex User Starts Transcoding:
    
-   *(No width specified)*  
+     
    ![Plex User Starts Transcoding](https://i.imgur.com/AT6hCUV.png)
 
 4. Script Detects Transcoding & Stops Tdarr Node:
    
    <img width="655" alt="image" src="https://github.com/user-attachments/assets/8b9b0cdc-9084-48ed-a1c0-b00e32f51dc6">
    
-   *(No width specified)*  
+     
    ![Tdarr Node Stopped](https://i.imgur.com/KzdXHKf.png)
 
 5. Tdarr Node Completely Stopped:
    
-   *(No width specified)*  
+     
    ![Tdarr Node Dead](https://i.imgur.com/4gIzOkW.png)
 
 ### Script Behavior After Plex Transcoding Stops
@@ -285,19 +285,19 @@ The script waits a set cooldown period after Plex finishes before restarting the
 
 1. Countdown Before Restarting Tdarr Node:
    
-   *(No width specified)*  
+     
    ![Countdown](https://i.imgur.com/59AGRlv.png)
 
 2. Tdarr Node Restarts After Cooldown:
    
    <img width="611" alt="image" src="https://github.com/user-attachments/assets/7ca1d8b0-efac-44ab-9701-24ef525f33c7">
    
-   *(No width specified)*  
+     
    ![Tdarr Node Coming Online](https://i.imgur.com/TTPVyt0.png)
 
 3. Tdarr Node Fully Online Again:
    
-   *(No width specified)*  
+     
    ![Tdarr Node Online](https://i.imgur.com/M1M2vSL.png)
 
 ### Troubleshooting Common Issues
