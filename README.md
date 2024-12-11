@@ -340,9 +340,9 @@ Install User Scripts, add the script, set it to run at array startup, and run it
 
 4. Script detects transcoding & stops Tdarr Node:
    
-   <img width="655" alt="image" src="https://github.com/user-attachments/assets/8b9b0cdc-9084-48ed-a1c0-b00e32f51dc6">
+   <br><img width="655" alt="image" src="https://github.com/user-attachments/assets/8b9b0cdc-9084-48ed-a1c0-b00e32f51dc6"><br>
    
-   ![Tdarr Node Stopped](https://i.imgur.com/KzdXHKf.png)
+   <br><img width="322" alt="image" src="https://github.com/user-attachments/assets/68dcc0c5-b347-4bed-86cb-53e58637b48b" /><br>
 
 5. Tdarr Node completely stopped:
    
