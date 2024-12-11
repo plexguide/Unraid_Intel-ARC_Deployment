@@ -358,9 +358,9 @@ After Plex finishes, the script waits, then restarts Tdarr:
 
 2. Tdarr Node restarts after cooldown:
    
-   <img width="611" alt="image" src="https://github.com/user-attachments/assets/7ca1d8b0-efac-44ab-9701-24ef525f33c7">
+   <br><img width="611" alt="image" src="https://github.com/user-attachments/assets/7ca1d8b0-efac-44ab-9701-24ef525f33c7"><br>
    
-   ![Tdarr Node Coming Online](https://i.imgur.com/TTPVyt0.png)
+   <br><img width="323" alt="image" src="https://github.com/user-attachments/assets/9730388b-c5e8-42fc-9392-69b58d9554d7" /><br>
 
 3. Tdarr Node fully online again:
    
