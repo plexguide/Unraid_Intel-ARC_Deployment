@@ -104,7 +104,7 @@ Enable hardware transcoding in Plex and HDR tone mapping (if supported). If mult
 
 ### Verifying GPU Transcoding
 
-Play a media file that requires transcoding. Check Plex’s dashboard and GPU stats. You should see minimal CPU usage and smooth playback.
+Play a media file that requires transcoding. Check Plex’s dashboard and GPU stats. You should see minimal CPU usage and smooth playback. If you have an AV1 file, play that for the test to verify that AV1 transcoding is working also!
 
 ![Plex GPU Transcoding](https://i.imgur.com/Zz9jfYo.png)
 
