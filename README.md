@@ -70,15 +70,14 @@ Before setting up AV1 flows or using the Tdarr Node Killer Script, ensure you’
 ### Installing Intel GPU TOP Plugin
 
 Install **Intel GPU TOP** by ich777 from the Unraid Community Apps store. This plugin allows you to monitor your Intel ARC GPU’s performance directly from the Unraid dashboard.
-
-*(No width specified for this screenshot originally, leaving as is)*  
+ 
 ![Intel GPU TOP Plugin](https://i.imgur.com/0bHRqya.png)
 
 ### Installing GPU Statistics Plugin
 
 Next, install the **GPU Statistics** plugin by b3rs3rk. With Intel GPU TOP, you’ll gain comprehensive insights into your GPU’s usage during encoding or transcoding tasks.
 
-*(No width specified for this screenshot originally, leaving as is)*  
+ 
 ![GPU Statistics Plugin](https://i.imgur.com/lJZgPvC.png)
 
 Once installed, you’ll see real-time GPU usage:
