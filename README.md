@@ -352,9 +352,7 @@ Install User Scripts, add the script, set it to run at array startup, and run it
 
 After Plex finishes, the script waits, then restarts Tdarr:
 
-1. Countdown before restarting:
-   
-   ![Countdown](https://i.imgur.com/59AGRlv.png)
+1. Countdown 180 seconds before restarting the shutdown docker container.
 
 2. Tdarr Node restarts after cooldown:
    
