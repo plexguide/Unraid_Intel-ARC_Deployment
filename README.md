@@ -30,7 +30,7 @@ Whether you’re an Unraid pro or new to the platform, we’ll walk you through 
   - [What is the AV1 Flow?](#what-is-the-av1-flow)
   - [Importing the AV1 Flow in Tdarr](#importing-the-av1-flow-in-tdarr)
 - [Optimizing AV1 Encoding Settings](#optimizing-av1-encoding-settings)
-- [SAB Speed Control - Bonus](#sab-speed-control)
+- [SABNZBD Speed Control - Bonus](#sabnzbd-speed-control)
 - [Tdarr Node Killer Script](#tdarr-node-killer-script)
   - [Overview](#overview)
   - [Script Behavior](#script-behavior)
