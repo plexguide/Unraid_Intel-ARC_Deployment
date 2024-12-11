@@ -1,10 +1,5 @@
 # Guide to Intel ARC AV1 Encoding on Unraid + Tdarr Node Killer + SAB Speed Control (Bonus)
 
-**Bookmarks (New Resources Added):**  
-- [Intel ARC GPU Documentation](https://www.intel.com/content/www/us/en/support/products/140984/graphics.html)  
-- [Tautulli Documentation](https://tautulli.com/)  
-- [Tdarr Documentation](https://docs.tdarr.io/)
-
 **Want to help?** Click the ★ (Star) button in the upper-right corner!
 
 This guide shows you how to optimize your media library with AV1 encoding on Unraid while also managing GPU resources between Plex and Tdarr. You’ll learn how to significantly reduce video file sizes, save substantial storage space, and automatically free up your GPU for Plex transcodes when needed. Additionally, you’ll learn how to pause Tdarr when Plex requires the GPU and then restart Tdarr once Plex is done.
