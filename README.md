@@ -82,7 +82,6 @@ Next, install the **GPU Statistics** plugin by b3rs3rk. With Intel GPU TOP, youâ
 
 Once installed, youâ€™ll see real-time GPU usage:
 
-*(No width specified for these screenshots)*  
 ![GPU Usage Example 1](https://i.imgur.com/toOvgvN.png)  
 ![GPU Usage Example 2](https://i.imgur.com/jDbrB5a.png)
 
@@ -159,7 +158,7 @@ After setting up the Tdarr Server, install the **Tdarr Node** container (listed 
 5. Ensure the transcode cache matches the server's template path that you created. For this, add the node name at the end such n1 or node1
 6. Ensure to assign the correct GPU to the node. If your deploying 2 or more nodes, ensure it's NOT using the same device. To see your GPUs, type:
 
-```ls -la /dev/dri/ ``` 
+* ls -la /dev/dri/
 
 **WARNING**:
 
@@ -173,7 +172,7 @@ One of these numbers will reflect your iGPU, even for AMD processors. Do not ass
 ### Configuring Tdarr
 
 Once your server and node(s) are deployed, visit
-```http://ip-address:8265```
+* http://ip-address:8265
 
 If you setup your nodes correctly, you should see the following below:
 <br><img width="409" alt="image" src="https://github.com/user-attachments/assets/db6b2dc8-6fb7-4acf-be86-785705a44961" /><br>
