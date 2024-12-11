@@ -248,8 +248,6 @@ Keep in mind the following:
 <br><img width="467" alt="image" src="https://github.com/user-attachments/assets/59439420-8a46-4548-b63f-47076f1a5a6b" /><br>
 <br><img width="448" alt="image" src="https://github.com/user-attachments/assets/b001501f-8757-4ca3-9b63-c74d24fe4da8" /><br>
 
-
-
 ---
 
 # Setting Up Tdarr Libraries
