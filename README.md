@@ -157,7 +157,7 @@ After setting up the Tdarr Server, install the **Tdarr Node** container (listed 
 4. Make sure the configs and logs match the node # for simplicity.
    - Using 2 or more GPU's? Repeat the process and label each one based off the node name - node2 or n2
 5. Ensure the transcode cache matches the server's template path that you created. For this, add the node name at the end such n1 or node1
-6. Ensure to assign the correct GPU to the node. If your deploying 2 or more nodes, ensure it's using the same device. To see your GPUs, type:
+6. Ensure to assign the correct GPU to the node. If your deploying 2 or more nodes, ensure it's NOT using the same device. To see your GPUs, type:
 
 ```ls -la /dev/dri/ ``` 
 
@@ -213,11 +213,47 @@ Note, repeat the following below if you have more than 1 node.
 
 # Setting up Tdarr Libraries
 
-The purpose of setting up libraries is to target
- 
+The purpose of setting up libraries is to target certain locations of where your media is stored. For simplicity, we will use [tv] and [movies]. You can change it to whatever you want or add more libaries.
 
+1. Click the [Libraries] Tab:
 
-[UNDER CONSTRUCTION - DEPLOYING TDARR]
+<br><img width="646" alt="image" src="https://github.com/user-attachments/assets/2bd6102a-9694-42f1-842d-3cc70f087a0f" /><br>
+
+2. Click Library+
+
+<br><img width="130" alt="image" src="https://github.com/user-attachments/assets/f5c6a119-afb6-4f63-8dbc-c2f1db63c019" /><br>
+
+3. Name it TV or Movies (just repeat this entire process when setting up another one)
+4. Next on the Source [Tab] which you should be on by default, match the following information for TV (or movies). Change this accordingly.
+
+<br><img width="909" alt="image" src="https://github.com/user-attachments/assets/2142aa48-a7a8-4e3f-9dcb-d7df3aed5570" /><br>
+
+5. Next, click the [Transcode Cache] tab and make sure the following below matches from the picture. Basically the path will be /temp.
+
+<br><img width="404" alt="image" src="https://github.com/user-attachments/assets/22f9c1f8-a3d8-49a9-8ce6-678c1de28ce4" /><br>
+
+6. Next, click the Filters [Tab]. Scroll downward a-bit and type codecs to skip, put AV1 as shown in the picture. You do not want to re-encode current AV1 files in your library. If you want to skip smaller files, you can put 480p,720p or whatever you like above. 
+
+<br><img width="297" alt="image" src="https://github.com/user-attachments/assets/8ed82ff6-aa65-4fbe-a576-39810eeed1c3" /><br>
+
+7. Next, click the [Transcode Options] Tab. You will unselect classic plugins and select the flows tab and then select the flow called AV1 or AV1 PlexGuide. Guess what! You cannot complete this step. Continue with the Guide below on how to import a [Flow]. Once you import a flow, come back to this step and select the flow called AV1 or AV1 PlexGuide.
+
+<br><img width="1004" alt="image" src="https://github.com/user-attachments/assets/a0a4028d-c539-4df9-8e09-4b25a6a2a2a5" /><br>
+
+8. Repeat this for your other libraries.
+
+9. When done, make sure to start a FRESH NEW SCAN. Failing to do so... well nothing happens
+
+<br><img width="284" alt="image" src="https://github.com/user-attachments/assets/0556d967-8ab3-4628-86d4-12a53a369c0f" /><br>
+
+10. Go back to the home page and look at your nodes and give it a few minutes incase. Make sure you see activity of transcoding. If not, there is an issue. Either the wrong gpu is assigned to your node and etc.
+
+<br><img width="1158" alt="image" src="https://github.com/user-attachments/assets/642f3102-7cfa-4c49-b1d0-0f408930f36d" /><br>
+
+11. If you see successful transcodes, good! If your seeing errors fill up fast and the number is moving pretty fast, it means there is an issue.
+
+<br><img width="1254" alt="image" src="https://github.com/user-attachments/assets/474ce9bf-d883-4b31-afa7-f0ccb909dd0f" /><br>
+
 
 ---
 
