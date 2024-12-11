@@ -328,7 +328,7 @@ Install User Scripts, add the script, set it to run at array startup, and run it
 
 1. Tdarr Node running, no Plex transcoding:
    
-   ![Tdarr Node Running](https://i.imgur.com/PHRITk0.png)
+   <br><img width="543" alt="image" src="https://github.com/user-attachments/assets/c4d99d6c-e8f9-4d38-a103-f8071f07a4fa" /><br>
 
 2. Script monitoring Plex:
    
