@@ -152,7 +152,7 @@ After setting up the Tdarr Server, install the **Tdarr Node** container (listed 
 
 1. Install the **Tdarr Node** via the Unraid App Store (ensure it’s labeled “Tdarr Node,” not “Tdarr).
 2. Name it something identifiable, like - Node1 or N1
-   - Using 2 or more GPU's? Repeat the process and call the next node - Node2 or N2
+  - Using 2 or more GPU's? Repeat the process and call the next node - Node2 or N2
 3. Ensure the server IP is set correctly, usually your Unraid server’s IP. Also ensure the NodeIP is the same IP (trust me on it)
 4. Make sure the configs and logs match the node # for simplicity.
   - Using 2 or more GPU's? Repeat the process and label each one based off the node name - node2 or n2
@@ -195,11 +195,11 @@ Note, repeat the following below if you have more than 1 node.
   - Transcode: CPU (O) GPU (6)
   - Healthcheck: CPU (2) GPU (0) 
 
-<img width="548" alt="image" src="https://github.com/user-attachments/assets/8dc965c7-d801-42b3-af1f-c5310e2e2fad" />
+<br><img width="548" alt="image" src="https://github.com/user-attachments/assets/8dc965c7-d801-42b3-af1f-c5310e2e2fad" /><br>
 
-3. Now click Options and scroll towards the mid bottom and ensure the GPU Works to do CPU Tasks are turned [On] and click the X in the upper right when done
+3. Now click Options and scroll towards the mid bottom and ensure the GPU Works to do CPU Tasks are turned [On] and click the X in the upper right when done.
 
-<img width="431" alt="image" src="https://github.com/user-attachments/assets/3cb3786a-025a-48c6-ba72-c6835effef11" />
+<br><img width="431" alt="image" src="https://github.com/user-attachments/assets/3cb3786a-025a-48c6-ba72-c6835effef11" /><br>
 
 4. dfdf
  
