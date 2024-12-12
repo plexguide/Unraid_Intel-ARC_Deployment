@@ -67,7 +67,7 @@ AV1 is not perfect. Some devices may not support AV1 decoding natively, and AV1 
 
 ## Upgrading to Unraid 7.0 and Installing Required Plugins
 
-Ensure you run Unraid 7.0 or newer, and install the required GPU plugins before setting up AV1 flows or using the Tdarr Node Killer script.
+Ensure you run Unraid 7.0 or newer, and install the required GPU plugins before setting up s or using the Tdarr Node Killer script.
 
 ### Installing Intel GPU TOP Plugin
 
@@ -246,8 +246,6 @@ The AV1 Flow is a predefined workflow that transcodes media into AV1, delivering
 ![Adding a New Flow in Tdarr](https://i.imgur.com/nLzQi1b.png)  
 ![Scroll to Import Option](https://i.imgur.com/hmYNetQ.png)  
 ![Pasting the JSON Content](https://i.imgur.com/Qe13kYg.png)
-
-Tdarr will then begin AV1 transcoding.
 
 ## Optimizing AV1 Encoding Settings
 
