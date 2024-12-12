@@ -164,6 +164,7 @@ After deploying the Tdarr Server, install the **Tdarr Node** (listed separately)
 
 To identify GPUs:
 * `ls -la /dev/dri/`
+<br><img width="457" alt="image" src="https://github.com/user-attachments/assets/3e8b0028-c1b2-4517-b42d-731c2b01d7f3" /><br>
 
 **WARNING:** One entry might be your iGPU. Do not assign the iGPU to a Tdarr Node. 
 
@@ -171,9 +172,7 @@ _Tip:_ Visit your Plex and headover to Transcoding (as shown in the picture) and
 
 <br><img width="701" alt="image" src="https://github.com/user-attachments/assets/1dfa28a8-ddd4-4c0b-a1f9-f4ff2b9c5e9b" /><br>
 
-Plex lists my order of graphics cards as `Intel ARC 380 > Raphel (AMD iGPU) > Intel ARC 380 > Intel ARC 380`. So the second one on the plex list of graphics cards was the same order of of `ls -la /dev/dri`.
-
-<br><img width="457" alt="image" src="https://github.com/user-attachments/assets/3e8b0028-c1b2-4517-b42d-731c2b01d7f3" /><br>
+Plex lists my order of graphics cards as `Intel ARC 380 > Raphel (AMD iGPU) > Intel ARC 380 > Intel ARC 380`. The second one list on plex as iGPU was the same order of of `ls -la /dev/dri` as render129 (so that's the one I do not use or assign)
 
 ### Configuring Tdarr
 
