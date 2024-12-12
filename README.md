@@ -140,7 +140,7 @@ Choose a suitable location for transcoding. For occasional use, an SSD/NVMe cach
 
 Continuous transcoding strains SSD/NVMe drives. Using a dedicated, cost-effective NVMe helps preserve your primary drives’ health. 
 
-Note this is optional. I have a cheap 512GB NVME that Tdarr transcodes to. Since Tdarr will transcode 100s of TBs of data possibly, avoid wearing your primary SSD/NVME. I personally had an NVME give me a BAD SMART warning (nothing was wrong with it) but warning of ZERO life left for reliability.
+Note this is optional. I have a cheap 512GB NVME that Tdarr transcodes to. Since Tdarr will transcode 100s of Terabytes of, avoid wearing out your primary SSD/NVME. I had an NVME provide me BAD SMART warning for reliability (due to wear and tear). I still use it, but cautiously (and works fine).
 
 I also personally encountered where Tdarr bottleneck my primary NVME due to the amount of GPU's and Transcodes reading and writing to my primary appdata NVME.
 
