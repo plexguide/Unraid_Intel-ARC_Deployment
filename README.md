@@ -154,22 +154,26 @@ After deploying the Tdarr Server, install the **Tdarr Node** (listed separately)
 
 1. Install **Tdarr Node** from the Unraid App Store.
 2. Give it a clear name, e.g., Node1. For multiple GPUs, deploy more nodes (N1, N2, etc.).
+<br><img width="477" alt="image" src="https://github.com/user-attachments/assets/8ce39a4d-1479-433c-b3c8-9eceb4ebf044" /><br>
 3. Ensure the server IP and Node IP match.
+<br><img width="749" alt="image" src="https://github.com/user-attachments/assets/736eff11-ec78-441d-9c82-0f11def877bd" /><br>
 4. Keep configs/logs organized per node.
 5. Match the transcode cache path from the server’s template. Add node identifiers if using multiple nodes.
 6. Assign the correct GPU to each node. If multiple nodes exist, ensure they do not share the same GPU.
+<br><img width="769" alt="image" src="https://github.com/user-attachments/assets/b7a2d3e3-288b-4f16-9424-74a82b8f6451" /><br>
 
 To identify GPUs:
 * `ls -la /dev/dri/`
 
 **WARNING:** One entry might be your iGPU. Do not assign the iGPU to a Tdarr Node. 
 
-_Tip:_ If you go to plex, goto Transcoding and click your GPU list... the actually order listed there is the same order of the GPUs when typing ls -la /dev/dri. In the phot example below, you will notice I skipped render129, which is actually the iGPU. Plex lists my order of graphics cards as Intel ARC 380 > Raphel (AMD iGPU) > Intel ARC 380 > Intel ARC 380. So the second one on the plex list of graphics cards was the same order of of ls -la /dev/dri.
+_Tip:_ Visit your Plex and headover to Transcoding (as shown in the picture) and click your GPU list. The listed order shown in Plex is the same order of the GPUs when typing `ls -la /dev/dri`. In the photo example below, you will notice I skipped render129, which is actually the iGPU. 
 
-<img width="477" alt="image" src="https://github.com/user-attachments/assets/8ce39a4d-1479-433c-b3c8-9eceb4ebf044" />
-<img width="749" alt="image" src="https://github.com/user-attachments/assets/736eff11-ec78-441d-9c82-0f11def877bd" />
-<img width="769" alt="image" src="https://github.com/user-attachments/assets/b7a2d3e3-288b-4f16-9424-74a82b8f6451" />
-<img width="457" alt="image" src="https://github.com/user-attachments/assets/3e8b0028-c1b2-4517-b42d-731c2b01d7f3" />
+<br><img width="701" alt="image" src="https://github.com/user-attachments/assets/1dfa28a8-ddd4-4c0b-a1f9-f4ff2b9c5e9b" /><br>
+
+Plex lists my order of graphics cards as `Intel ARC 380 > Raphel (AMD iGPU) > Intel ARC 380 > Intel ARC 380`. So the second one on the plex list of graphics cards was the same order of of `ls -la /dev/dri`.
+
+<br><img width="457" alt="image" src="https://github.com/user-attachments/assets/3e8b0028-c1b2-4517-b42d-731c2b01d7f3" /><br>
 
 ### Configuring Tdarr
 
