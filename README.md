@@ -154,16 +154,20 @@ After deploying the Tdarr Server, install the **Tdarr Node** (listed separately)
 
 1. Install **Tdarr Node** from the Unraid App Store.
 2. Give it a clear name, e.g., Node1. For multiple GPUs, deploy more nodes (N1, N2, etc.).
+
 <br><img width="477" alt="image" src="https://github.com/user-attachments/assets/8ce39a4d-1479-433c-b3c8-9eceb4ebf044" /><br>
 3. Ensure the server IP and Node IP match.
+
 <br><img width="749" alt="image" src="https://github.com/user-attachments/assets/736eff11-ec78-441d-9c82-0f11def877bd" /><br>
 4. Keep configs/logs organized per node.
 5. Match the transcode cache path from the server’s template. Add node identifiers if using multiple nodes.
 6. Assign the correct GPU to each node. If multiple nodes exist, ensure they do not share the same GPU.
+
 <br><img width="769" alt="image" src="https://github.com/user-attachments/assets/b7a2d3e3-288b-4f16-9424-74a82b8f6451" /><br>
 
 To identify GPUs:
 * `ls -la /dev/dri/`
+
 <br><img width="457" alt="image" src="https://github.com/user-attachments/assets/3e8b0028-c1b2-4517-b42d-731c2b01d7f3" /><br>
 
 **WARNING:** One entry might be your iGPU. Do not assign the iGPU to a Tdarr Node. 
