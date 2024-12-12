@@ -51,7 +51,7 @@ Whether you’re an experienced Unraid user or just beginning, this step-by-step
 
 ## Data Savings with AV1 Encoding
 
-AV1 encoding drastically reduces file sizes. Using three Intel ARC GPUs to encode just 10-15% of a large library saved about 37TB. For a 300TB collection, careful AV1 conversion could reduce it to 75-100TB.
+AV1 encoding drastically reduces file sizes. Using three Intel ARC GPUs to encode just 10-15% of a large library saved about 116TB. For a 300TB collection, careful AV1 conversion could reduce it to 75-100TB.
 
 <img width="373" alt="image" src="https://github.com/user-attachments/assets/09d36726-56d9-4c53-8589-eca2173e7283">
 
@@ -121,8 +121,8 @@ If you find this guide helpful, consider clicking the ★ (Star) button above. I
 
 When installing Tdarr, you may see an option to deploy both the server and node in one container. For easier troubleshooting, deploy them separately.
 
-1. Install **Tdarr Server** (not Tdarr Node) from the Unraid App Store.
-2. Name it clearly, e.g., “Tdarr_Server.”
+1. Install **Tdarr** (not Tdarr Node) from the Unraid App Store.
+2. Name it clearly, e.g., “Server” “TServer” “TdarrServer”
 3. Ensure the server IP is correct (usually your Unraid server’s IP).
 4. Set the internal node option to **False**, so you will deploy a separate node container later.
 
@@ -134,11 +134,15 @@ When installing Tdarr, you may see an option to deploy both the server and node 
 
 ## Tdarr Transcoding Location
 
-Choose a suitable location for transcoding. For occasional use, an SSD/NVMe cache is fine. For heavy use (multiple streams, multiple GPUs), consider a dedicated NVMe. Avoid HDDs or RAM to prevent bottlenecks and errors.
+Choose a suitable location for transcoding. For occasional use, an SSD/NVMe cache is fine. For heavy use (multiple streams, multiple GPUs), consider a dedicated NVMe. Avoid HDDs or RAM to prevent bottlenecks and errors. 
 
 ### Warning: Bottlenecks & SSD Wear
 
-Continuous transcoding strains SSD/NVMe drives. Using a dedicated, cost-effective NVMe helps preserve your primary drives’ health.
+Continuous transcoding strains SSD/NVMe drives. Using a dedicated, cost-effective NVMe helps preserve your primary drives’ health. 
+
+Note this is optional. I have a cheap 512GB NVME that Tdarr transcodes to. Since Tdarr will transcode 100s of TBs of data possibly, avoid wearing your primary SSD/NVME. I personally had an NVME give me a BAD SMART warning (nothing was wrong with it) but warning of ZERO life left for reliability.
+
+I also personally encountered where Tdarr bottleneck my primary NVME due to the amount of GPU's and Transcodes reading and writing to my primary appdata NVME.
 
 <img width="754" alt="image" src="https://github.com/user-attachments/assets/daac629c-3fe9-45e4-89e9-c8e50686e2ea" />
 
@@ -149,7 +153,7 @@ After deploying the Tdarr Server, install the **Tdarr Node** (listed separately)
 <img width="397" alt="image" src="https://github.com/user-attachments/assets/6b384a42-194d-4089-b1ff-89d6cca77728" />
 
 1. Install **Tdarr Node** from the Unraid App Store.
-2. Give it a clear name, e.g., Node1. For multiple GPUs, deploy more nodes (Node2, etc.).
+2. Give it a clear name, e.g., Node1. For multiple GPUs, deploy more nodes (N1, N2, etc.).
 3. Ensure the server IP and Node IP match.
 4. Keep configs/logs organized per node.
 5. Match the transcode cache path from the server’s template. Add node identifiers if using multiple nodes.
@@ -158,7 +162,9 @@ After deploying the Tdarr Server, install the **Tdarr Node** (listed separately)
 To identify GPUs:
 * `ls -la /dev/dri/`
 
-**WARNING:** One entry might be your iGPU. Do not assign the iGPU to a Tdarr Node. Check Plex’s GPU order if unsure.
+**WARNING:** One entry might be your iGPU. Do not assign the iGPU to a Tdarr Node. 
+
+_Tip:_ If you go to plex, goto Transcoding and click your GPU list... the actually order listed there is the same order of the GPUs when typing ls -la /dev/dri. In the phot example below, you will notice I skipped render129, which is actually the iGPU. Plex lists my order of graphics cards as Intel ARC 380 > Raphel (AMD iGPU) > Intel ARC 380 > Intel ARC 380. So the second one on the plex list of graphics cards was the same order of of ls -la /dev/dri.
 
 <img width="477" alt="image" src="https://github.com/user-attachments/assets/8ce39a4d-1479-433c-b3c8-9eceb4ebf044" />
 <img width="749" alt="image" src="https://github.com/user-attachments/assets/736eff11-ec78-441d-9c82-0f11def877bd" />
