@@ -1,4 +1,4 @@
-# Guide to Intel ARC AV1 Encoding on Unraid + Tdarr Node Killer + SAB Speed Control (Bonus)
+# Intel ARC AV1 Guide Encoding on Unraid + Tdarr Node Killer + SAB Speed Control (Bonus)
 
 **Want to help?** Click the ★ (Star) button in the upper-right corner!
 
