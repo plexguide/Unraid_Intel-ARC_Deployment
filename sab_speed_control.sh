@@ -12,9 +12,9 @@
 # Configuration
 SABNZBD_API_KEY="60x7fega60f642d489ed89f08c4f8a80fake"
 SABNZBD_URL="http://10.0.0.10:8081/sabnzbd/api"
-SLOW_SPEED="65000000"       # DL Speed when Plex Transcoding
-NORMAL_SPEED="85000000"     # DL Speed when Plex Not Transocding
-NIGHT_SPEED="125000000"     # DL Speed when not using Internet and when Plex Not Transcoding (such as Night)
+SLOW_SPEED="65000000"       # DL Speed when Plex IS playing for a user
+NORMAL_SPEED="85000000"     # DL Speed when Plex is NOT playing for a user
+NIGHT_SPEED="125000000"     # DL Speed when not using Internet and when Plex NOT playing for a user (such as Night)
 
 # 125000000 is 118.2 MB | 80000000 is 76.3 MB 
 
