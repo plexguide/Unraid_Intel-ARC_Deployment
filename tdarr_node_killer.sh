@@ -17,11 +17,11 @@
 #!/bin/bash
 
 # Configuration
-TAUTULLI_API_KEY="dad9bbb78bde43249754b630b58fbf6a" # your api key
-TAUTULLI_URL="http://10.0.0.10:8181/api/v2"         # your tautulli url
-WAIT_SECONDS=180                                    # wait time for when script killed tdarr node to bring up tdarr node again; do not have short to ensure that plex transcodning has occured in awhile
-BASIC_CHECK=3                                       # wait time to check when plex is not transcoding
-CONTAINER_NAME="N1"                                 # the exact name of your tdarr node that you want killed
+TAUTULLI_API_KEY="dad9bbb78bde43249754b630b58fbf6a" # Tautulli API Key
+TAUTULLI_URL="http://10.0.0.10:8181/api/v2"         # Tautulli URL
+WAIT_SECONDS=180                                    # Wait time (seconds) to bring docker container back up when it was stopped
+BASIC_CHECK=3                                       # check Plex Activity intervals (seconds) when not playing 
+CONTAINER_NAME="N1"                                 # Exact of your Tdarr Node that you want stopped
 
 # Function to check if Plex is transcoding via Tautulli
 is_plex_transcoding() {
