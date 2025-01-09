@@ -2,7 +2,7 @@
 
 **Want to help?** Click the ★ (Star) button in the upper-right corner!
 
-**WARNING >>>** Having issues with NODES disappearing? Use ghcr.io/haveagitgat/tdarr:2.23.01 - instead of ghcr.io/haveagitgat/tdarr:latest. Since Tdarr moved to a new version, I have had issues where the nodes disappeared, and the database is sluggish. In their changelog, they claim to speed things up... but it's been more sluggish since. Utilizing this version will work just as fine without having your nodes disappear.
+**WARNING >>>** Having issues with NODES disappearing? Use ghcr.io/haveagitgat/tdarr:2.23.01 - instead of ghcr.io/haveagitgat/tdarr:latest. Since Tdarr moved to a new version, I have had issues where the nodes disappeared and the database statistics acted sluggish. In their changelog, they claim to speed things up, but it's been sluggish since then. Utilizing this version will work just as fine without having your nodes disappear.
 
 This guide shows you how to optimize your media library with AV1 encoding on Unraid while efficiently managing GPU resources shared between Plex and Tdarr. By following these steps, you will reduce video file sizes, save substantial storage space, and ensure Plex always has access to the GPU when it needs it. You will also learn how to pause Tdarr automatically when Plex requires the GPU and then restart Tdarr afterward. Additionally, this guide explains how to adjust SABnzbd download speeds based on Plex streaming activity to prevent buffering.
 
