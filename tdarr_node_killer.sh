@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# v1 - Intial
-# v2 - Prevent Tdarr Node from being killed when only LOCAL is transcoding
-
 # Configuration
 TAUTULLI_API_KEY="dad9bbb78bde43249754b630b58fbf7c"   # Tautulli API Key
 TAUTULLI_URL="http://10.0.0.10:8181/api/v2"            # Tautulli URL
