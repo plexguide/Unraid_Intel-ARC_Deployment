@@ -2,64 +2,40 @@
 
 # Configuration
 TAUTULLI_API_KEY="dad9bbb78bde43249754b630b58fbf7c"   # Tautulli API Key
-TAUTULLI_URL="http://10.0.0.10:8181/api/v2"            # Tautulli URL
-WAIT_SECONDS=180                                      # Wait time (in seconds) after killing the tdarr node before checking again
+TAUTULLI_URL="http://10.0.0.10:8181/api/v2"           # Tautulli URL
+WAIT_SECONDS=180                                      # Wait time (in seconds) after killing the tdarr node
 BASIC_CHECK=3                                         # Basic check interval when Plex is idle
-CONTAINER_NAME="N4"                                   # The exact name of your tdarr node container
-# Option: set to "yes" to disable tdarr only when a remote transcode is detected.
-# When set to "yes", if a remote transcode is active (even with local transcodes), tdarr is disabled.
-# Set to "no" to disable tdarr whenever any transcoding session (local or remote) is detected.
-DISABLE_TDARR_FOR_LOCAL_ONLY="yes"
+CONTAINER_NAME="N4"                                   # Exact name of your tdarr node container
 
-# Function to sleep while logging status every 5 seconds
-sleep_with_status() {
-    local duration=$1
-    local interval=5
-    local elapsed=0
+# The total number of transcodes (local + remote) required to trigger Tdarr shutdown
+TRANSCODE_THRESHOLD=3
 
-    while [ $elapsed -lt $duration ]; do
-        echo "$(date '+%Y-%m-%d %H:%M:%S') - Waiting... ($elapsed/${duration}s elapsed)"
-        sleep $interval
-        elapsed=$(( elapsed + interval ))
-    done
-}
-
-# Function to check if Plex is transcoding via Tautulli.
-is_plex_transcoding() {
+# Function to check if Plex is transcoding via Tautulli
+# Returns 0 (true) if total transcodes >= threshold, else returns 1 (false).
+is_plex_transcoding_over_threshold() {
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Checking Plex activity via Tautulli API"
     response=$(curl -s "${TAUTULLI_URL}?apikey=${TAUTULLI_API_KEY}&cmd=get_activity")
 
-    # Count local and remote transcoding sessions.
-    # Assumes that each session includes an "ip_address" field.
+    # Count local and remote transcoding sessions
     local_count=$(echo "$response" | jq '[.response.data.sessions[]? | select(.transcode_decision == "transcode" and (.ip_address | startswith("10.0.0.")))] | length')
     remote_count=$(echo "$response" | jq '[.response.data.sessions[]? | select(.transcode_decision == "transcode" and (.ip_address | startswith("10.0.0.") | not))] | length')
     total_count=$(( local_count + remote_count ))
     
-    # Log counts.
+    # Log counts
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Detected ${local_count} local and ${remote_count} remote transcoding session(s)."
-    
-    if [ "$DISABLE_TDARR_FOR_LOCAL_ONLY" = "yes" ]; then
-        # Only remote transcoding triggers tdarr disable, even if local transcodes exist.
-        if [ "$remote_count" -gt 0 ]; then
-            echo "$(date '+%Y-%m-%d %H:%M:%S') - Remote transcoding detected."
-            return 0
-        else
-            echo "$(date '+%Y-%m-%d %H:%M:%S') - No remote transcoding detected (only local transcoding active or none at all)."
-            return 1
-        fi
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Total transcodes: ${total_count}, Threshold: ${TRANSCODE_THRESHOLD}"
+
+    # If total_count >= threshold, signal that we should kill Tdarr
+    if [ "$total_count" -ge "$TRANSCODE_THRESHOLD" ]; then
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Total transcodes >= threshold (${TRANSCODE_THRESHOLD})."
+        return 0
     else
-        # Any transcoding session triggers tdarr disable.
-        if [ "$total_count" -gt 0 ]; then
-            echo "$(date '+%Y-%m-%d %H:%M:%S') - Plex is transcoding ${total_count} session(s)."
-            return 0
-        else
-            echo "$(date '+%Y-%m-%d %H:%M:%S') - No Plex transcoding detected."
-            return 1
-        fi
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Total transcodes below threshold. No kill."
+        return 1
     fi
 }
 
-# Function to check if the container is running.
+# Function to check if the container is running
 is_container_running() {
     state=$(docker inspect -f '{{.State.Running}}' "${CONTAINER_NAME}" 2>/dev/null)
     if [ "$state" = "true" ]; then
@@ -70,27 +46,30 @@ is_container_running() {
 }
 
 while true; do
-    if is_plex_transcoding; then
-        # If transcoding (by the chosen criteria) is detected, ensure the container is not running.
+    # Check if total transcodes >= threshold
+    if is_plex_transcoding_over_threshold; then
+        # Ensure the container is not running
         if is_container_running; then
-            echo "$(date '+%Y-%m-%d %H:%M:%S') - Killing Docker container ${CONTAINER_NAME} due to Plex transcoding."
+            echo "$(date '+%Y-%m-%d %H:%M:%S') - Killing Docker container ${CONTAINER_NAME} due to Plex transcode threshold."
             docker kill "${CONTAINER_NAME}"
         else
             echo "$(date '+%Y-%m-%d %H:%M:%S') - ${CONTAINER_NAME} is already stopped."
         fi
 
-        # Wait before checking again with status updates.
-        sleep_with_status "${WAIT_SECONDS}"
+        # Wait before checking again
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Sleeping for ${WAIT_SECONDS} seconds..."
+        sleep "${WAIT_SECONDS}"
     else
-        # When no triggering transcode is detected, if the container is stopped then start it.
+        # If below threshold, ensure the container is running
         if ! is_container_running; then
-            echo "$(date '+%Y-%m-%d %H:%M:%S') - Starting Docker container ${CONTAINER_NAME} since Plex is not transcoding."
+            echo "$(date '+%Y-%m-%d %H:%M:%S') - Starting Docker container ${CONTAINER_NAME} since transcodes are below threshold."
             docker start "${CONTAINER_NAME}"
         else
             echo "$(date '+%Y-%m-%d %H:%M:%S') - ${CONTAINER_NAME} is already running, no action needed."
         fi
 
-        # Wait before next check with status updates.
-        sleep_with_status "${BASIC_CHECK}"
+        # Sleep before next check
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Sleeping for ${BASIC_CHECK} seconds..."
+        sleep "${BASIC_CHECK}"
     fi
 done
