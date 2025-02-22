@@ -332,6 +332,7 @@ Run it at array startup and in the background.
 **Change Log:**  
 - **v1:** Original script  
 - **v2:** Uses Tautulli for simpler detection
+- **v3:** Added option to NOT kill Tdarr node when transcoding LOCAL ONLY
 
 ### Overview
 
