@@ -4,7 +4,7 @@
 TAUTULLI_API_KEY="dad9bbb78bde43249754b630b58fbf7c"   # Tautulli API Key
 TAUTULLI_URL="http://10.0.0.10:8181/api/v2"           # Tautulli URL
 WAIT_SECONDS=180                                      # Wait time (in seconds) after killing the tdarr node
-BASIC_CHECK=3                                         # Basic check interval when Plex is idle
+BASIC_CHECK=3                                         # Seconds check interval to check on Plex Transcode Status
 CONTAINER_NAME="N4"                                   # Exact name of your tdarr node container
 
 # The total number of transcodes (local + remote) required to trigger Tdarr shutdown
