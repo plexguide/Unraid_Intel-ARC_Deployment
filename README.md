@@ -4,7 +4,7 @@
 
 ---
 
-**WARNING
+**WARNING**
 
 Experiencing disappearing nodes? Try using `ghcr.io/haveagitgat/tdarr:2.23.01` instead of `ghcr.io/haveagitgat/tdarr:latest` 
 
