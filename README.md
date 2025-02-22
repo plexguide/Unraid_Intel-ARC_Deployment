@@ -207,15 +207,15 @@ If you have multiple nodes, repeat the following steps for each:
 2. Set the numbers according to your ARC card type:
 
 - ARC 310  
-  - Transcode: CPU (0), GPU (3)  
-  - Healthcheck: CPU (2), GPU (0)
-
-- ARC 380  
   - Transcode: CPU (0), GPU (4)  
   - Healthcheck: CPU (2), GPU (0)
 
+- ARC 380  
+  - Transcode: CPU (0), GPU (4-5)  
+  - Healthcheck: CPU (2), GPU (0)
+
 - ARC 500/700 Series  
-  - Transcode: CPU (0), GPU (6)  
+  - Transcode: CPU (0), GPU (6-8)  
   - Healthcheck: CPU (2), GPU (0)
 
 <br><img width="548" alt="image" src="https://github.com/user-attachments/assets/8dc965c7-d801-42b3-af1f-c5310e2e2fad" /><br>
