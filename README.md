@@ -1,4 +1,4 @@
-# Intel ARC AV1 Guide Encoding on Unraid + Tdarr Node Killer + SAB Speed Control (Bonus)
+# Intel ARC AV1 Guide Encoding on Unraid + Tdarr Node Killer
 
 **Want to help?** Click the ★ (Star) button in the upper-right corner!
 
@@ -317,23 +317,6 @@ Libraries let you target specific media locations. For simplicity, we’ll use �
 11. If errors increase rapidly, double-check configurations or GPU assignments.
 
 <br><img width="1254" alt="image" src="https://github.com/user-attachments/assets/474ce9bf-d883-4b31-afa7-f0ccb909dd0f" /><br>
-
----
-
-# SABNZBD Speed Control - Bonus
-
-Use the SAB Speed Script to adjust SABnzbd download speeds based on Plex streaming activity dynamically. It slows downloads when Plex is active, preventing buffering, and speeds them up off-peak.
-
-**Requirements:**
-- [Tautulli](https://tautulli.com/) for Plex monitoring
-- [User Scripts](https://forums.unraid.net/topic/87144-plugin-user-scripts/) from the Unraid App Store
-
-**Script:** [sab_speed_control.sh](sab_speed_control.sh)
-
-Run it at array startup and in the background.
-
-<img width="483" alt="image" src="https://github.com/user-attachments/assets/b04d53b1-9d5d-42ab-ab33-2ac2dd2449b0">
-<img width="403" alt="image" src="https://github.com/user-attachments/assets/728a6959-cfaf-44e5-8302-ab43372c87a1">
 
 ---
 
