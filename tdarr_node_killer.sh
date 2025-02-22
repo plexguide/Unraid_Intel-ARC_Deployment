@@ -11,6 +11,19 @@ CONTAINER_NAME="N4"                                   # The exact name of your t
 # Set to "no" to disable tdarr whenever any transcoding session (local or remote) is detected.
 DISABLE_TDARR_FOR_LOCAL_ONLY="yes"
 
+# Function to sleep while logging status every 5 seconds
+sleep_with_status() {
+    local duration=$1
+    local interval=5
+    local elapsed=0
+
+    while [ $elapsed -lt $duration ]; do
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Waiting... ($elapsed/${duration}s elapsed)"
+        sleep $interval
+        elapsed=$(( elapsed + interval ))
+    done
+}
+
 # Function to check if Plex is transcoding via Tautulli.
 is_plex_transcoding() {
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Checking Plex activity via Tautulli API"
@@ -66,9 +79,8 @@ while true; do
             echo "$(date '+%Y-%m-%d %H:%M:%S') - ${CONTAINER_NAME} is already stopped."
         fi
 
-        # Wait before checking again.
-        echo "$(date '+%Y-%m-%d %H:%M:%S') - Sleeping for ${WAIT_SECONDS} seconds..."
-        sleep "${WAIT_SECONDS}"
+        # Wait before checking again with status updates.
+        sleep_with_status "${WAIT_SECONDS}"
     else
         # When no triggering transcode is detected, if the container is stopped then start it.
         if ! is_container_running; then
@@ -78,8 +90,7 @@ while true; do
             echo "$(date '+%Y-%m-%d %H:%M:%S') - ${CONTAINER_NAME} is already running, no action needed."
         fi
 
-        # Sleep before next check.
-        echo "$(date '+%Y-%m-%d %H:%M:%S') - Sleeping for ${BASIC_CHECK} seconds..."
-        sleep "${BASIC_CHECK}"
+        # Wait before next check with status updates.
+        sleep_with_status "${BASIC_CHECK}"
     fi
 done
