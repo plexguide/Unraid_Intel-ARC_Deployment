@@ -12,6 +12,8 @@ Since Tdarr transitioned to a new version, I encountered issues where the Tdarr 
 
 ---
 
+**Introduction**
+
 This guide shows you how to optimize your media library with AV1 encoding on Unraid while efficiently managing GPU resources shared between Plex and Tdarr. By following these steps, you will reduce video file sizes, save substantial storage space, and ensure Plex always has access to the GPU when it needs it. You will also learn how to pause Tdarr automatically when Plex requires the GPU and then restart Tdarr afterward. Additionally, this guide explains how to adjust SABnzbd download speeds based on Plex streaming activity to prevent buffering.
 
 **What you’ll learn:**
