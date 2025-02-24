@@ -69,7 +69,7 @@ AV1 encoding drastically reduces file sizes. Using three Intel ARC GPUs to encod
 
 <img width="373" alt="image" src="https://github.com/user-attachments/assets/09d36726-56d9-4c53-8589-eca2173e7283">
 
-In other words, AV1 can deliver huge storage and cost savings.
+In other words, AV1 can deliver huge storage and cost savings. >>> Currently saved 255TB!
 
 ---
 
