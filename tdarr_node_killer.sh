@@ -2,16 +2,32 @@
 
 # Configuration
 TAUTULLI_API_KEY="dad9bbb78bde43249754b630b58fbf7c"   # Tautulli API Key
-TAUTULLI_URL="http://10.0.0.10:8181/api/v2"           # Tautulli URL
-WAIT_SECONDS=180                                      # Wait time (in seconds) after killing the tdarr node
-BASIC_CHECK=3                                         # Seconds check interval to check on Plex Transcode Status
-CONTAINER_NAME="N4"                                   # Exact name of your tdarr node container
+TAUTULLI_URL="http://10.0.0.16:8181/api/v2"           # Tautulli URL (custom bridge mode)
+WAIT_SECONDS=180                                      # Wait time (in seconds) after killing the Tdarr node
+BASIC_CHECK=3                                         # Basic check interval when Plex is idle
+CONTAINER_NAME="N1"                                   # Exact name of your Tdarr node container
 
 # The total number of transcodes (local + remote) required to trigger Tdarr shutdown
-TRANSCODE_THRESHOLD=3
+TRANSCODE_THRESHOLD=4
 
-# Function to check if Plex is transcoding via Tautulli
-# Returns 0 (true) if total transcodes >= threshold, else returns 1 (false).
+# ------------------------------------------------------------
+# Function: Check connectivity to Tautulli API at startup
+# ------------------------------------------------------------
+check_tautulli_connection() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Checking connection to Tautulli API at ${TAUTULLI_URL}"
+    response=$(curl -s "${TAUTULLI_URL}?apikey=${TAUTULLI_API_KEY}&cmd=get_activity")
+    if echo "$response" | jq . >/dev/null 2>&1; then
+         echo "$(date '+%Y-%m-%d %H:%M:%S') - Successfully connected to Tautulli."
+    else
+         echo "$(date '+%Y-%m-%d %H:%M:%S') - ERROR: Could not connect to Tautulli API. Please check your Tautulli URL and API key."
+         exit 1
+    fi
+}
+
+# ------------------------------------------------------------
+# Function: Check if Plex is transcoding via Tautulli
+# Returns 0 (true) if total transcodes >= threshold, else returns 1 (false)
+# ------------------------------------------------------------
 is_plex_transcoding_over_threshold() {
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Checking Plex activity via Tautulli API"
     response=$(curl -s "${TAUTULLI_URL}?apikey=${TAUTULLI_API_KEY}&cmd=get_activity")
@@ -25,7 +41,7 @@ is_plex_transcoding_over_threshold() {
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Detected ${local_count} local and ${remote_count} remote transcoding session(s)."
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Total transcodes: ${total_count}, Threshold: ${TRANSCODE_THRESHOLD}"
 
-    # If total_count >= threshold, signal that we should kill Tdarr
+    # Only if total_count >= threshold do we signal a kill
     if [ "$total_count" -ge "$TRANSCODE_THRESHOLD" ]; then
         echo "$(date '+%Y-%m-%d %H:%M:%S') - Total transcodes >= threshold (${TRANSCODE_THRESHOLD})."
         return 0
@@ -35,7 +51,9 @@ is_plex_transcoding_over_threshold() {
     fi
 }
 
-# Function to check if the container is running
+# ------------------------------------------------------------
+# Function: Check if the container is running
+# ------------------------------------------------------------
 is_container_running() {
     state=$(docker inspect -f '{{.State.Running}}' "${CONTAINER_NAME}" 2>/dev/null)
     if [ "$state" = "true" ]; then
@@ -45,10 +63,13 @@ is_container_running() {
     fi
 }
 
+# Initial connectivity check to Tautulli
+check_tautulli_connection
+
+# Main monitoring loop
 while true; do
-    # Check if total transcodes >= threshold
     if is_plex_transcoding_over_threshold; then
-        # Ensure the container is not running
+        # If threshold reached, ensure the container is not running.
         if is_container_running; then
             echo "$(date '+%Y-%m-%d %H:%M:%S') - Killing Docker container ${CONTAINER_NAME} due to Plex transcode threshold."
             docker kill "${CONTAINER_NAME}"
@@ -60,7 +81,7 @@ while true; do
         echo "$(date '+%Y-%m-%d %H:%M:%S') - Sleeping for ${WAIT_SECONDS} seconds..."
         sleep "${WAIT_SECONDS}"
     else
-        # If below threshold, ensure the container is running
+        # If below threshold, ensure the container is running.
         if ! is_container_running; then
             echo "$(date '+%Y-%m-%d %H:%M:%S') - Starting Docker container ${CONTAINER_NAME} since transcodes are below threshold."
             docker start "${CONTAINER_NAME}"
