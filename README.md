@@ -327,6 +327,7 @@ Libraries let you target specific media locations. For simplicity, weâ€™ll use â
 - **v2:** Uses Tautulli for simpler detection
 - **v3:** Added option to NOT kill Tdarr node when transcoding LOCAL ONLY
 - **v4:** Added a threshold transcode number option to kill the tdarr container. Default is 3. (If 2 are watching, it keeps running).
+- **v5:** Added startup verification that it connects to the Tautulli API in the logs when it starts up
 
 ### Overview
 
