@@ -21,11 +21,11 @@ SAB_ADDRESS="http://10.0.0.10:8080"
 SAB_API_KEY="86a11e19dcb1400a869773be38abc9bf"
 
 # Speed limit settings:
-BASE_SPEED_LIMIT_MB=50    # Base SABnzbd speed limit in MB/s
-OFFSET_PER_USER_MB=5      # Reduce speed by X MB/s for each remote user
+BASE_SPEED_LIMIT_MB=110   # Base SABnzbd speed limit in MB/s
+OFFSET_PER_USER_MB=3      # Reduce speed by X MB/s for each remote user
 MIN_SPEED_MB=10           # Minimum speed limit in MB/s
 
-# Local network configuration:
+# Local network configuration - this is to ignore local connections from Tatutulli (because does not affect speed)
 LOCAL_IP_PREFIX="10.0.0."
 
 # Loop interval:
