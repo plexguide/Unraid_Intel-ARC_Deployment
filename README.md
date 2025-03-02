@@ -2,8 +2,6 @@
 
 <h2 align="center">Want to Help? Click the Star in the Upper-Right Corner! ⭐</h2>
 
----
-
 **WARNING**
 
 Experiencing disappearing nodes? Try using `ghcr.io/haveagitgat/tdarr:2.23.01` instead of `ghcr.io/haveagitgat/tdarr:latest` 
