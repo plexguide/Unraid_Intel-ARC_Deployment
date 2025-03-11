@@ -4,7 +4,7 @@
 
 **NOTE**
 
-This is using `ghcr.io/haveagitgat/tdarr:2.35.02` instead of `ghcr.io/haveagitgat/tdarr:latest` as a note, but should be ok. If a future update breaks things, utilize `ghcr.io/haveagitgat/tdarr:2.35.02`.
+This is using `ghcr.io/haveagitgat/tdarr:2.35.02` instead of `ghcr.io/haveagitgat/tdarr:latest`.
 
 ---
 
