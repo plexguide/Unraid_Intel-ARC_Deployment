@@ -2,11 +2,9 @@
 
 <h2 align="center">Want to Help? Click the Star in the Upper-Right Corner! ⭐</h2>
 
-**WARNING**
+**NOTEG**
 
-Experiencing disappearing nodes? Try using `ghcr.io/haveagitgat/tdarr:2.23.01` instead of `ghcr.io/haveagitgat/tdarr:latest` 
-
-Since Tdarr transitioned to a new version, I encountered issues where the Tdarr Nodes vanish, including the database statistics becoming sluggish even though their changelog illudes to performance improvements. This specific version provides reliable operation without the disappearing nodes problem. You have been warned. Also by using this version, changes to any commands will PREVENT problems.
+This is using `ghcr.io/haveagitgat/tdarr:2.35.02` instead of `ghcr.io/haveagitgat/tdarr:latest`.
 
 ---
 
