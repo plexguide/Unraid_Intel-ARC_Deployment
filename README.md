@@ -239,7 +239,7 @@ If you have multiple nodes, repeat the following steps for each:
 - **v4:** Removed images from files, reducing failure rates from ~25% to nearly 1-2%
 - **v5:** Better quality improvement and adjusted flow for simplicity
 
-**JSON Script:** [av1_flow_v4.json](av1_flow_v4.json)
+**JSON Script:** [av1_flow_v5.json](av1_flow_v5.json)
 
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/9b884a52-426f-4c35-b843-199bcdc363ec" />
 
