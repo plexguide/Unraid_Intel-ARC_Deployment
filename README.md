@@ -267,8 +267,8 @@ Keep in mind the following:
 * Bigger Number: Worst Quality, Smaller File
 * Lower Number: Better Quality, Bigger File
 
-<br><img width="467" alt="image" src="https://github.com/user-attachments/assets/59439420-8a46-4548-b63f-47076f1a5a6b" /><br>
-<br><img width="448" alt="image" src="https://github.com/user-attachments/assets/b001501f-8757-4ca3-9b63-c74d24fe4da8" /><br>
+<br><img width="828" alt="image" src="https://github.com/user-attachments/assets/8e5474a0-2601-4d11-a716-4bc3168d6636" /><br>
+<br><img width="744" alt="image" src="https://github.com/user-attachments/assets/c53b379a-43e2-4d02-bb10-0e6073b53a66" /><br>
 
 ---
 
