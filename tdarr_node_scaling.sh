@@ -11,10 +11,13 @@ TDARR_NODE_LOG_PATH="/mnt/user/appdata/n1-1/logs/Tdarr_Node_Log.txt"
 T1_TAUTULLI_API_KEY="ebdb8c80fc2b461ea182243dbc1b27a1"
 T1_TAUTULLI_URL="http://10.0.0.10:8181/api/v2"
 
-######################################## IMPORTANT NOTE ########################################
-# The additional Tautulli's are needed if you are running multiple PLEX SERVERS on the SAME GPU.
-# This is useful if you only have one GPU, but need to run a PLEX Primary and Backup Servers.
-# If you do not understand, ignore it. Typically 99% of people will not utilize this.
+####################################### IMPORTANT NOTE #######################################
+# Additional Tautulli configurations are only needed if you run multiple Plex servers
+# on the same GPU (e.g., a primary and a backup Plex instance). This lets the script
+# track transcodes across all your servers sharing that single GPU.
+#
+# In most cases (99% of setups), you only have one Plex server (per gpu), so you can ignore
+# any extra Tautulli entries.
 
 # ------------- T2 (Optional) -------------
 T2_TAUTULLI_API_KEY=""
@@ -27,6 +30,8 @@ T3_TAUTULLI_URL=""
 # ------------- T4 (Optional) -------------
 T4_TAUTULLI_API_KEY=""
 T4_TAUTULLI_URL=""
+###############################################################################################
+
 
 # ----------- Tdarr Settings -------------
 TDARR_ALTER_WORKERS=true       # If true, we adjust GPU workers; otherwise we kill container on threshold
