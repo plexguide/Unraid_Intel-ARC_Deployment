@@ -32,12 +32,20 @@ T4_TAUTULLI_API_KEY=""
 T4_TAUTULLI_URL=""
 ###############################################################################################
 
-
 # ----------- Tdarr Settings -------------
 TDARR_ALTER_WORKERS=true       # If true, we adjust GPU workers; otherwise we kill container on threshold
-TDARR_DEFAULT_LIMIT=5          # Default GPU workers when watchers=0
-TDARR_API_URL="http://10.0.0.10:8265"   # Without /api/v2
+TDARR_DEFAULT_LIMIT=5          # Default GPU workers
+TDARR_API_URL="http://10.0.0.10:8265"   # WITHOUT /api/v2
 CONTAINER_NAME="N1"            # Name of your Tdarr Node Docker container
+
+# ----------- Offset Setting ------------- 
+# Only Applies if >>> TDARR_ALTER_WORKERS=true 
+
+# The number of jobs is only reduced once so many transcodes are occuring
+# If set to 3 - If you have 3 transcodes, then the gpu workers reduce by 1
+#               If you have 4 transcodes, then the gpu workers reduce by 2
+# If set to 0 - It will reduce gpu workers by one per transcode immediately
+OFFSET_THRESHOLD=3
 
 # ----------- Other -------------
 WAIT_SECONDS=10                # Sleep after adjustments
@@ -48,16 +56,11 @@ TRANSCODE_THRESHOLD=4          # # watchers that triggers kill or reduce workers
 # End of configuration
 ###################################
 
-
 # ------------------------------------------------------------
 # Function: find_latest_node_id
-# Grabs the most recent "nodeID": "xxxx" from the Node log.
-# If not found, returns empty string.
 # ------------------------------------------------------------
 find_latest_node_id() {
     if [ -f "$TDARR_NODE_LOG_PATH" ]; then
-        # use grep to find lines like `"nodeID": "26Rf3QImB",`
-        # tail -n1 picks the latest occurrence
         local found
         found=$(grep -oP '"nodeID":\s*"\K[^"]+' "$TDARR_NODE_LOG_PATH" | tail -n1)
         echo "$found"
@@ -71,12 +74,10 @@ TDARR_NODE_ID=""
 
 # ------------------------------------------------------------
 # Function: ensure_node_id_loaded
-# Checks if we have TDARR_NODE_ID already set. If not, tries to find it from the log.
-# If the log doesn't have it, we fail.
 # ------------------------------------------------------------
 ensure_node_id_loaded() {
     if [ -n "$TDARR_NODE_ID" ]; then
-        return 0  # We already have a Node ID
+        return 0
     fi
 
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Attempting to retrieve nodeID from $TDARR_NODE_LOG_PATH"
@@ -85,7 +86,6 @@ ensure_node_id_loaded() {
 
     if [ -z "$found" ]; then
         echo "ERROR: Could not find any nodeID in $TDARR_NODE_LOG_PATH."
-        echo "Script cannot proceed until the Node logs show a 'nodeID' line."
         return 1
     fi
 
@@ -96,8 +96,6 @@ ensure_node_id_loaded() {
 
 # ------------------------------------------------------------
 # Function: refresh_node_id_if_changed
-# If the node restarts and the ID changes, pick up the new one automatically.
-# We call this if we see "Could not retrieve current GPU worker limit," etc.
 # ------------------------------------------------------------
 refresh_node_id_if_changed() {
     local latest
@@ -114,7 +112,6 @@ refresh_node_id_if_changed() {
         echo "NOTICE: nodeID is still the same [$TDARR_NODE_ID]."
     fi
 }
-
 
 # ------------------------------------------------------------
 # Function: check_single_tautulli_connection
@@ -158,7 +155,6 @@ check_tautulli_connections_on_startup() {
 
 # ------------------------------------------------------------
 # Function: fetch_transcode_counts_from_tautulli
-# Returns "local_cnt remote_cnt" or "0 0" on error
 # ------------------------------------------------------------
 fetch_transcode_counts_from_tautulli() {
     local api_key="$1"
@@ -192,7 +188,6 @@ total_count=0
 
 # ------------------------------------------------------------
 # Function: is_plex_transcoding_over_threshold
-# sets total_count and returns 0 if >= threshold, else 1
 # ------------------------------------------------------------
 is_plex_transcoding_over_threshold() {
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Checking Plex transcodes..."
@@ -224,6 +219,7 @@ is_plex_transcoding_over_threshold() {
 
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Found $total_local local & $total_remote remote => total=$total_count, threshold=$TRANSCODE_THRESHOLD"
 
+    # Return 0 if watchers >= threshold
     if [ "$total_count" -ge "$TRANSCODE_THRESHOLD" ]; then
         return 0
     fi
@@ -241,18 +237,34 @@ is_container_running() {
 
 # ------------------------------------------------------------
 # Function: adjust_tdarr_workers
-# If watchers=0 => desired=5, watchers=3 => desired=2, etc.
-# If we get an error, we re-check the Node log for a changed ID.
+# 
+# We only start subtracting from TDARR_DEFAULT_LIMIT once watchers >= OFFSET_THRESHOLD.
+# Example with OFFSET_THRESHOLD=3:
+#   watchers=2 => no reduce
+#   watchers=3 => reduce by 1
+#   watchers=4 => reduce by 2, etc.
 # ------------------------------------------------------------
 adjust_tdarr_workers() {
-    # Make sure we have a nodeID
     ensure_node_id_loaded || return
 
     local watchers="$1"
-    local desired=$((TDARR_DEFAULT_LIMIT - watchers))
-    [ "$desired" -lt 0 ] && desired=0
 
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - Adjusting GPU workers. watchers=$watchers => desired=$desired"
+    # 1) Calculate how many watchers are above the offset
+    #    If watchers < OFFSET_THRESHOLD => watchersOverOffset=0
+    #    If watchers=3 => watchersOverOffset=1 => reduce by 1
+    #    If watchers=4 => watchersOverOffset=2 => reduce by 2, etc.
+    local watchersOverOffset=$(( watchers - OFFSET_THRESHOLD + 1 ))
+    if [ "$watchersOverOffset" -lt 0 ]; then
+        watchersOverOffset=0
+    fi
+
+    # 2) Desired = TDARR_DEFAULT_LIMIT - watchersOverOffset
+    local desired=$(( TDARR_DEFAULT_LIMIT - watchersOverOffset ))
+    if [ "$desired" -lt 0 ]; then
+        desired=0
+    fi
+
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - watchers=$watchers => watchersOverOffset=$watchersOverOffset => desiredWorkers=$desired"
 
     # poll-worker-limits
     local poll_resp
@@ -293,26 +305,19 @@ adjust_tdarr_workers() {
             -d '{"data":{"nodeID":"'"$TDARR_NODE_ID"'","process":"'"$step"'","workerType":"transcodegpu"}}' \
             >/dev/null 2>&1
         i=$(( i + 1 ))
-        sleep 1  # optional delay
+        sleep 1
     done
 
     echo "$(date '+%Y-%m-%d %H:%M:%S') - GPU worker limit adjustment complete."
 }
 
-
 # ------------------------------------------------------------
 # Main Script
 # ------------------------------------------------------------
-
-# 1) Try to load a nodeID at startup (not strictly required, but nice to do once).
 ensure_node_id_loaded
-
-# 2) Check Tautulli connectivity
 check_tautulli_connections_on_startup
 
-# 3) Main monitoring loop
 while true; do
-
     if is_plex_transcoding_over_threshold; then
         # watchers >= threshold
         if [ "$TDARR_ALTER_WORKERS" = "true" ]; then
