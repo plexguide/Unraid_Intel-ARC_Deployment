@@ -179,7 +179,208 @@ Once the Tdarr Server is running, install **Tdarr Node** (a separate listing). T
 <br><img width="769" alt="image" src="https://github.com/user-attachments/assets/b7a2d3e3-288b-4f16-9424-74a82b8f6451" /><br>
 
 **Identify GPUs** by running:
+<br><img width="457" alt="image" src="https://github.com/user-attachments/assets/3e8b0028-c1b2-4517-b42d-731c2b01d7f3" /><br>
 
+> **Warning:** One entry might be your iGPU. Don’t assign your iGPU to a Tdarr node.
+
+**Tip:** Go to Plex → Settings → Transcoding. When you pick a GPU in Plex, the GPU order matches the order from `ls -la /dev/dri`. In the example below, `render129` is the iGPU, so I skip it and use `render130` for Node2 and `render131` for Node3.
+
+<br><img width="701" alt="image" src="https://github.com/user-attachments/assets/1dfa28a8-ddd4-4c0b-a1f9-f4ff2b9c5e9b" /><br>
+
+### Configuring Tdarr
+
+1. Go to `http://<your-unraid-IP>:8265`.  
+2. You should see your nodes listed:
+
+<br><img width="409" alt="image" src="https://github.com/user-attachments/assets/db6b2dc8-6fb7-4acf-be86-785705a44961" /><br>
+
+3. For each node, click it and set CPU/GPU worker counts based on your ARC card:
+
+    - **ARC A310**  
+      - Transcode: CPU (0), GPU (2–3)  
+      - Health Check: CPU (2), GPU (0)  
+
+    - **ARC A380**  
+      - Transcode: CPU (0), GPU (2–4)  
+      - Health Check: CPU (2), GPU (0)  
+
+    - **ARC A500/A700**  
+      - Transcode: CPU (0), GPU (2–5)  
+      - Health Check: CPU (2), GPU (0)  
+
+<br><img width="548" alt="image" src="https://github.com/user-attachments/assets/8dc965c7-d801-42b3-af1f-c5310e2e2fad" /><br>
+
+4. Click **Options**, scroll to the bottom, and enable “GPU Workers to do CPU Tasks,” then close.
+
+<br><img width="431" alt="image" src="https://github.com/user-attachments/assets/3cb3786a-025a-48c6-ba72-c6835effef11" /><br>
+
+5. In the staging section, check **Auto-accept successful transcodes** so Tdarr replaces old files automatically.
+
+<br><img width="745" alt="image" src="https://github.com/user-attachments/assets/b78a71c2-71c9-4a01-a5c7-40d34ff26775" /><br>
+
+6. In **Status**, pick the queue order (e.g., largest files first).
+
+<br><img width="774" alt="image" src="https://github.com/user-attachments/assets/111cbddd-bfe3-437f-b79e-7fd00ec90c59" /><br>
+
+---
+
+# Setting up the AV1 Tdarr Flow
+
+**Change Log**  
+- **v1:** Original AV1 flow  
+- **v2:** Removed B-frames  
+- **v3:** Improved quality  
+- **v4:** Removed images from files (failure rates ~25% → 1–2%)  
+- **v5:** Better quality, simpler flow  
+
+**JSON Script:** [av1_flow_v5.json](av1_flow_v5.json)
+
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/9b884a52-426f-4c35-b843-199bcdc363ec" />
+
+## What is the AV1 Flow?
+
+The AV1 Flow is a prebuilt workflow that encodes your media to AV1 for huge storage savings, without requiring expert knowledge of encoding parameters. You must import it before creating your Tdarr libraries.
+
+## Importing the AV1 Flow in Tdarr
+
+1. In Tdarr, go to **Flows**.  
+2. Scroll down and click **Import**.  
+3. Paste the AV1 Flow JSON.  
+4. Apply it to your libraries.
+
+![Adding a New Flow in Tdarr](https://i.imgur.com/nLzQi1b.png)  
+![Scroll to Import Option](https://i.imgur.com/hmYNetQ.png)  
+![Pasting the JSON Content](https://i.imgur.com/Qe13kYg.png)
+
+---
+
+# Optimizing AV1 Encoding Settings
+
+Within the AV1 flow, adjust **CRF** and **bitrate** to balance quality and size. Make sure you’ve enabled hardware acceleration so the GPU does the heavy lifting. In general:
+
+- **Higher CRF** → Lower quality, smaller files  
+- **Lower CRF** → Higher quality, larger files  
+
+I’ve found the default settings in the AV1 Flow give an excellent quality-to-size ratio. If you want finer control, test small sets of files and tweak CRF/bitrate until you find your sweet spot.
+
+<br><img width="828" alt="image" src="https://github.com/user-attachments/assets/8e5474a0-2601-4d11-a716-4bc3168d6636" /><br>
+<br><img width="744" alt="image" src="https://github.com/user-attachments/assets/c53b379a-43e2-4d02-bb10-0e6073b53a66" /><br>
+
+---
+
+# Setting Up Tdarr Libraries
+
+Libraries let you specify locations and define how Tdarr processes them. For instance, you might have separate libraries for “tv” and “movies.” Adjust to your setup.
+
+1. Click **Libraries**:  
+<br><img width="646" alt="image" src="https://github.com/user-attachments/assets/2bd6102a-9694-42f1-842d-3cc70f087a0f" /><br>
+
+2. Click **Library+**:
+<br><img width="130" alt="image" src="https://github.com/user-attachments/assets/f5c6a119-afb6-4f63-8dbc-c2f1db63c019" /><br>
+
+3. Name your new library (e.g., “TV,” “Movies,” etc.).  
+4. Under **Source**, point it to your media folder. Enable [Hourly] scanning to catch new content.
+
+<br><img width="909" alt="image" src="https://github.com/user-attachments/assets/2142aa48-a7a8-4e3f-9dcb-d7df3aed5570" /><br>
+<br><img width="292" alt="image" src="https://github.com/user-attachments/assets/e5bb4b33-5115-4d65-a4de-7a28d705a0d0" /><br>
+
+5. Under **Transcode Cache**, set the path to `/temp` (or your chosen transcode folder).
+
+<br><img width="404" alt="image" src="https://github.com/user-attachments/assets/22f9c1f8-a3d8-49a9-8ce6-678c1de28ce4" /><br>
+
+6. In **Filters**, add `AV1` to “Codecs to Skip,” so you never re-encode existing AV1 files. You can also skip small files if you like.
+
+<br><img width="297" alt="image" src="https://github.com/user-attachments/assets/8ed82ff6-aa65-4fbe-a576-39810eeed1c3" /><br>
+
+7. In **Transcode Options**, uncheck “Classic Plugins,” go to the **Flows** tab, and pick the AV1 flow. (If you haven’t imported the flow yet, see the [Importing the AV1 Flow in Tdarr](#importing-the-av1-flow-in-tdarr) section first.)
+
+<br><img width="1004" alt="image" src="https://github.com/user-attachments/assets/a0a4028d-c539-4df9-8e09-4b25a6a2a2a5" /><br>
+
+8. Repeat for all your libraries.  
+9. Perform a **Fresh New Scan** to apply changes.
+
+<br><img width="284" alt="image" src="https://github.com/user-attachments/assets/0556d967-8ab3-4628-86d4-12a53a369c0f" /><br>
+
+10. After scanning, the home page should show transcoding activity. If not, re-check your GPU assignments and node settings.
+
+<br><img width="1158" alt="image" src="https://github.com/user-attachments/assets/642f3102-7cfa-4c49-b1d0-0f408930f36d" /><br>
+
+11. If you see tons of errors, review your GPU configuration or flow settings.
+
+<br><img width="1254" alt="image" src="https://github.com/user-attachments/assets/474ce9bf-d883-4b31-afa7-f0ccb909dd0f" /><br>
+
+---
+
+# SABNZBD Speed Control - Bonus
+
+You can also tie SABnzbd’s download speed to Plex streaming demand. By throttling SABnzbd when Plex is active, you minimize buffering. Check out Tautulli’s scripts or the SABnzbd API for ways to reduce speed during high stream loads. This is optional but can significantly improve user experience if you often saturate your internet bandwidth with downloads.
+
+---
+
+# Tdarr Node Killer Script
+
+**Change Log**  
+- **v1:** Original script  
+- **v2:** Switched to Tautulli for simpler detection  
+- **v3:** Option to avoid killing Tdarr node on local-only transcodes  
+- **v4:** Added a threshold to kill the Tdarr container only if transcodes exceed (default) 3 sessions  
+- **v5:** Added Tautulli API connectivity check in logs at startup  
+
+## Overview
+
+The Tdarr Node Killer script ensures Plex always has GPU priority. When Plex starts transcoding on the same GPU, the script stops Tdarr. Once Plex stops, it waits a short cooldown and restarts Tdarr.
+
+## Script Behavior
+
+- Stops the Tdarr Node container as soon as Plex begins GPU transcoding.  
+- Waits for Plex transcoding to end, then restarts Tdarr after a short cooldown (e.g., 3 minutes).
+
+**Script:** [tdarr_node_killer.sh](tdarr_node_killer.sh)
+
+Use **User Scripts** in Unraid to install this script, set it to run on array startup, and keep it running in the background.
+
+<img width="403" alt="image" src="https://github.com/user-attachments/assets/728a6959-cfaf-44e5-8302-ab43372c87a1">
+
+## Step-by-Step Implementation for Unraid
+
+1. Confirm Tdarr Node [N1] is running when no one’s transcoding in Plex:  
+   <br><img width="543" alt="image" src="https://github.com/user-attachments/assets/c4d99d6c-e8f9-4d38-a103-f8071f07a4fa" /><br>
+
+2. The script runs and waits for Plex transcoding activity:  
+   <br><img width="615" alt="image" src="https://github.com/user-attachments/assets/a0ebab4e-e178-4de3-87f7-00e749cfa6cd"><br>
+
+3. A user begins transcoding in Plex:
+
+   ![Plex User Starts Transcoding](https://i.imgur.com/AT6hCUV.png)
+
+4. The script detects transcoding and stops the Tdarr Node:
+
+   <br><img width="655" alt="image" src="https://github.com/user-attachments/assets/8b9b0cdc-9084-48ed-a1c0-b00e32f51dc6"><br>
+   <br><img width="322" alt="image" src="https://github.com/user-attachments/assets/68dcc0c5-b347-4bed-86cb-53e58637b48b" /><br>
+
+5. Tdarr Node [N1] is now stopped:
+
+   <br><img width="548" alt="image" src="https://github.com/user-attachments/assets/e10fc050-2000-49a6-be46-a49b9a8609e2" /><br>
+
+## Script Behavior After Plex Transcoding Stops
+
+When Plex finishes transcoding, the script waits a cooldown (e.g., 180 seconds) and then restarts Tdarr:
+
+1. You’ll see a countdown timer in the logs before it restarts the container.  
+2. Tdarr Node starts again after the countdown:
+
+   <br><img width="611" alt="image" src="https://github.com/user-attachments/assets/7ca1d8b0-efac-44ab-9701-24ef525f33c7"><br>
+   <br><img width="323" alt="image" src="https://github.com/user-attachments/assets/9730388b-c5e8-42fc-9392-69b58d9554d7" /><br>
+
+3. Tdarr Node is fully online:
+
+   ![Tdarr Node Online](https://i.imgur.com/M1M2vSL.png)
+
+## Troubleshooting Common Issues
+
+- **Plex Not Using GPU?** Re-check your Plex Docker template and transcoding settings.  
+- **Tdarr Not Restarting?** Make sure the script has the right container name, Tautulli API key, and is set to run in the background.  
+- **High CPU Usage?** Some features, like HDR tone mapping, can be CPU-intensive. Ensure your GPU and drivers support it. Update drivers if needed.
 
 ---
 
