@@ -6,6 +6,13 @@
 
 This is using `ghcr.io/haveagitgat/tdarr:2.35.02` instead of `ghcr.io/haveagitgat/tdarr:latest`.
 
+**Change Log:**
+- **v1:** Original AV1 flow
+- **v2:** Removed B-frames
+- **v3:** Improved quality
+- **v4:** Removed images from files, reducing failure rates from ~25% to nearly 1-2%
+- **v5:** Better quality improvement and adjusted flow for simplicity
+
 ---
 
 **Introduction**
