@@ -34,18 +34,15 @@ T4_TAUTULLI_URL=""
 
 # ----------- Tdarr Settings -------------
 TDARR_ALTER_WORKERS=true       # If true, we adjust GPU workers; otherwise we kill container on threshold
-TDARR_DEFAULT_LIMIT=5          # Default GPU workers
+TDARR_DEFAULT_LIMIT=5          # Default GPU workers when watchers=0
 TDARR_API_URL="http://10.0.0.10:8265"   # WITHOUT /api/v2
 CONTAINER_NAME="N1"            # Name of your Tdarr Node Docker container
 
-# ----------- Offset Setting ------------- 
-# Only Applies if >>> TDARR_ALTER_WORKERS=true 
-
-# The number of jobs is only reduced once so many transcodes are occuring
-# If set to 3 - If you have 3 transcodes, then the gpu workers reduce by 1
-#               If you have 4 transcodes, then the gpu workers reduce by 2
-# If set to 0 - It will reduce gpu workers by one per transcode immediately
-OFFSET_THRESHOLD=3
+# ----------- Offset Setting ------------- IF >>> TDARR_ALTER_WORKERS=true 
+# We only start reducing workers when watchers >= OFFSET_THRESHOLD.
+# e.g. If OFFSET_THRESHOLD=3, watchers <3 => no reduction,
+#      watchers=3 => reduce by 1, watchers=4 => reduce by 2, etc.
+OFFSET_THRESHOLD=2
 
 # ----------- Other -------------
 WAIT_SECONDS=10                # Sleep after adjustments
@@ -55,6 +52,11 @@ TRANSCODE_THRESHOLD=4          # # watchers that triggers kill or reduce workers
 ###################################
 # End of configuration
 ###################################
+
+# Simple logging function with timestamp
+log_message() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1"
+}
 
 # ------------------------------------------------------------
 # Function: find_latest_node_id
@@ -80,17 +82,17 @@ ensure_node_id_loaded() {
         return 0
     fi
 
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - Attempting to retrieve nodeID from $TDARR_NODE_LOG_PATH"
+    log_message "Attempting to retrieve nodeID from $TDARR_NODE_LOG_PATH"
     local found
     found=$(find_latest_node_id)
 
     if [ -z "$found" ]; then
-        echo "ERROR: Could not find any nodeID in $TDARR_NODE_LOG_PATH."
+        log_message "ERROR: Could not find any nodeID in $TDARR_NODE_LOG_PATH."
         return 1
     fi
 
     TDARR_NODE_ID="$found"
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - Found nodeID: $TDARR_NODE_ID"
+    log_message "Found nodeID: $TDARR_NODE_ID"
     return 0
 }
 
@@ -101,15 +103,15 @@ refresh_node_id_if_changed() {
     local latest
     latest=$(find_latest_node_id)
     if [ -z "$latest" ]; then
-        echo "WARNING: Could not find any 'nodeID' lines in the log to refresh."
+        log_message "WARNING: Could not find any 'nodeID' lines in the log to refresh."
         return
     fi
 
     if [ "$latest" != "$TDARR_NODE_ID" ]; then
-        echo "NOTICE: nodeID changed from [$TDARR_NODE_ID] -> [$latest]. Updating."
+        log_message "NOTICE: nodeID changed from [$TDARR_NODE_ID] -> [$latest]. Updating."
         TDARR_NODE_ID="$latest"
     else
-        echo "NOTICE: nodeID is still the same [$TDARR_NODE_ID]."
+        log_message "NOTICE: nodeID is still the same [$TDARR_NODE_ID]."
     fi
 }
 
@@ -123,15 +125,15 @@ check_single_tautulli_connection() {
         return 2
     fi
 
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - Checking Tautulli at: $url"
+    log_message "Checking Tautulli at: $url"
     local response
     response=$(curl -s "${url}?apikey=${api_key}&cmd=get_activity")
 
     if echo "$response" | jq . >/dev/null 2>&1; then
-        echo "$(date '+%Y-%m-%d %H:%M:%S') - Tautulli OK: $url"
+        log_message "Tautulli OK: $url"
         return 0
     else
-        echo "$(date '+%Y-%m-%d %H:%M:%S') - WARNING: Could not connect or invalid JSON: $url"
+        log_message "WARNING: Could not connect or invalid JSON: $url"
         return 1
     fi
 }
@@ -143,7 +145,7 @@ check_tautulli_connections_on_startup() {
     # T1 must work
     check_single_tautulli_connection "$T1_TAUTULLI_API_KEY" "$T1_TAUTULLI_URL"
     if [ $? -ne 0 ]; then
-        echo "ERROR: T1 not reachable. Exiting."
+        log_message "ERROR: T1 not reachable. Exiting."
         exit 1
     fi
 
@@ -173,10 +175,11 @@ fetch_transcode_counts_from_tautulli() {
     fi
 
     local local_cnt remote_cnt
+    # Only count sessions that are transcoding video, not just audio
     local_cnt=$(echo "$resp" | jq '[.response.data.sessions[]?
-       | select(.transcode_decision == "transcode" and (.ip_address | startswith("10.0.0.")))] | length')
+       | select(.transcode_decision == "transcode" and .video_decision == "transcode" and (.ip_address | startswith("10.0.0.")))] | length')
     remote_cnt=$(echo "$resp" | jq '[.response.data.sessions[]?
-       | select(.transcode_decision == "transcode" and (.ip_address | startswith("10.0.0.") | not))] | length')
+       | select(.transcode_decision == "transcode" and .video_decision == "transcode" and (.ip_address | startswith("10.0.0.") | not))] | length')
 
     echo "$local_cnt $remote_cnt"
 }
@@ -190,7 +193,7 @@ total_count=0
 # Function: is_plex_transcoding_over_threshold
 # ------------------------------------------------------------
 is_plex_transcoding_over_threshold() {
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - Checking Plex transcodes..."
+    log_message "Checking Plex transcodes..."
 
     local total_local=0
     local total_remote=0
@@ -217,7 +220,7 @@ is_plex_transcoding_over_threshold() {
 
     total_count=$(( total_local + total_remote ))
 
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - Found $total_local local & $total_remote remote => total=$total_count, threshold=$TRANSCODE_THRESHOLD"
+    log_message "Found $total_local local & $total_remote remote => total=$total_count, threshold=$TRANSCODE_THRESHOLD"
 
     # Return 0 if watchers >= threshold
     if [ "$total_count" -ge "$TRANSCODE_THRESHOLD" ]; then
@@ -250,12 +253,20 @@ adjust_tdarr_workers() {
     local watchers="$1"
 
     # 1) Calculate how many watchers are above the offset
-    #    If watchers < OFFSET_THRESHOLD => watchersOverOffset=0
-    #    If watchers=3 => watchersOverOffset=1 => reduce by 1
-    #    If watchers=4 => watchersOverOffset=2 => reduce by 2, etc.
-    local watchersOverOffset=$(( watchers - OFFSET_THRESHOLD + 1 ))
-    if [ "$watchersOverOffset" -lt 0 ]; then
-        watchersOverOffset=0
+    #    If OFFSET_THRESHOLD=0, use watchers directly
+    #    If OFFSET_THRESHOLD>0 and watchers < OFFSET_THRESHOLD => watchersOverOffset=0
+    #    If OFFSET_THRESHOLD>0 and watchers=3 => watchersOverOffset=1 => reduce by 1
+    #    If OFFSET_THRESHOLD>0 and watchers=4 => watchersOverOffset=2 => reduce by 2, etc.
+    local watchersOverOffset
+    if [ "$OFFSET_THRESHOLD" -eq 0 ]; then
+        # When offset is 0, reduce by exactly the watcher count
+        watchersOverOffset=$watchers
+    else
+        # When offset >0, start reducing only after reaching threshold
+        watchersOverOffset=$(( watchers - OFFSET_THRESHOLD + 1 ))
+        if [ "$watchersOverOffset" -lt 0 ]; then
+            watchersOverOffset=0
+        fi
     fi
 
     # 2) Desired = TDARR_DEFAULT_LIMIT - watchersOverOffset
@@ -264,7 +275,7 @@ adjust_tdarr_workers() {
         desired=0
     fi
 
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - watchers=$watchers => watchersOverOffset=$watchersOverOffset => desiredWorkers=$desired"
+    log_message "watchers=$watchers => watchersOverOffset=$watchersOverOffset => desiredWorkers=$desired"
 
     # poll-worker-limits
     local poll_resp
@@ -275,27 +286,27 @@ adjust_tdarr_workers() {
     local current
     current=$(echo "$poll_resp" | jq '.workerLimits.transcodegpu' 2>/dev/null)
     if [ -z "$current" ] || [ "$current" = "null" ]; then
-        echo "ERROR: Could not retrieve current GPU worker limit for nodeID='$TDARR_NODE_ID'. Will re-check log for a new ID."
+        log_message "ERROR: Could not retrieve current GPU worker limit for nodeID='$TDARR_NODE_ID'. Will re-check log for a new ID."
         refresh_node_id_if_changed
         return
     fi
 
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - Current GPU worker limit: $current"
+    log_message "Current GPU worker limit: $current"
 
     local diff=$(( desired - current ))
     if [ "$diff" -eq 0 ]; then
-        echo "Already at the desired GPU worker limit ($desired)."
+        log_message "Already at the desired GPU worker limit ($desired)."
         return
     fi
 
     local step
     if [ "$diff" -gt 0 ]; then
         step="increase"
-        echo "Need to increase by $diff"
+        log_message "Need to increase by $diff"
     else
         step="decrease"
         diff=$(( -diff ))
-        echo "Need to decrease by $diff"
+        log_message "Need to decrease by $diff"
     fi
 
     local i=0
@@ -308,7 +319,7 @@ adjust_tdarr_workers() {
         sleep 1
     done
 
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - GPU worker limit adjustment complete."
+    log_message "GPU worker limit adjustment complete."
 }
 
 # ------------------------------------------------------------
@@ -317,34 +328,171 @@ adjust_tdarr_workers() {
 ensure_node_id_loaded
 check_tautulli_connections_on_startup
 
+# Main loop with protection against duplicate operations
+last_operation=""
+last_gpu_limit=0
+consecutive_duplicates=0
+
+# Set initial GPU workers on startup
+if [ "$TDARR_ALTER_WORKERS" = "true" ]; then
+    log_message "Setting initial GPU workers to default limit: $TDARR_DEFAULT_LIMIT on startup"
+    
+    # Ensure we have nodeID before trying to set workers
+    ensure_node_id_loaded || {
+        log_message "ERROR: Could not get nodeID, can't set initial GPU workers"
+        sleep 5  # Wait a bit and continue, will try again in the main loop
+    }
+    
+    if [ -n "$TDARR_NODE_ID" ]; then
+        # Get current limit
+        current_limit=$(curl -s -X POST "${TDARR_API_URL}/api/v2/poll-worker-limits" \
+            -H "Content-Type: application/json" \
+            -d '{"data":{"nodeID":"'"$TDARR_NODE_ID"'"}}' | \
+            jq '.workerLimits.transcodegpu' 2>/dev/null)
+            
+        if [ -n "$current_limit" ] && [ "$current_limit" != "null" ]; then
+            # Calculate how many workers to add/remove
+            diff=$(( TDARR_DEFAULT_LIMIT - current_limit ))
+            
+            if [ "$diff" -ne 0 ]; then
+                step=""
+                count=0
+                
+                if [ "$diff" -gt 0 ]; then
+                    step="increase"
+                    count=$diff
+                    log_message "Need to increase by $diff to reach default limit"
+                else
+                    step="decrease"
+                    count=$(( -diff ))
+                    log_message "Need to decrease by $(( -diff )) to reach default limit"
+                fi
+                
+                i=0
+                while [ $i -lt $count ]; do
+                    curl -s -X POST "${TDARR_API_URL}/api/v2/alter-worker-limit" \
+                        -H "Content-Type: application/json" \
+                        -d '{"data":{"nodeID":"'"$TDARR_NODE_ID"'","process":"'"$step"'","workerType":"transcodegpu"}}' \
+                        >/dev/null 2>&1
+                    i=$(( i + 1 ))
+                    sleep 1
+                done
+                
+                log_message "Initial GPU worker limit set to $TDARR_DEFAULT_LIMIT"
+            else
+                log_message "GPU workers already at desired default limit: $current_limit"
+            fi
+        else
+            log_message "ERROR: Could not get current GPU worker limit"
+        fi
+    fi
+fi
+
 while true; do
     if is_plex_transcoding_over_threshold; then
         # watchers >= threshold
         if [ "$TDARR_ALTER_WORKERS" = "true" ]; then
-            echo "Threshold exceeded. Reducing GPU workers."
+            # Check if we're doing the same operation repeatedly
+            operation="reduce_workers_$total_count"
+            
+            # Get current limit to check if it changed
+            current_limit=$(curl -s -X POST "${TDARR_API_URL}/api/v2/poll-worker-limits" \
+                -H "Content-Type: application/json" \
+                -d '{"data":{"nodeID":"'"$TDARR_NODE_ID"'"}}' | \
+                jq '.workerLimits.transcodegpu' 2>/dev/null)
+            
+            if [ "$operation" = "$last_operation" ] && [ "$current_limit" = "$last_gpu_limit" ]; then
+                consecutive_duplicates=$((consecutive_duplicates + 1))
+                if [ $consecutive_duplicates -gt 2 ]; then
+                    log_message "Skipping duplicate worker adjustment (done $consecutive_duplicates times already)"
+                    sleep "$WAIT_SECONDS"
+                    continue
+                fi
+            else
+                consecutive_duplicates=0
+            fi
+            
+            last_operation="$operation"
+            last_gpu_limit="$current_limit"
+            
+            log_message "Threshold exceeded. Reducing GPU workers."
             adjust_tdarr_workers "$total_count"
             sleep "$WAIT_SECONDS"
         else
             # kill container
+            operation="kill_container"
+            
+            if [ "$operation" = "$last_operation" ]; then
+                consecutive_duplicates=$((consecutive_duplicates + 1))
+                if [ $consecutive_duplicates -gt 2 ]; then
+                    log_message "Skipping duplicate container management (done $consecutive_duplicates times already)"
+                    sleep "$WAIT_SECONDS"
+                    continue
+                fi
+            else
+                consecutive_duplicates=0
+            fi
+            
+            last_operation="$operation"
+            
             if is_container_running; then
-                echo "Threshold exceeded: Killing $CONTAINER_NAME"
+                log_message "Threshold exceeded: Killing $CONTAINER_NAME"
                 docker kill "$CONTAINER_NAME"
             else
-                echo "$CONTAINER_NAME is already stopped."
+                log_message "$CONTAINER_NAME is already stopped."
             fi
             sleep "$WAIT_SECONDS"
         fi
     else
         # watchers < threshold
         if [ "$TDARR_ALTER_WORKERS" = "true" ]; then
+            # Check if we're doing the same operation repeatedly
+            operation="adjust_workers_$total_count"
+            
+            # Get current limit to check if it changed
+            current_limit=$(curl -s -X POST "${TDARR_API_URL}/api/v2/poll-worker-limits" \
+                -H "Content-Type: application/json" \
+                -d '{"data":{"nodeID":"'"$TDARR_NODE_ID"'"}}' | \
+                jq '.workerLimits.transcodegpu' 2>/dev/null)
+            
+            if [ "$operation" = "$last_operation" ] && [ "$current_limit" = "$last_gpu_limit" ]; then
+                consecutive_duplicates=$((consecutive_duplicates + 1))
+                if [ $consecutive_duplicates -gt 2 ]; then
+                    log_message "Skipping duplicate worker adjustment (done $consecutive_duplicates times already)"
+                    sleep "$BASIC_CHECK"
+                    continue
+                fi
+            else
+                consecutive_duplicates=0
+            fi
+            
+            last_operation="$operation"
+            last_gpu_limit="$current_limit"
+            
             adjust_tdarr_workers "$total_count"
         fi
 
+        # Start container if needed
+        operation="start_container"
+        
+        if [ "$operation" = "$last_operation" ] && is_container_running; then
+            consecutive_duplicates=$((consecutive_duplicates + 1))
+            if [ $consecutive_duplicates -gt 2 ]; then
+                log_message "Skipping duplicate container check (done $consecutive_duplicates times already)"
+                sleep "$BASIC_CHECK"
+                continue
+            fi
+        else
+            consecutive_duplicates=0
+        fi
+        
+        last_operation="$operation"
+
         if ! is_container_running; then
-            echo "Below threshold -> Starting container $CONTAINER_NAME."
+            log_message "Below threshold -> Starting container $CONTAINER_NAME."
             docker start "$CONTAINER_NAME"
         else
-            echo "Container $CONTAINER_NAME is already running."
+            log_message "Container $CONTAINER_NAME is already running."
         fi
 
         sleep "$BASIC_CHECK"
