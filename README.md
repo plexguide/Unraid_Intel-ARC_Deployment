@@ -311,12 +311,6 @@ Libraries let you specify locations and define how Tdarr processes them. For ins
 
 ---
 
-# SABNZBD Speed Control - Bonus
-
-You can also tie SABnzbd’s download speed to Plex streaming demand. By throttling SABnzbd when Plex is active, you minimize buffering. Check out Tautulli’s scripts or the SABnzbd API for ways to reduce speed during high stream loads. This is optional but can significantly improve user experience if you often saturate your internet bandwidth with downloads.
-
----
-
 # Tdarr Node Killer Script
 
 **Change Log**  
@@ -336,7 +330,8 @@ The Tdarr Node Killer script ensures Plex always has GPU priority. When Plex sta
 - Stops the Tdarr Node container as soon as Plex begins GPU transcoding.  
 - Waits for Plex transcoding to end, then restarts Tdarr after a short cooldown (e.g., 3 minutes).
 
-**Script:** [tdarr_node_killer.sh](tdarr_node_killer.sh)
+**Script (OLD):** [tdarr_node_killer.sh](tdarr_node_killer.sh)
+**Script (NEW):** [tdarr_node_scaling.sh](tdarr_node_scaling.sh) ***Instructions Not Updated Yet***
 
 Use **User Scripts** in Unraid to install this script, set it to run on array startup, and keep it running in the background.
 
