@@ -343,11 +343,11 @@ Use **User Scripts** in Unraid to install this script, set it to run on array st
    <br><img width="505" alt="image" src="https://github.com/user-attachments/assets/33afaf9e-107e-4b74-9ce2-05cc818d0666" /><br>
 
 2. The script runs and waits for Plex transcoding activity:  
-   <br><<img width="279" alt="image" src="https://github.com/user-attachments/assets/2ad935a0-29e6-4734-82d4-0b4f18efa0c7" /><br>
+   <br><img width="616" alt="image" src="https://github.com/user-attachments/assets/0e82792a-9164-45b8-8d52-c7c801cb0c82" /><br>
 
 3. A user begins transcoding in Plex:
 
-   ![Plex User Starts Transcoding](https://i.imgur.com/AT6hCUV.png)
+   <img width="279" alt="image" src="https://github.com/user-attachments/assets/96d6d64c-4dff-440a-89ae-c978d29766f7" />
 
 4. The script detects transcoding and stops the Tdarr Node:
 
