@@ -351,7 +351,7 @@ Use **User Scripts** in Unraid to install this script, set it to run on array st
 
 4. The script detects transcoding and stops the Tdarr Node:
 
-   <br><img width="655" alt="image" src="https://github.com/user-attachments/assets/8b9b0cdc-9084-48ed-a1c0-b00e32f51dc6"><br>
+   <br><img width="438" alt="image" src="https://github.com/user-attachments/assets/7ed827b3-fd50-4b60-9a59-82be72ada416" /><br>
    <br><img width="322" alt="image" src="https://github.com/user-attachments/assets/68dcc0c5-b347-4bed-86cb-53e58637b48b" /><br>
 
 5. Tdarr Node [N1] is now stopped:
