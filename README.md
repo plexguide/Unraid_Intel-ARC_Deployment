@@ -343,7 +343,7 @@ Use **User Scripts** in Unraid to install this script, set it to run on array st
    <br><img width="505" alt="image" src="https://github.com/user-attachments/assets/33afaf9e-107e-4b74-9ce2-05cc818d0666" /><br>
 
 2. The script runs and waits for Plex transcoding activity:  
-   <br><img width="615" alt="image" src="https://github.com/user-attachments/assets/a0ebab4e-e178-4de3-87f7-00e749cfa6cd"><br>
+   <br><<img width="279" alt="image" src="https://github.com/user-attachments/assets/2ad935a0-29e6-4734-82d4-0b4f18efa0c7" /><br>
 
 3. A user begins transcoding in Plex:
 
