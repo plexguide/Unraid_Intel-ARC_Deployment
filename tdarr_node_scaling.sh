@@ -42,12 +42,12 @@ CONTAINER_NAME="N1"            # Name of your Tdarr Node Docker container
 # We only start reducing workers when watchers >= OFFSET_THRESHOLD.
 # e.g. If OFFSET_THRESHOLD=3, watchers <3 => no reduction,
 #      watchers=3 => reduce by 1, watchers=4 => reduce by 2, etc.
-OFFSET_THRESHOLD=2
+OFFSET_THRESHOLD=2      # For Tdarr Scaling, number of transcodes reached to start reducing GPU Workers (when TDARR_ALTER_WORKERS=true)
 
 # ----------- Other -------------
 WAIT_SECONDS=10                # Sleep after adjustments
 BASIC_CHECK=3                  # Poll interval (seconds) when idle
-TRANSCODE_THRESHOLD=4          # # watchers that triggers kill or reduce workers
+TRANSCODE_THRESHOLD=4          # For Tdarr Killer, number of transcodes reached to kill the tdarr node (when TDARR_ALTER_WORKERS=false)
 
 ###################################
 # End of configuration
