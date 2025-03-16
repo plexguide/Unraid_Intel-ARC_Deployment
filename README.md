@@ -331,7 +331,7 @@ The Tdarr Node Killer script ensures Plex always has GPU priority. When Plex sta
 - Waits for Plex transcoding to end, then restarts Tdarr after a short cooldown (e.g., 3 minutes).
 
 **Script (OLD):** [tdarr_node_killer.sh](tdarr_node_killer.sh)
-<br>**Script (NEW):** [tdarr_node_scaling.sh](tdarr_node_scaling.sh) ***Instructions Not Updated Yet***
+<br>**Script (NEW):** [tdarr_node_scaling.sh](tdarr_node_scaling.sh) - ***Instructions Not Updated Yet***
 
 Use **User Scripts** in Unraid to install this script, set it to run on array startup, and keep it running in the background.
 
@@ -339,8 +339,8 @@ Use **User Scripts** in Unraid to install this script, set it to run on array st
 
 ## Step-by-Step Implementation for Unraid
 
-1. Confirm Tdarr Node [N1] is running when no one’s transcoding in Plex:  
-   <br><img width="543" alt="image" src="https://github.com/user-attachments/assets/c4d99d6c-e8f9-4d38-a103-f8071f07a4fa" /><br>
+1. Confirm Tdarr Node the targetted Node is running when no one’s transcoding in Plex:  
+   <br><img width="505" alt="image" src="https://github.com/user-attachments/assets/33afaf9e-107e-4b74-9ce2-05cc818d0666" /><br>
 
 2. The script runs and waits for Plex transcoding activity:  
    <br><img width="615" alt="image" src="https://github.com/user-attachments/assets/a0ebab4e-e178-4de3-87f7-00e749cfa6cd"><br>
