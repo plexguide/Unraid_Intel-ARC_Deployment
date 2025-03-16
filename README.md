@@ -324,7 +324,8 @@ You can also tie SABnzbd’s download speed to Plex streaming demand. By throttl
 - **v2:** Switched to Tautulli for simpler detection  
 - **v3:** Option to avoid killing Tdarr node on local-only transcodes  
 - **v4:** Added a threshold to kill the Tdarr container only if transcodes exceed (default) 3 sessions  
-- **v5:** Added Tautulli API connectivity check in logs at startup  
+- **v5:** Added Tautulli API connectivity check in logs at startup
+- **v6:** Added Optional GPU Job Scaling instead of Killing Tdarr Node  
 
 ## Overview
 
