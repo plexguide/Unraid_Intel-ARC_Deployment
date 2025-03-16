@@ -349,9 +349,13 @@ Use **User Scripts** in Unraid to install this script, set it to run on array st
 
    <img width="279" alt="image" src="https://github.com/user-attachments/assets/96d6d64c-4dff-440a-89ae-c978d29766f7" />
 
-4. The script detects transcoding and stops the Tdarr Node:
+4A. (Tdarr Scaling) Script detects transcoding threshold set and reduces amount of Tdarr GPU Workers:
 
    <br><img width="438" alt="image" src="https://github.com/user-attachments/assets/7ed827b3-fd50-4b60-9a59-82be72ada416" /><br>
+
+4B. (Tdarr Killer) Script detects transcoding exceeding set threshold and kills Tdarr Node:
+
+   <br><img width="557" alt="image" src="https://github.com/user-attachments/assets/8efc5c6a-b01a-4b06-8ea2-3b5d15108cab" /><br>
    <br><img width="322" alt="image" src="https://github.com/user-attachments/assets/68dcc0c5-b347-4bed-86cb-53e58637b48b" /><br>
 
 5. Tdarr Node [N1] is now stopped:
