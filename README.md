@@ -1,4 +1,4 @@
-# AV1 - Intel ARC Encoding Guide via Unraid + Tdarr Node Killer
+# AV1 - Intel ARC Encoding Guide via Unraid + Tdarr Node Scaling/Killer
 
 <h2 align="center">Want to Help? Click the Star in the Upper-Right Corner! ⭐</h2>
 
