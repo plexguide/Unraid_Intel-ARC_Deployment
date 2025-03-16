@@ -5,7 +5,7 @@
 ###################################
 
 # Where your Tdarr Node log is located
-TDARR_NODE_LOG_PATH="/mnt/user/appdata/n1-1/logs/Tdarr_Node_Log.txt"
+TDARR_NODE_LOG_PATH="/mnt/user/appdata/n1/logs/Tdarr_Node_Log.txt"
 
 # ------------- T1 (Required) -------------
 T1_TAUTULLI_API_KEY="ebdb8c80fc2b461ea182243dbc1b27a1"
