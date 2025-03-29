@@ -34,7 +34,7 @@ T4_TAUTULLI_URL=""
 
 # ----------- Tdarr Settings -------------
 TDARR_ALTER_WORKERS=true       # If true, we adjust GPU workers; otherwise we kill container on threshold
-TDARR_DEFAULT_LIMIT=5          # Default GPU workers when watchers=0
+TDARR_DEFAULT_LIMIT=3          # Default GPU workers when watchers=0
 TDARR_API_URL="http://10.0.0.10:8265"   # WITHOUT /api/v2
 CONTAINER_NAME="N1"            # Name of your Tdarr Node Docker container
 
