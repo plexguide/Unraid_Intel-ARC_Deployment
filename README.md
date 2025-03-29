@@ -10,7 +10,10 @@ We’re using `ghcr.io/haveagitgat/tdarr:2.35.02` instead of `ghcr.io/haveagitga
 - **v2:** Removed B-frames  
 - **v3:** Improved quality  
 - **v4:** Removed images from files, cutting failure rates from ~25% to 1–2%  
-- **v5:** Enhanced quality and simplified workflow  
+- **v5:** Enhanced quality and simplified workflow 
+- **v6:** Added a Special-ish Variable - If file is still to big, try again at a slightly lower quality
+
+<img width="1124" alt="image" src="https://github.com/user-attachments/assets/4956d1d8-8c82-4f9c-95ac-e2df0bc85fb9" />
 
 ---
 
