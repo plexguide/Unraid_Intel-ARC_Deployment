@@ -7,9 +7,7 @@ We’re using `ghcr.io/haveagitgat/tdarr:2.35.02` instead of `ghcr.io/haveagitga
 The latest probably works FINE, but just a note!
 
 **Change Log:**
-- **v1:** Original AV1 flow  
-- **v2:** Removed B-frames  
-- **v3:** Improved quality  
+- **v1-3:** Original AV1 flow, Removed-B Frames, Improved Quality  
 - **v4:** Removed images from files, cutting failure rates from ~25% to 1–2%  
 - **v5:** Enhanced quality and simplified workflow 
 - **v6:** Added a Special-ish Variable - If file is still to big, try again at a slightly lower quality
