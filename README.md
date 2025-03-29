@@ -3,7 +3,7 @@
 <h2 align="center">Want to Help? Click the Star in the Upper-Right Corner! ⭐</h2>
 
 **NOTE**  
-We’re using `ghcr.io/haveagitgat/tdarr:2.35.02` instead of `ghcr.io/haveagitgat/tdarr:latest`.
+We’re using `ghcr.io/haveagitgat/tdarr:2.35.02` instead of `ghcr.io/haveagitgat/tdarr:latest`. The latest probably works FINE, but just a note!
 
 **Change Log:**
 - **v1:** Original AV1 flow  
