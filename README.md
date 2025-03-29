@@ -199,16 +199,8 @@ Once the Tdarr Server is running, install **Tdarr Node** (a separate listing). T
 
 3. For each node, click it and set CPU/GPU worker counts based on your ARC card:
 
-    - **ARC A310**  
-      - Transcode: CPU (0), GPU (2–3)  
-      - Health Check: CPU (2), GPU (0)  
-
-    - **ARC A380**  
+    - **ARC 310/380/500/700**  
       - Transcode: CPU (0), GPU (2–4)  
-      - Health Check: CPU (2), GPU (0)  
-
-    - **ARC A500/A700**  
-      - Transcode: CPU (0), GPU (2–5)  
       - Health Check: CPU (2), GPU (0)  
 
 <br><img width="548" alt="image" src="https://github.com/user-attachments/assets/8dc965c7-d801-42b3-af1f-c5310e2e2fad" /><br>
