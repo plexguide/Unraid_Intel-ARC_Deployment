@@ -5,6 +5,129 @@
   "tags": "",
   "flowPlugins": [
     {
+      "name": "Compare File Size",
+      "sourceRepo": "Community",
+      "pluginName": "compareFileSize",
+      "version": "1.0.0",
+      "id": "aSv4ZEQr0",
+      "position": {
+        "x": 56.673362514219235,
+        "y": 718.3599502468546
+      },
+      "fpEnabled": true
+    },
+    {
+      "name": "Execute v2",
+      "sourceRepo": "Community",
+      "pluginName": "ffmpegCommandExecute",
+      "version": "1.0.0",
+      "id": "4dhJKjMSt",
+      "position": {
+        "x": -53.7300200482278,
+        "y": 815.0387650285796
+      },
+      "fpEnabled": true
+    },
+    {
+      "name": "Set Original File",
+      "sourceRepo": "Community",
+      "pluginName": "setOriginalFile",
+      "version": "1.0.0",
+      "id": "-yhk4Lit6",
+      "position": {
+        "x": -106.64360991269855,
+        "y": 561.2732973253414
+      },
+      "fpEnabled": true
+    },
+    {
+      "name": "Reorder Streams v2",
+      "sourceRepo": "Community",
+      "pluginName": "ffmpegCommandRorderStreams",
+      "version": "1.0.0",
+      "inputsDB": {
+        "languages": "eng"
+      },
+      "id": "QH2w5YhQD",
+      "position": {
+        "x": -108.89995388012728,
+        "y": 729.9465395020065
+      },
+      "fpEnabled": true
+    },
+    {
+      "name": "Custom Arguments",
+      "sourceRepo": "Community",
+      "pluginName": "ffmpegCommandCustomArguments",
+      "version": "1.0.0",
+      "inputsDB": {
+        "outputArguments": "-max_muxing_queue_size 1024 -global_quality {{{args.variables.user.qual}}} -preset veryslow",
+        "inputArguments": "-hwaccel qsv"
+      },
+      "id": "QjFeVXDLt",
+      "position": {
+        "x": -109.58209739377594,
+        "y": 685.3183780727188
+      },
+      "fpEnabled": true
+    },
+    {
+      "name": "Set Video Encoder",
+      "sourceRepo": "Community",
+      "pluginName": "ffmpegCommandSetVideoEncoder",
+      "version": "1.0.0",
+      "inputsDB": {
+        "outputCodec": "av1",
+        "ffmpegPreset": "veryslow",
+        "hardwareType": "qsv",
+        "ffmpegQuality": "15",
+        "hardwareEncoding": "true",
+        "hardwareDecoding": "false",
+        "forceEncoding": "true",
+        "ffmpegPresetEnabled": "false",
+        "ffmpegQualityEnabled": "false"
+      },
+      "id": "raEaO2cfG",
+      "position": {
+        "x": -108.50133564634717,
+        "y": 634.8978179305361
+      },
+      "fpEnabled": true
+    },
+    {
+      "name": "Special-ish",
+      "sourceRepo": "Community",
+      "pluginName": "setFlowVariable",
+      "version": "1.0.0",
+      "id": "g26dVAvQm",
+      "position": {
+        "x": -108.33385374246566,
+        "y": 599.7056785887281
+      },
+      "fpEnabled": true,
+      "inputsDB": {
+        "variable": "qual",
+        "value": "34"
+      }
+    },
+    {
+      "name": "Notify Overseas",
+      "sourceRepo": "Community",
+      "pluginName": "notifyRadarrOrSonarr",
+      "version": "2.0.0",
+      "inputsDB": {
+        "arr": "sonarr",
+        "arr_api_key": "3ff8afc8581c4a83bef1b9fb1c67a90f",
+        "arr_host": "http://10.0.0.10:8988"
+      },
+      "id": "b6oMqri3E",
+      "position": {
+        "x": 590.0950783923086,
+        "y": 803.3218734315572
+      },
+      "fpEnabled": true
+    },
+    {
       "name": "1080p-ish",
       "sourceRepo": "Community",
       "pluginName": "setFlowVariable",
@@ -12,7 +135,7 @@
       "id": "umaTXsNaU",
       "position": {
         "x": 886.2105927429751,
-        "y": 460.18235108810114
+        "y": 459.06404297022146
       },
       "fpEnabled": true,
       "inputsDB": {
@@ -33,7 +156,7 @@
       "fpEnabled": true,
       "inputsDB": {
         "variable": "qual",
-        "value": "27"
+        "value": "29"
       }
     },
     {
@@ -49,7 +172,7 @@
       "fpEnabled": true,
       "inputsDB": {
         "variable": "qual",
-        "value": "31"
+        "value": "29"
       }
     },
     {
@@ -212,8 +335,8 @@
       "version": "1.0.0",
       "id": "PGuZs5nAA",
       "position": {
-        "x": 271.5517395474514,
-        "y": 601.4309959316765
+        "x": 270.7517784272451,
+        "y": 888.4914053566152
       },
       "fpEnabled": true
     },
@@ -224,7 +347,7 @@
       "version": "2.0.0",
       "inputsDB": {
         "arr": "sonarr",
-        "arr_api_key": "e1fdd2cc159a45ee85159f34bf500e04",
+        "arr_api_key": "a03c86b6292c4bd48cd5e3b84e5a4702",
         "arr_host": "http://10.0.0.10:8989"
       },
       "id": "7cEM9Ueje",
@@ -240,7 +363,7 @@
       "pluginName": "notifyRadarrOrSonarr",
       "version": "2.0.0",
       "inputsDB": {
-        "arr_api_key": "6a89ed00e6954be28a73dd0861da2fc1",
+        "arr_api_key": "fff4318f18ca48da8fb33a9fe5b136c2",
         "arr_host": "http://10.0.0.10:7878"
       },
       "id": "afcN2Nl97",
@@ -258,7 +381,7 @@
       "id": "nlAVmhQV3",
       "position": {
         "x": 487.8271915301475,
-        "y": 290.13221603899063
+        "y": 291.3275732351331
       },
       "fpEnabled": true
     },
@@ -285,13 +408,25 @@
       "id": "CqvMoHan9",
       "position": {
         "x": 544.4521775478631,
-        "y": 459.4553689046553
+        "y": 458.88453203907955
       },
       "fpEnabled": true,
       "inputsDB": {
         "variable": "qual",
-        "value": "26"
+        "value": "30"
       }
+    },
+    {
+      "name": "If the file is too big for conversion (as in goes over 100%) try again at a slightly lower quality. Change Special-ish value!",
+      "sourceRepo": "Community",
+      "pluginName": "comment",
+      "version": "1.0.0",
+      "id": "2-upGovUr",
+      "position": {
+        "x": -149.7572608169468,
+        "y": 432.5237817097443
+      },
+      "fpEnabled": true
     }
   ],
   "flowEdges": [
@@ -336,20 +471,6 @@
       "target": "xG56Of7cp",
       "targetHandle": null,
       "id": "TVF0Rfo1k"
-    },
-    {
-      "source": "abUXrdfpu",
-      "sourceHandle": "2",
-      "target": "PGuZs5nAA",
-      "targetHandle": null,
-      "id": "ViG9kbRhX"
-    },
-    {
-      "source": "abUXrdfpu",
-      "sourceHandle": "3",
-      "target": "PGuZs5nAA",
-      "targetHandle": null,
-      "id": "U1qf-v2n6"
     },
     {
       "source": "xG56Of7cp",
@@ -490,6 +611,97 @@
       "target": "nvhiecc42",
       "targetHandle": null,
       "id": "AAXZJc1E1"
+    },
+    {
+      "source": "afcN2Nl97",
+      "sourceHandle": "2",
+      "target": "b6oMqri3E",
+      "targetHandle": null,
+      "id": "UHrip4Cbh"
+    },
+    {
+      "source": "g26dVAvQm",
+      "sourceHandle": "1",
+      "target": "raEaO2cfG",
+      "targetHandle": null,
+      "id": "TDr_xP77Z"
+    },
+    {
+      "source": "raEaO2cfG",
+      "sourceHandle": "1",
+      "target": "QjFeVXDLt",
+      "targetHandle": null,
+      "id": "57GVd2GUg"
+    },
+    {
+      "source": "QjFeVXDLt",
+      "sourceHandle": "1",
+      "target": "QH2w5YhQD",
+      "targetHandle": null,
+      "id": "BE2ZEw-CM"
+    },
+    {
+      "source": "-yhk4Lit6",
+      "sourceHandle": "1",
+      "target": "g26dVAvQm",
+      "targetHandle": null,
+      "id": "Q3xp5zRXm"
+    },
+    {
+      "source": "abUXrdfpu",
+      "sourceHandle": "2",
+      "target": "-yhk4Lit6",
+      "targetHandle": null,
+      "id": "zRFORRrfk"
+    },
+    {
+      "source": "abUXrdfpu",
+      "sourceHandle": "3",
+      "target": "-yhk4Lit6",
+      "targetHandle": null,
+      "id": "DeS6Xzunh"
+    },
+    {
+      "source": "QH2w5YhQD",
+      "sourceHandle": "1",
+      "target": "4dhJKjMSt",
+      "targetHandle": null,
+      "id": "LeTLmV-Nf"
+    },
+    {
+      "source": "4dhJKjMSt",
+      "sourceHandle": "1",
+      "target": "aSv4ZEQr0",
+      "targetHandle": null,
+      "id": "_duggalQS"
+    },
+    {
+      "source": "aSv4ZEQr0",
+      "sourceHandle": "1",
+      "target": "xG56Of7cp",
+      "targetHandle": null,
+      "id": "A8uNFy5Bc"
+    },
+    {
+      "source": "aSv4ZEQr0",
+      "sourceHandle": "2",
+      "target": "PGuZs5nAA",
+      "targetHandle": null,
+      "id": "ock41pgha"
+    },
+    {
+      "source": "aSv4ZEQr0",
+      "sourceHandle": "3",
+      "target": "PGuZs5nAA",
+      "targetHandle": null,
+      "id": "Iqc_injZ-"
+    },
+    {
+      "source": "2-upGovUr",
+      "sourceHandle": "1",
+      "target": "-yhk4Lit6",
+      "targetHandle": null,
+      "id": "VsuG1MZ-9"
     }
   ]
 }
