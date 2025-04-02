@@ -29,6 +29,12 @@ Following these steps will dramatically reduce video file sizes, saving huge amo
 
 > **Quick Tip:** Always test your AV1 encoding on a small library or a few files. Adjust CRF to balance quality and size before converting your entire collection.
 
+## PayPal Donations – Building My Daughter’s Future
+
+My 12-year-old daughter loves singing, dancing, and exploring STEM. She’s an A-B honor roll student with big dreams for the future. Any donation you make will go directly toward her college fund, helping her turn those dreams into reality. Thank you for your support!
+
+[![Donate with PayPal button](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/donate?hosted_button_id=58AYJ68VVMGSC)
+
 ---
 
 ## Table of Contents
